@@ -27,7 +27,7 @@ fit_fam<-function(ss, vc_struct, ycol="y",family="gaussian", silent=TRUE){
   
   dl<-data_f(ss, tmplt, ycol)
   strt.fixed<-coef(glm(dl$y~dl$X-1,family=gsub("over","",family)))
-  params<-param_f(ss, dl, tmplt)
+  params<-param_f(ss, dl, tmplt,strt.fixed)
   re_params<-grep("^x|^u", names(params),value=T) 
   if(grepl("over",family)) re_params<-c("res", re_params) 
   
@@ -192,7 +192,7 @@ data_f<-function(ss,tmplt,ycol){
 } 
 #data<-data_f(ss, "sgfps", "y")
 
-param_f<-function(ss, data, tmplt){
+param_f<-function(ss, data, tmplt,strt.fixed){
   switch(tmplt,
              fam_chol_matern_gmrf_sgfps=    list(
                             log_sdvc_a = 0.1,
