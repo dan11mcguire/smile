@@ -3,13 +3,33 @@
 #define TMB_LIB_INIT R_init_meta_model
 #include <TMB.hpp>
 #include "fam_chol_matern_gmrf_sgps.hpp"
+#include "fam_chol_matern_gmrf_sgps_logit.hpp"
+#include "fam_chol_matern_gmrf_sgps_overlogit.hpp"
+#include "fam_chol_matern_gmrf_sgps_overpois.hpp"
 #include "fam_chol_matern_gmrf_s.hpp"
+#include "fam_chol_matern_gmrf_gfps.hpp"
+#include "fam_chol_matern_gmrf_gps.hpp"
+#include "fam_chol_matern_gmrf_sgfps.hpp"
 
 template<class Type>
 Type objective_function<Type>::operator() () {
   DATA_STRING(model);
-  if(model == "fam_chol_matern_gmrf_sgps") {
+  if(model ==        "fam_chol_matern_gmrf_sgps") {
     return fam_chol_matern_gmrf_sgps(this);
+  } else if(model == "fam_chol_matern_gmrf_sgps_logit") {
+    return fam_chol_matern_gmrf_sgps_logit(this);
+  } else if(model == "fam_chol_matern_gmrf_sgps_overlogit") {
+    return fam_chol_matern_gmrf_sgps_overlogit(this);
+  } else if(model == "fam_chol_matern_gmrf_sgps_overpois") {
+    return fam_chol_matern_gmrf_sgps_overpois(this);
+  } else if(model == "fam_chol_matern_gmrf_s") {
+    return fam_chol_matern_gmrf_s(this);
+  } else if(model == "fam_chol_matern_gmrf_gfps") {
+    return fam_chol_matern_gmrf_gfps(this);
+  } else if(model == "fam_chol_matern_gmrf_sgfps") {
+    return fam_chol_matern_gmrf_sgfps(this);
+  } else if(model == "fam_chol_matern_gmrf_gps") {
+    return fam_chol_matern_gmrf_gps(this);
   } else if(model == "fam_chol_matern_gmrf_s") {
     return fam_chol_matern_gmrf_s(this);
   } else {

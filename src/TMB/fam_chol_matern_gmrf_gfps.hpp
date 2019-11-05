@@ -2,7 +2,7 @@
 #define TMB_OBJECTIVE_PTR obj
 	
 template<class Type>
-  Type objective_function<Type>::operator() ()
+  Type fam_chol_matern_gmrf_gfps(objective_function<Type>* obj)
 {
   using namespace R_inla; //includes SPDE-spesific functions, e.g. Q_spde()
   using namespace density; 

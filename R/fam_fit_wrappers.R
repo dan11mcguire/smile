@@ -26,9 +26,11 @@ fit_fam<-function(ss, vc_struct, ycol="y",family="gaussian", silent=TRUE){
   tmplt<-paste0(vc_str, link)
   
   dl<-data_f(ss, tmplt, ycol)
-  params<-param_f(ss, dl, vc_struct)
+  strt.fixed<-coef(glm(dl$y~dl$X-1,family=gsub("over","",family)))
+  params<-param_f(ss, dl, tmplt)
   re_params<-grep("^x|^u", names(params),value=T) 
-   
+  if(grepl("over",family)) re_params<-c("res", re_params) 
+  
   obj_chol <- MakeADFun(data=c(model=tmplt, dl), 
                         parameters=params, 
                         random=re_params, 
@@ -51,10 +53,10 @@ fit_fam<-function(ss, vc_struct, ycol="y",family="gaussian", silent=TRUE){
 link_f<-function(link){
   switch(link,
             gaussian = "", 
-            logit  = "logit", 
-            overlogit  = "overlogit", 
-            poisson   = "pois",
-            overpoisson = "overpois")
+            binomial  = "_logit", 
+            overbinomial  = "_overlogit", 
+            poisson   = "_pois",
+            overpoisson = "_overpois")
 }
 
 vc_f<-function(vc_struct){
@@ -80,40 +82,6 @@ vc_f<-function(vc_struct){
 
 
 
-## testing
-
-#silent<-TRUE
-#vc_struct<-"sgps"
-#ycol<-"y"
-#chk<-fit_fam(ss=ss, vc_struct="sgps", ycol="y",silent=T)
-#chk2<-fit_fam(ss=ss, vc_struct="sgfps", ycol="y",silent=T)
-#chk3<-fit_fam(ss=ss, vc_struct="sgps", ycol="y",silent=T)
-#chk4<-fit_fam(ss=ss, vc_struct="sgps", ycol="y",silent=T)
-#class(data_f(ss, vc_struct))
-#rel<-data.table(re=names(chk$rep$par.random), val=chk$rep$par.random)
-#rel[,var(val),by=re]
-#chk$opt$p
-#
-#1-sum(chk$rep$value[-1])
-#ss$d[,.(u_a=unique(u_a),uahat=rel[re=="ua",val])][,plot(u_a,uahat)]
-#ss$d[,.(u_sib=unique(u_sib),uahat=rel[re=="uc_sib",val])][,plot(u_sib,uahat)]
-#ss$d[,.(u_par=unique(u_par),uahat=rel[re=="uc_par",val])][,plot(u_par,uahat)]
-##ss$d[,.(u_s=unique(u_s),uahat=rel[re=="x",val])][,plot(u_par,uahat)]
-#
-#tau.hat<-exp(chk$opt$par['log_tau'])
-#estdt<-data.table(
-#  ss$d[,.(set,emprel, ttype,pid,empreltype,lat,lon,tru_l=y-eps)],
-#  ua=as.vector(ss$Zlist$Za %*% rel[re=="ua",val]),
-#  uc_par=as.vector(ss$Zlist$Zc_par %*% rel[re=="uc_par",val]),
-#  uc_sib=as.vector(ss$Zlist$Zc_sib %*% rel[re=="uc_sib",val]),
-#  u_s=as.vector(ss$Zlist$Zc_fam %*% ss$sp$A %*% rel[re=="x",val]/tau.hat)
-#)[,mypred:=ua + uc_par + uc_sib + u_s]
-#
-#
-#unsc<-as.vector(ss$sp$A%*%ss$sp$u)
-#xhat<-rel[re=="x",val]
-#
-#plot(ss$d[,u_s],as.vector(ss$Zlist$Zc_fam%*%ss$sp$A%*%xhat)/tau.hat)
 
 data_f<-function(ss,tmplt,ycol){
   
@@ -125,7 +93,7 @@ data_f<-function(ss,tmplt,ycol){
   A<-ss$sp$A
   
   d<-switch(tmplt,
-            fam_chol_matern_gmrf_sgps =  list(
+            fam_chol_matern_gmrf_sgfps =  list(
                           y=y,
                           X=X,
                           Za=ss$Zlist[["Za"]],
@@ -174,17 +142,58 @@ data_f<-function(ss,tmplt,ycol){
                           Zc_par=ss$Zlist[["Zc_par"]],
                           Zc_sib=ss$Zlist[["Zc_sib"]],
                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                          Lt_Gc_fam=as(ss$Ltlist[["Lt_Gc_fam"]],"dgTMatrix"),
                           Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
                           Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix")
+                          ),
+
+              fam_chol_matern_gmrf_sgps_logit= list(
+                            y=y,
+                            X=X,
+                            Za=ss$Zlist[["Za"]],
+                            Zc_fam=ss$Zlist[["Zc_fam"]],
+                            Zc_par=ss$Zlist[["Zc_par"]],
+                            Zc_sib=ss$Zlist[["Zc_sib"]],
+                            Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
+                            Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                            Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                            spdeMatrices=spdeMatrices,
+                            A=A
+                            ),
+
+               fam_chol_matern_gmrf_sgps_overlogit=list(
+                           y=y,
+                           X=X,
+                           Za=ss$Zlist[["Za"]],
+                           Zc_fam=ss$Zlist[["Zc_fam"]],
+                           Zc_par=ss$Zlist[["Zc_par"]],
+                           Zc_sib=ss$Zlist[["Zc_sib"]],
+                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
+                           Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                           Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                           spdeMatrices=spdeMatrices,
+                           A=A
+                           ),
+
+               fam_chol_matern_gmrf_sgps_overpois=list(
+                          y=y,
+                          X=X,
+                          Za=ss$Zlist[["Za"]],
+                          Zc_fam=ss$Zlist[["Zc_fam"]],
+                          Zc_par=ss$Zlist[["Zc_par"]],
+                          Zc_sib=ss$Zlist[["Zc_sib"]],
+                          Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
+                          Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                          Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                          spdeMatrices=spdeMatrices,
+                          A=A
                           )
         ) 
    return(d)
 } 
 #data<-data_f(ss, "sgfps", "y")
 
-param_f<-function(ss, data, vc_struct){
-  switch(vc_struct,
+param_f<-function(ss, data, tmplt){
+  switch(tmplt,
              fam_chol_matern_gmrf_sgfps=    list(
                             log_sdvc_a = 0.1,
                             log_sdvc_c_fam = log(sqrt(0.1)),
@@ -195,7 +204,7 @@ param_f<-function(ss, data, vc_struct){
                             uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
-                            beta           = rep(0, ncol(data$X)),
+                            beta           = strt.fixed,
                             log_tau        = 0,
                             log_kappa      = 0,
                             x              = rep(0.0, nrow(data$spdeMatrices$M0))
@@ -211,7 +220,7 @@ param_f<-function(ss, data, vc_struct){
                             uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
-                            beta           = rep(0, ncol(data$X))
+                            beta           = strt.fixed 
                            ),
 
              fam_chol_matern_gmrf_sgps=    list(
@@ -222,7 +231,7 @@ param_f<-function(ss, data, vc_struct){
                             ua             = rep(0.0, ncol(ss$Zlist$Za)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
-                            beta           = rep(0, ncol(data$X)),
+                            beta           = strt.fixed,
                             log_tau        = 0,
                             log_kappa      = 0,
                             x              = rep(0.0, nrow(data$spdeMatrices$M0))
@@ -237,13 +246,93 @@ param_f<-function(ss, data, vc_struct){
                             uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
-                            beta           = rep(0, ncol(data$X))
-                           )
+                            beta           = strt.fixed 
+                           ),
+
+               fam_chol_matern_gmrf_sgps_logit=list(
+                                  log_sdvc_a = log(sqrt(0.1)),
+                                  log_sdvc_c_par = log(sqrt(0.2)),
+                                  log_sdvc_c_sib = log(sqrt(0.2)),
+                                  #log_sdvc_res   = log(sqrt(0.2)),
+                                  ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                                  uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
+                                  uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
+                                  #res            = rep(0.0, nrow(ss$Zlist$Zc_sib)),
+                                  beta           = strt.fixed,
+                                  log_tau        = 0,
+                                  log_kappa      = 0,
+                                  x              = rep(0.0, nrow(data$spdeMatrices$M0))
+                                 ),
+
+               fam_chol_matern_gmrf_sgps_overlogit = list(
+                                  log_sdvc_a = log(sqrt(.35)),
+                                  log_sdvc_c_par = log(sqrt(.1)),
+                                  log_sdvc_c_sib = log(sqrt(.2)),
+                                  log_sdvc_res   = log(sqrt(.3)),
+                                  ua             = runif(ncol(ss$Zlist$Za)),    #rep(0.0, ncol(ss$Zlist$Za)),
+                                  uc_par         = runif(ncol(ss$Zlist$Zc_par)),#rep(0.0, ncol(ss$Zlist$Zc_par)),
+                                  uc_sib         = runif(ncol(ss$Zlist$Zc_sib)),#rep(0.0, ncol(ss$Zlist$Zc_sib)),
+                                  res            = runif(nrow(ss$Zlist$Zc_sib)),#rep(0.0, nrow(ss$Zlist$Zc_sib)),
+                                  beta           = strt.fixed,                #rep(0, ncol(X)),
+                                  log_tau        = 0,
+                                  log_kappa      = 0,
+                                    x              = rep(0.0, nrow(data$spdeMatrices$M0))
+                                   ),
+
+               fam_chol_matern_gmrf_sgps_overpois=list(
+                                  log_sdvc_a = log(sqrt(0.1*500)),
+                                  log_sdvc_c_par = log(sqrt(0.1*500)),
+                                  log_sdvc_c_sib = log(sqrt(0.1*500)),
+                                  log_sdvc_res   = log(sqrt(0.8*500)),
+                                  ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                                  uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
+                                  uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
+                                  res            = rep(0.0, nrow(ss$Zlist$Zc_sib)),
+                                  beta           = strt.fixed,
+                                  log_tau        = -1.58,
+                                  log_kappa      = 1.4,
+                                  x              = rep(0.0, nrow(data$spdeMatrices$M0))
+                                 )
             )
 }
 
 
+## testing
 
+#silent<-TRUE
+#vc_struct<-"sgps"
+#ycol<-"y"
+#chk<-fit_fam(ss=ss, vc_struct="sgps", ycol="y",silent=T)
+#chk2<-fit_fam(ss=ss, vc_struct="sgfps", ycol="y",silent=T)
+#chk3<-fit_fam(ss=ss, vc_struct="sgps", ycol="y",silent=T)
+#chk4<-fit_fam(ss=ss, vc_struct="sgps", ycol="y",silent=T)
+#class(data_f(ss, vc_struct))
+#rel<-data.table(re=names(chk$rep$par.random), val=chk$rep$par.random)
+#rel[,var(val),by=re]
+#chk$opt$p
+#
+#1-sum(chk$rep$value[-1])
+#ss$d[,.(u_a=unique(u_a),uahat=rel[re=="ua",val])][,plot(u_a,uahat)]
+#ss$d[,.(u_sib=unique(u_sib),uahat=rel[re=="uc_sib",val])][,plot(u_sib,uahat)]
+#ss$d[,.(u_par=unique(u_par),uahat=rel[re=="uc_par",val])][,plot(u_par,uahat)]
+##ss$d[,.(u_s=unique(u_s),uahat=rel[re=="x",val])][,plot(u_par,uahat)]
+#
+#tau.hat<-exp(chk$opt$par['log_tau'])
+#estdt<-data.table(
+#  ss$d[,.(set,emprel, ttype,pid,empreltype,lat,lon,tru_l=y-eps)],
+#  ua=as.vector(ss$Zlist$Za %*% rel[re=="ua",val]),
+#  uc_par=as.vector(ss$Zlist$Zc_par %*% rel[re=="uc_par",val]),
+#  uc_sib=as.vector(ss$Zlist$Zc_sib %*% rel[re=="uc_sib",val]),
+#  u_s=as.vector(ss$Zlist$Zc_fam %*% ss$sp$A %*% rel[re=="x",val]/tau.hat)
+#)[,mypred:=ua + uc_par + uc_sib + u_s]
+#
+#
+#unsc<-as.vector(ss$sp$A%*%ss$sp$u)
+#xhat<-rel[re=="x",val]
+#
+#plot(ss$d[,u_s],as.vector(ss$Zlist$Zc_fam%*%ss$sp$A%*%xhat)/tau.hat)
+
+  #strt.fixed<-unname(coef(glm(y~X-1,family=binomial("logit"))))
 
 
 

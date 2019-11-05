@@ -2,7 +2,7 @@
 #define TMB_OBJECTIVE_PTR obj
 
 template<class Type>
-Type objective_function<Type>::operator() ()
+Type lmer_replicate(objective_function<Type>* obj)
 {
   // Data
   DATA_INTEGER( npair_dz );

@@ -7,7 +7,7 @@
 //#include "tiny_ad/tiny_ad.hpp"
 //#include "mask.hpp"
 template<class Type>
-  Type objective_function<Type>::operator() ()
+  Type fam_chol_matern_gmrf_sg_logit(objective_function<Type>* obj)
 {
   using namespace R_inla; //includes SPDE-spesific functions, e.g. Q_spde()
   using namespace density; 

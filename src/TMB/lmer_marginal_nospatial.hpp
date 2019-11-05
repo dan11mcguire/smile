@@ -2,7 +2,7 @@
 #define TMB_OBJECTIVE_PTR obj
 	
 template<class Type>
-Type objective_function<Type>::operator() ()
+Type lmer_marginal_nospatial(objective_function<Type>* obj)
 {  
   using namespace density;
   // Data
