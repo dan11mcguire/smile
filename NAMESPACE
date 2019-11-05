@@ -1,0 +1,7 @@
+useDynLib(msr, .registration=TRUE)
+useDynLib(meta_model)
+exportPattern("^[[:alpha:]]+")
+import(parallel)
+import(data.table)
+import(Matrix)
+importFrom(Rcpp, evalCpp)
