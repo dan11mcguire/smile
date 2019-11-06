@@ -80,9 +80,9 @@ gen_fam_ids<-function(n_trio = 5, n_quad = 5){
     return(id_dt)
 }
 
-sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=.3){
+sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=2,bmax=NULL){
 
-  bmax<-10 
+  if(missing(bmax)) bmax<-10 
   fake.locations = matrix(c(0,0,bmax,bmax, 0, bmax, bmax, 0), 
 			  nrow = 4, byrow = T)
   mesh = inla.mesh.2d(loc = fake.locations, max.edge=c(0.5, 1))
@@ -99,7 +99,7 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=.3){
   set.seed(inla.seed)
   if(use_my_sample){
     cholQu<-Matrix::chol(Qu) 
-    cholQuinv<-chol(chol2inv(cholQu))
+    cholQuinv<-t(chol(chol2inv(cholQu)))  ## triple check this line later (t)?
     u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1]),ncol=1)
   } else {
     u = inla.qsample(n=1, Q=Qu, seed = inla.seed)
@@ -129,7 +129,7 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=.3){
 
 sim_fam_spatial<-function(  n_trio = 5,
                             n_quad = 5,
-                            seed=NULL,
+                            inla.seed=NULL,
                             X=NULL,
                             loc=NULL,
                             Ag = 0.2,
@@ -141,6 +141,7 @@ sim_fam_spatial<-function(  n_trio = 5,
 			    sigma.u=1,
 			    rng=.1,
 			    rescale_to_S=FALSE,
+			    use_my_sample=T,
                             ...){
 
     Za_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
@@ -207,9 +208,9 @@ sim_fam_spatial<-function(  n_trio = 5,
       
      
      
-    if(missing(seed)) seed<-sample.int(10^3,1)
+    if(missing(inla.seed)) inla.seed<-sample.int(10^3,1)
 
-    set.seed(seed) 
+    set.seed(inla.seed) 
 
     E = 1 - Ag - C_par - C_sib - C_fam - S
     id_dt<-gen_fam_ids(n_trio, n_quad) 
@@ -273,9 +274,10 @@ sim_fam_spatial<-function(  n_trio = 5,
 
     #loc<-sim_spatial(n=id_dt[,uniqueN(set)],inla.seed=seed+1L,...) 
     loc<-sim_spatial(n=id_dt[,uniqueN(set)],
-		     inla.seed=seed,
+		     inla.seed=inla.seed,
 		     sigma.u=sigma.u,
-		     rng=rng) 
+		     rng=rng,
+		     use_my_sample=use_my_sample) 
 
     locdt<-data.table(loc$loc)[,set:=1:.N]  
     locdt[,u_s:=as.vector(loc$A%*%loc$u)]
@@ -299,7 +301,7 @@ sim_fam_spatial<-function(  n_trio = 5,
       Zlist=list(Za=Za,Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
       Glist=list(Ga=Ga,Gc_sib=Gc_sib,Gc_par=Gc_par,Gc_fam=Gc_fam),
       Ltlist=list(Lt_Ga=Lt_Ga,Lt_Gc_sib=Lt_Gc_sib,Lt_Gc_par=Lt_Gc_par,Lt_Gc_fam=Lt_Gc_fam),
-      seed=seed,
+      inla.seed=inla.seed,
       Ag=Ag,
       C_par=C_par,
       C_fam=C_fam,
