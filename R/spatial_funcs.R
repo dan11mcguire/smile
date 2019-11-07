@@ -98,8 +98,13 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=2,bmax=NULL){
   
   set.seed(inla.seed)
   if(use_my_sample){
-    cholQu<-Matrix::chol(Qu) 
-    cholQuinv<-t(chol(chol2inv(cholQu)))  ## triple check this line later (t)?
+  #  cholQu<-Matrix::chol(Qu) 
+  #  cholQuinv<-t(chol(chol2inv(cholQu)))  ## triple check this line later (t)?
+  #  u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1],sd=sigma.u),ncol=1)
+    cholQu<-t(Matrix::chol(Qu)) 
+   # all.equal(cholQu%*%t(cholQu), Qu)
+    cholQuinv<-chol(chol2inv(cholQu))
+   # all.equal(cholQuinv%*%t(cholQuinv), solve(Qu))
     u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1]),ncol=1)
   } else {
     u = inla.qsample(n=1, Q=Qu, seed = inla.seed)
