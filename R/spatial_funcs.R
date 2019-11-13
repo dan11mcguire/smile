@@ -131,31 +131,13 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=2,bmax=NULL){
 }
 
 
-
-sim_fam_spatial<-function(  n_trio = 5,
-                            n_quad = 5,
-                            inla.seed=NULL,
-                            X=NULL,
-                            loc=NULL,
-                            Ag = 0.2,
-                            C_par = 0.1,
-                            C_sib = 0.1,
-                            C_fam = 0.1,
-                            S=0.2,
-                            mu = 0,
-			    sigma.u=1,
-			    rng=.1,
-			    rescale_to_S=FALSE,
-			    use_my_sample=T,
+make_matrix_lists<-function(family_data,
                             ...){
 
     Za_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
                  "dz"=diag(2), "",
                  "trio" = diag(3),
                  "quad" = diag(4)) 
-  
-  
-  
   
     Ga_ref<-list("mz"=matrix(1,nrow=1,ncol=1),
                  "dz"=matrix(c(1, .5, .5, 1),ncol=2),
@@ -166,7 +148,6 @@ sim_fam_spatial<-function(  n_trio = 5,
                                  0, 1, .5, .5, 
                                  .5, .5, 1, .5, 
                                  .5, .5, .5, 1),ncol=4, byrow=T))
-  
   
     Zc_sib_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
                      "dz"=matrix(1,nrow=2,ncol=1),
@@ -212,35 +193,51 @@ sim_fam_spatial<-function(  n_trio = 5,
                      "quad"=diag(1))
       
      
-     
-    if(missing(inla.seed)) inla.seed<-sample.int(10^3,1)
 
-    set.seed(inla.seed) 
-
-    E = 1 - Ag - C_par - C_sib - C_fam - S
-    id_dt<-gen_fam_ids(n_trio, n_quad) 
+    id_dt<-copy(family_data)
     id_dt[emprel %in% c(1:2),empreltype:="parent"]
     id_dt[emprel %in% 3,empreltype:="sib"]
-     
+    if(!"cc_group" %in% names(id_dt)){
+      id_dt[,cc_group:=0]
+    }
+    ordervars<-c("cc_group", "ttype", "set", "emprel","pid")
+    ordervars<-ordervars[ordervars %in% names(id_dt)] 
+    setorderv(id_dt, ordervars)
+    #if(!all.equal(id_dt, family_data)){
+    #  print("wha") 
+    #}
     uftype<-id_dt[,unique(ttype)] 
     Za<-Ga<-c()
     Zc_sib<-Gc_sib<-c()
     Zc_par<-Gc_par<-c()
     Zc_fam<-Gc_fam<-c()
 
+    uftype<-id_dt[,.N,by=.(set,ttype,cc_group)][,.N,by=.(ttype,cc_group)] 
 
-    for(ff in 1:length(uftype)){
-
-      Za<-c(Za,rep(list(Za_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-      Zc_sib<-c(Zc_sib,rep(list(Zc_sib_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-      Zc_par<-c(Zc_par,rep(list(Zc_par_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-      Zc_fam<-c(Zc_fam,rep(list(Zc_fam_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-     
-      Ga<-c(Ga,rep(list(Ga_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-      Gc_sib<-c(Gc_sib,rep(list(Gc_sib_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-      Gc_par<-c(Gc_par,rep(list(Gc_par_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-      Gc_fam<-c(Gc_fam,rep(list(Gc_fam_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
-
+    for(ff in 1:uftype[,.N]){
+      ffn<-uftype[ff,N]
+      fftype<-uftype[ff,ttype]
+      Za<-c(Za,rep(list(Za_ref[fftype][[1]]),
+      	     ffn))
+      Zc_sib<-c(Zc_sib,
+      	  rep(list(Zc_sib_ref[fftype][[1]]),
+      	      ffn))
+      Zc_par<-c(Zc_par,
+      	  rep(list(Zc_par_ref[fftype][[1]]),
+      	      ffn))
+      Zc_fam<-c(Zc_fam,
+      	  rep(list(Zc_fam_ref[fftype][[1]]),
+      	      ffn))
+      
+      Ga<-c(Ga,rep(list(Ga_ref[fftype][[1]]),
+      	     ffn))
+      Gc_sib<-c(Gc_sib,rep(list(Gc_sib_ref[fftype][[1]]),
+      		    ffn ))
+      Gc_par<-c(Gc_par,rep(list(Gc_par_ref[fftype][[1]]),
+      		     ffn))
+      Gc_fam<-c(Gc_fam,rep(list(Gc_fam_ref[fftype][[1]]),
+			     ffn))
+      
     }
     
     Za<-.bdiag(Za)
@@ -258,11 +255,63 @@ sim_fam_spatial<-function(  n_trio = 5,
     Lt_Gc_par<-t(Matrix::chol(Gc_par))
     Lt_Gc_fam<-t(Matrix::chol(Gc_fam))
 
-    u_a<-as.vector(Za %*% Lt_Ga %*%matrix(rnorm(ncol(Za), 0, sqrt(Ag)),ncol=1))
-    u_sib<-as.vector(Zc_sib %*% Lt_Gc_sib%*%matrix(rnorm(ncol(Zc_sib), 0, sqrt(C_sib)),ncol=1))
-    u_par<-as.vector(Zc_par %*% Lt_Gc_par%*%matrix(rnorm(ncol(Zc_par), 0, sqrt(C_par)),ncol=1))
-    u_fam<-as.vector(Zc_fam %*% Lt_Gc_fam%*%matrix(rnorm(ncol(Zc_fam), 0, sqrt(C_fam)),ncol=1))
+  return(list(
+      d=id_dt,
+      Zlist=list(Za=Za,Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
+      Glist=list(Ga=Ga,Gc_sib=Gc_sib,Gc_par=Gc_par,Gc_fam=Gc_fam),
+      Ltlist=list(Lt_Ga=Lt_Ga,Lt_Gc_sib=Lt_Gc_sib,Lt_Gc_par=Lt_Gc_par,Lt_Gc_fam=Lt_Gc_fam)
+   )) 
+}
 
+#corr<-function(x, y){
+#  n<-length(x)
+# (sum(x*y) - n*mean(x)*mean(y)) / ((n-1)*sd(x)*sd(y))
+#}
+#mse<-function(x,y){
+#  mean((x-y)^2)
+#}
+#for(i in 1:1000){
+# o[i,]<-c(mse(x)
+#
+#}
+
+sim_fam_spatial<-function(  n_trio = 5,
+                            n_quad = 5,
+			    create_ustar=TRUE,
+                            inla.seed=NULL,
+			    mesh=NULL,
+			    ustar=NULL,
+                            X=NULL,
+                            loc=NULL,
+                            Ag = 0.2,
+                            C_par = 0.1,
+                            C_sib = 0.1,
+                            C_fam = 0.1,
+                            S=0.2,
+                            mu = 0,
+			    sigma.u=1,
+			    rng=.1,
+			    bmax=NULL,
+			    rescale_to_S=FALSE,
+			    use_my_sample=TRUE,
+                            ...){
+
+     
+    if(missing(inla.seed)) inla.seed<-sample.int(10^3,1)
+
+    set.seed(inla.seed) 
+
+    E = 1 - Ag - C_par - C_sib - C_fam - S
+    id_dt<-gen_fam_ids(n_trio, n_quad) 
+    id_dt[emprel %in% c(1:2),empreltype:="parent"]
+    id_dt[emprel %in% 3,empreltype:="sib"]
+    mlists<-make_matrix_lists(id_dt) 
+     
+    u_a<-as.vector(mlists$Zlist$Za %*% mlists$Ltlist$Lt_Ga %*%matrix(rnorm(ncol(mlists$Zlist$Za), 0, sqrt(Ag)),ncol=1))
+    u_sib<-as.vector(mlists$Zlist$Zc_sib %*% mlists$Ltlist$Lt_Gc_sib%*%matrix(rnorm(ncol(mlists$Zlist$Zc_sib), 0, sqrt(C_sib)),ncol=1))
+    u_par<-as.vector(mlists$Zlist$Zc_par %*% mlists$Ltlist$Lt_Gc_par%*%matrix(rnorm(ncol(mlists$Zlist$Zc_par), 0, sqrt(C_par)),ncol=1))
+    u_fam<-as.vector(mlists$Zlist$Zc_fam %*% mlists$Ltlist$Lt_Gc_fam%*%matrix(rnorm(ncol(mlists$Zlist$Zc_fam), 0, sqrt(C_fam)),ncol=1))
+    
     id_dt[,u_a:=u_a]
     id_dt[,u_sib:=u_sib]
     id_dt[,u_par:=u_par]
@@ -276,16 +325,35 @@ sim_fam_spatial<-function(  n_trio = 5,
     } else {
       id_dt[,fixed:=mu]
     } 
+    
+   # if(all(!missing(mesh, ustar))) 
+    if(create_ustar){
+      loc <- sim_spatial(n = id_dt[, uniqueN(set)], inla.seed = inla.seed, 
+        sigma.u = sigma.u, rng = rng, use_my_sample = use_my_sample) 
+      locdt <- data.table(loc$loc)[, `:=`(set, 1:.N)]
+      locdt[, `:=`(u_s, as.vector(loc$A %*% loc$u))] 
 
-    #loc<-sim_spatial(n=id_dt[,uniqueN(set)],inla.seed=seed+1L,...) 
-    loc<-sim_spatial(n=id_dt[,uniqueN(set)],
-		     inla.seed=inla.seed,
-		     sigma.u=sigma.u,
-		     rng=rng,
-		     use_my_sample=use_my_sample) 
+      sp<-list(loc=loc$loc,
+              mesh=loc$mesh,
+              A=loc$A, 
+              u=loc$u,
+              Qu=loc$Qu)
 
-    locdt<-data.table(loc$loc)[,set:=1:.N]  
-    locdt[,u_s:=as.vector(loc$A%*%loc$u)]
+    } else {
+      if(missing(mesh) | missing(ustar)) stop("need to provide the 'mesh' and generated random effect 'ustar' to project at new locations")
+      if(missing(bmax)) bmax<-10
+      n<-id_dt[,uniqueN(set)] 
+      loc <- matrix(runif(2 * n), n) * bmax
+      colnames(loc)<-c("lat", "lon")
+      A <- inla.spde.make.A(mesh, loc)
+      locdt<-data.table(loc)[,set:=1:.N]
+      locdt[,u_s:=as.vector(A %*% as.matrix(ustar,ncol=1))]
+
+      sp<-list(loc=loc,
+               mesh=mesh,
+               A=A, 
+               u=ustar)
+    }
     
     if(rescale_to_S){
       vus<-locdt[,var(u_s)*(.N-1)/.N]
@@ -295,17 +363,13 @@ sim_fam_spatial<-function(  n_trio = 5,
     
     id_dt<-merge(id_dt, locdt, by="set",sort=F)
     id_dt[,y:=fixed + u_a + u_sib + u_par + u_fam + u_s + eps]
-   
-  return(list(
+    
+    return(list(
       d=id_dt,
-      sp=list(loc=loc$loc,
-                  mesh=loc$mesh,
-                  A=loc$A, 
-                  u=loc$u,
-                  Qu=loc$Qu),
-      Zlist=list(Za=Za,Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
-      Glist=list(Ga=Ga,Gc_sib=Gc_sib,Gc_par=Gc_par,Gc_fam=Gc_fam),
-      Ltlist=list(Lt_Ga=Lt_Ga,Lt_Gc_sib=Lt_Gc_sib,Lt_Gc_par=Lt_Gc_par,Lt_Gc_fam=Lt_Gc_fam),
+      sp=sp,
+      Zlist=mlists$Zlist,
+      Glist=mlists$Glist,
+      Ltlist=mlists$Ltlist,
       inla.seed=inla.seed,
       Ag=Ag,
       C_par=C_par,
@@ -315,6 +379,217 @@ sim_fam_spatial<-function(  n_trio = 5,
       E=E
    )) 
 }
+
+    
+
+make_spatial_mats<-function(family_data, sigma.u=1, rng=2,bmax=NULL,mesh=NULL){
+  
+  if(missing(mesh)){
+    if(missing(bmax)) bmax<-10 
+    fake.locations = matrix(c(0,0,bmax,bmax, 0, bmax, bmax, 0), 
+          		  nrow = 4, byrow = T)
+    mesh = inla.mesh.2d(loc = fake.locations, max.edge=c(0.5, 1))
+    #if(mesh$n > n){
+    #  mesh = inla.mesh.2d(loc = fake.locations, max.edge=c(0.5, 1),max.n=n/2)
+    #}
+  } 
+  spde = inla.spde2.pcmatern(mesh, prior.range=c(rng, 0.5), prior.sigma=c(sigma.u,0.5))
+  spdeMatrices = spde$param.inla[c("M0","M1","M2")]
+  Qu = inla.spde.precision(spde, theta=c(log(rng), log(sigma.u)))
+  loc = as.matrix(family_data[,.(lat,lon)][,unique(.SD)])
+  colnames(loc) <- c("lat", "lon")
+  A = inla.spde.make.A(mesh,loc)
+  return(list(
+    loc=loc,
+    Qu=Qu,
+    mesh=mesh, 
+    A=A
+  ))
+}
+
+#sim_fam_spatial<-function(  n_trio = 5,
+#                            n_quad = 5,
+#                            inla.seed=NULL,
+#                            X=NULL,
+#                            loc=NULL,
+#                            Ag = 0.2,
+#                            C_par = 0.1,
+#                            C_sib = 0.1,
+#                            C_fam = 0.1,
+#                            S=0.2,
+#                            mu = 0,
+#			    sigma.u=1,
+#			    rng=.1,
+#			    rescale_to_S=FALSE,
+#			    use_my_sample=T,
+#                            ...){
+#
+#    Za_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
+#                 "dz"=diag(2), "",
+#                 "trio" = diag(3),
+#                 "quad" = diag(4)) 
+#  
+#  
+#  
+#  
+#    Ga_ref<-list("mz"=matrix(1,nrow=1,ncol=1),
+#                 "dz"=matrix(c(1, .5, .5, 1),ncol=2),
+#                 "trio"=matrix(c(1, .5, .5, 
+#                                 .5, 1, .5, 
+#                                 .5, .5, 1),ncol=3),
+#                 "quad"=matrix(c(1, 0, .5, .5, 
+#                                 0, 1, .5, .5, 
+#                                 .5, .5, 1, .5, 
+#                                 .5, .5, .5, 1),ncol=4, byrow=T))
+#  
+#  
+#    Zc_sib_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
+#                     "dz"=matrix(1,nrow=2,ncol=1),
+#                     "trio"=matrix(c(1, 0, 
+#                                     0, 1, 
+#                                     0, 1),nrow=3,byrow=T),
+#                     "quad"=matrix(c(1, 0, 0, 
+#                                     0, 1, 0, 
+#                                     0, 0, 1, 
+#                                     0, 0, 1),nrow=4,byrow=T)
+#                     )
+#  
+#    Gc_sib_ref<-list("mz"=matrix(1),
+#                     "dz"=matrix(1),
+#                     "trio"=diag(2),
+#                     "quad"=diag(3))
+#  
+#    Zc_par_ref<-list("mz"=diag(2),
+#                     "dz"=diag(2),
+#                     "trio"=diag(3),
+#                     "quad"=matrix(c(1, 0, 0, 
+#                                     1, 0, 0, 
+#                                     0, 1, 0, 
+#                                     0, 0, 1),nrow=4,byrow=T)
+#                     )
+#  
+#    Gc_par_ref<-list("mz"=diag(2),
+#                     "dz"=diag(2),
+#                     "trio"=diag(3),
+#                     "quad"=diag(3))
+#  
+#    Zc_fam_ref<-list("mz"=matrix(1, nrow=2),
+#                     "dz"=matrix(1, nrow=2),
+#                     "trio"=matrix(1, nrow=3),
+#                     "quad"=matrix(1, nrow=4)
+#                     )
+#    
+#  
+#  
+#    Gc_fam_ref<-list("mz"=diag(1),
+#                     "dz"=diag(1),
+#                     "trio"=diag(1),
+#                     "quad"=diag(1))
+#      
+#     
+#     
+#    if(missing(inla.seed)) inla.seed<-sample.int(10^3,1)
+#
+#    set.seed(inla.seed) 
+#
+#    E = 1 - Ag - C_par - C_sib - C_fam - S
+#    id_dt<-gen_fam_ids(n_trio, n_quad) 
+#    id_dt[emprel %in% c(1:2),empreltype:="parent"]
+#    id_dt[emprel %in% 3,empreltype:="sib"]
+#     
+#    uftype<-id_dt[,unique(ttype)] 
+#    Za<-Ga<-c()
+#    Zc_sib<-Gc_sib<-c()
+#    Zc_par<-Gc_par<-c()
+#    Zc_fam<-Gc_fam<-c()
+#
+#
+#    for(ff in 1:length(uftype)){
+#
+#      Za<-c(Za,rep(list(Za_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#      Zc_sib<-c(Zc_sib,rep(list(Zc_sib_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#      Zc_par<-c(Zc_par,rep(list(Zc_par_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#      Zc_fam<-c(Zc_fam,rep(list(Zc_fam_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#     
+#      Ga<-c(Ga,rep(list(Ga_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#      Gc_sib<-c(Gc_sib,rep(list(Gc_sib_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#      Gc_par<-c(Gc_par,rep(list(Gc_par_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#      Gc_fam<-c(Gc_fam,rep(list(Gc_fam_ref[uftype[ff]][[1]]),id_dt[ttype==uftype[ff], uniqueN(set)]))
+#
+#    }
+#    
+#    Za<-.bdiag(Za)
+#    Zc_sib<-.bdiag(Zc_sib)
+#    Zc_par<-.bdiag(Zc_par) 
+#    Zc_fam<-.bdiag(Zc_fam)
+#
+#    Ga<-.bdiag(Ga)
+#    Gc_sib<-.bdiag(Gc_sib)
+#    Gc_par<-.bdiag(Gc_par) 
+#    Gc_fam<-.bdiag(Gc_fam)
+#
+#    Lt_Ga<-t(Matrix::chol(Ga))
+#    Lt_Gc_sib<-t(Matrix::chol(Gc_sib))
+#    Lt_Gc_par<-t(Matrix::chol(Gc_par))
+#    Lt_Gc_fam<-t(Matrix::chol(Gc_fam))
+#
+#    u_a<-as.vector(Za %*% Lt_Ga %*%matrix(rnorm(ncol(Za), 0, sqrt(Ag)),ncol=1))
+#    u_sib<-as.vector(Zc_sib %*% Lt_Gc_sib%*%matrix(rnorm(ncol(Zc_sib), 0, sqrt(C_sib)),ncol=1))
+#    u_par<-as.vector(Zc_par %*% Lt_Gc_par%*%matrix(rnorm(ncol(Zc_par), 0, sqrt(C_par)),ncol=1))
+#    u_fam<-as.vector(Zc_fam %*% Lt_Gc_fam%*%matrix(rnorm(ncol(Zc_fam), 0, sqrt(C_fam)),ncol=1))
+#
+#    id_dt[,u_a:=u_a]
+#    id_dt[,u_sib:=u_sib]
+#    id_dt[,u_par:=u_par]
+#    id_dt[,u_fam:=u_fam]
+#    id_dt[,eps:=rnorm(1, 0, sqrt(E)),by=pid]
+#
+#    if(!missing(X)){
+#      beta<-runif(ncol(X))
+#      id_dt[,fixed:=as.vector(X%*%beta)]
+#      id_dt<-cbind(d, X)
+#    } else {
+#      id_dt[,fixed:=mu]
+#    } 
+#
+#    #loc<-sim_spatial(n=id_dt[,uniqueN(set)],inla.seed=seed+1L,...) 
+#    loc<-sim_spatial(n=id_dt[,uniqueN(set)],
+#		     inla.seed=inla.seed,
+#		     sigma.u=sigma.u,
+#		     rng=rng,
+#		     use_my_sample=use_my_sample) 
+#
+#    locdt<-data.table(loc$loc)[,set:=1:.N]  
+#    locdt[,u_s:=as.vector(loc$A%*%loc$u)]
+#    
+#    if(rescale_to_S){
+#      vus<-locdt[,var(u_s)*(.N-1)/.N]
+#      scaleus<-sqrt(S/vus)
+#      locdt[,u_s:=scaleus*u_s]
+#    }
+#    
+#    id_dt<-merge(id_dt, locdt, by="set",sort=F)
+#    id_dt[,y:=fixed + u_a + u_sib + u_par + u_fam + u_s + eps]
+#   
+#  return(list(
+#      d=id_dt,
+#      sp=list(loc=loc$loc,
+#                  mesh=loc$mesh,
+#                  A=loc$A, 
+#                  u=loc$u,
+#                  Qu=loc$Qu),
+#      Zlist=list(Za=Za,Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
+#      Glist=list(Ga=Ga,Gc_sib=Gc_sib,Gc_par=Gc_par,Gc_fam=Gc_fam),
+#      Ltlist=list(Lt_Ga=Lt_Ga,Lt_Gc_sib=Lt_Gc_sib,Lt_Gc_par=Lt_Gc_par,Lt_Gc_fam=Lt_Gc_fam),
+#      inla.seed=inla.seed,
+#      Ag=Ag,
+#      C_par=C_par,
+#      C_fam=C_fam,
+#      C_sib=C_sib,
+#      S=S,
+#      E=E
+#   )) 
+#}
 
 
 
