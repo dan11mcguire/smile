@@ -10,6 +10,8 @@
 #include "fam_chol_matern_gmrf_gfps.hpp"
 #include "fam_chol_matern_gmrf_gps.hpp"
 #include "fam_chol_matern_gmrf_sgfps.hpp"
+#include "fam_chol_matern_gmrf_sgps_us.hpp"
+#include "fam_chol_matern_gmrf_sgfps_us.hpp"
 
 template<class Type>
 Type objective_function<Type>::operator() () {
@@ -32,6 +34,10 @@ Type objective_function<Type>::operator() () {
     return fam_chol_matern_gmrf_gps(this);
   } else if(model == "fam_chol_matern_gmrf_s") {
     return fam_chol_matern_gmrf_s(this);
+  } else if(model == "fam_chol_matern_gmrf_sgps_us") {
+    return fam_chol_matern_gmrf_sgps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgfps_us") {
+    return fam_chol_matern_gmrf_sgfps_us(this);
   } else {
     error("Unknown model.");
   }
