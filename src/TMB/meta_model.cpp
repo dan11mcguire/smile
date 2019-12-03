@@ -10,8 +10,36 @@
 #include "fam_chol_matern_gmrf_gfps.hpp"
 #include "fam_chol_matern_gmrf_gps.hpp"
 #include "fam_chol_matern_gmrf_sgfps.hpp"
-#include "fam_chol_matern_gmrf_sgps_us.hpp"
 #include "fam_chol_matern_gmrf_sgfps_us.hpp"
+#include "fam_chol_matern_gmrf_sgfp_us.hpp"
+#include "fam_chol_matern_gmrf_sgfs_us.hpp"
+#include "fam_chol_matern_gmrf_sgps_us.hpp"
+#include "fam_chol_matern_gmrf_sfps_us.hpp"
+#include "fam_chol_matern_gmrf_gfps_us.hpp"
+#include "fam_chol_matern_gmrf_sgf_us.hpp"
+#include "fam_chol_matern_gmrf_sgp_us.hpp"
+#include "fam_chol_matern_gmrf_sgs_us.hpp"
+#include "fam_chol_matern_gmrf_sfp_us.hpp"
+#include "fam_chol_matern_gmrf_sfs_us.hpp"
+#include "fam_chol_matern_gmrf_sps_us.hpp"
+#include "fam_chol_matern_gmrf_gfp_us.hpp"
+#include "fam_chol_matern_gmrf_gfs_us.hpp"
+#include "fam_chol_matern_gmrf_gps_us.hpp"
+#include "fam_chol_matern_gmrf_fps_us.hpp"
+#include "fam_chol_matern_gmrf_sg_us.hpp"
+#include "fam_chol_matern_gmrf_sf_us.hpp"
+#include "fam_chol_matern_gmrf_sp_us.hpp"
+#include "fam_chol_matern_gmrf_ss_us.hpp"
+#include "fam_chol_matern_gmrf_gf_us.hpp"
+#include "fam_chol_matern_gmrf_gp_us.hpp"
+#include "fam_chol_matern_gmrf_gs_us.hpp"
+#include "fam_chol_matern_gmrf_fp_us.hpp"
+#include "fam_chol_matern_gmrf_fs_us.hpp"
+#include "fam_chol_matern_gmrf_ps_us.hpp"
+#include "fam_chol_matern_gmrf_g_us.hpp"
+#include "fam_chol_matern_gmrf_f_us.hpp"
+#include "fam_chol_matern_gmrf_p_us.hpp"
+#include "fam_chol_matern_gmrf_s_us.hpp"
 
 template<class Type>
 Type objective_function<Type>::operator() () {
@@ -34,10 +62,68 @@ Type objective_function<Type>::operator() () {
     return fam_chol_matern_gmrf_gps(this);
   } else if(model == "fam_chol_matern_gmrf_s") {
     return fam_chol_matern_gmrf_s(this);
-  } else if(model == "fam_chol_matern_gmrf_sgps_us") {
-    return fam_chol_matern_gmrf_sgps_us(this);
   } else if(model == "fam_chol_matern_gmrf_sgfps_us") {
-    return fam_chol_matern_gmrf_sgfps_us(this);
+            return fam_chol_matern_gmrf_sgfps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgfp_us") {
+            return fam_chol_matern_gmrf_sgfp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgfs_us") {
+            return fam_chol_matern_gmrf_sgfs_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgps_us") {
+            return fam_chol_matern_gmrf_sgps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sfps_us") {
+            return fam_chol_matern_gmrf_sfps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gfps_us") {
+            return fam_chol_matern_gmrf_gfps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgf_us") {
+            return fam_chol_matern_gmrf_sgf_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgp_us") {
+            return fam_chol_matern_gmrf_sgp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sgs_us") {
+            return fam_chol_matern_gmrf_sgs_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sfp_us") {
+            return fam_chol_matern_gmrf_sfp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sfs_us") {
+            return fam_chol_matern_gmrf_sfs_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sps_us") {
+            return fam_chol_matern_gmrf_sps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gfp_us") {
+            return fam_chol_matern_gmrf_gfp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gfs_us") {
+            return fam_chol_matern_gmrf_gfs_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gps_us") {
+            return fam_chol_matern_gmrf_gps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_fps_us") {
+            return fam_chol_matern_gmrf_fps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sg_us") {
+            return fam_chol_matern_gmrf_sg_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sf_us") {
+            return fam_chol_matern_gmrf_sf_us(this);
+  } else if(model == "fam_chol_matern_gmrf_sp_us") {
+            return fam_chol_matern_gmrf_sp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_ss_us") {
+            return fam_chol_matern_gmrf_ss_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gf_us") {
+            return fam_chol_matern_gmrf_gf_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gp_us") {
+            return fam_chol_matern_gmrf_gp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_gs_us") {
+            return fam_chol_matern_gmrf_gs_us(this);
+  } else if(model == "fam_chol_matern_gmrf_fp_us") {
+            return fam_chol_matern_gmrf_fp_us(this);
+  } else if(model == "fam_chol_matern_gmrf_fs_us") {
+            return fam_chol_matern_gmrf_fs_us(this);
+  } else if(model == "fam_chol_matern_gmrf_ps_us") {
+            return fam_chol_matern_gmrf_ps_us(this);
+  } else if(model == "fam_chol_matern_gmrf_s_us") {
+            return fam_chol_matern_gmrf_s_us(this);
+  } else if(model == "fam_chol_matern_gmrf_g_us") {
+            return fam_chol_matern_gmrf_g_us(this);
+  } else if(model == "fam_chol_matern_gmrf_f_us") {
+            return fam_chol_matern_gmrf_f_us(this);
+  } else if(model == "fam_chol_matern_gmrf_p_us") {
+            return fam_chol_matern_gmrf_p_us(this);
+  } else if(model == "fam_chol_matern_gmrf_s_us") {
+            return fam_chol_matern_gmrf_s_us(this);
   } else {
     error("Unknown model.");
   }
