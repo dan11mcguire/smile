@@ -13,7 +13,6 @@ template<class Type>
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
   DATA_SPARSE_MATRIX(Zc_par);         //Design matrix for genetic random effects 
-  DATA_SPARSE_MATRIX(Lt_Gc_par);         //Design matrix for genetic random effects 
   //DATA_INTEGER(flag); // if flag=0 the prior for x is calculated
 
   // Parameters
@@ -26,7 +25,6 @@ template<class Type>
   //---------------------------------------
   
   //Transform parameters-------------------
-  vector<Type> Lucpar = Lt_Gc_par * uc_par; 
   Type vc_c_par = pow(exp(log_sdvc_c_par),2);
   Type vc_res = pow(exp(log_sdvc_res),2);
   //------------------------------------------
@@ -39,7 +37,7 @@ template<class Type>
   // Return un-normalized density on request
   //if (flag == 0) return nll;
 
-  vector<Type> uc_par_l = Zc_par*Lucpar ;
+  vector<Type> uc_par_l = Zc_par*uc_par ;
   vector<Type> eta = X*beta + uc_par_l ;
 
   for( int j=0; j< Zc_par.cols(); j++){

@@ -14,7 +14,6 @@ template<class Type>
   DATA_MATRIX(X);         //Design matrix for fixed effects
   DATA_SPARSE_MATRIX(Zc_par);         //Design matrix for genetic random effects 
   DATA_SPARSE_MATRIX(Zs);         //Design matrix for spatial random effects 
-  DATA_SPARSE_MATRIX(Lt_Gc_par);         //Design matrix for genetic random effects 
   DATA_STRUCT(spdeMatrices,spde_t); //Three matrices needed for representing the GMRF, see p. 8 in Lindgren et al. (2011)
   DATA_SPARSE_MATRIX(A);  //Matrix for interpolating points witin triangles 
   //DATA_INTEGER(flag); // if flag=0 the prior for x is calculated
@@ -32,7 +31,6 @@ template<class Type>
   //---------------------------------------
   
   //Transform parameters-------------------
-  vector<Type> Lucpar = Lt_Gc_par * uc_par; 
   Type tau = exp(log_tau);
   Type kappa = exp(log_kappa);
   Type vc_c_par = pow(exp(log_sdvc_c_par),2);
@@ -55,7 +53,7 @@ template<class Type>
   // Return un-normalized density on request
   //if (flag == 0) return nll;
 
-  vector<Type> uc_par_l = Zc_par*Lucpar ;
+  vector<Type> uc_par_l = Zc_par*uc_par ;
   vector<Type> eta = X*beta + delta + uc_par_l ;
 
   for( int j=0; j< Zc_par.cols(); j++){

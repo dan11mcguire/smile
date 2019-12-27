@@ -12,12 +12,9 @@ template<class Type>
   DATA_VECTOR( y );                
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
-  DATA_SPARSE_MATRIX(Za);         //Design matrix for genetic random effects 
   DATA_SPARSE_MATRIX(Zc_fam);         //Design matrix for genetic random effects 
   DATA_SPARSE_MATRIX(Zc_sib);         //Design matrix for genetic random effects 
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
-  DATA_SPARSE_MATRIX(Lt_Gc_fam);         //Design matrix for genetic random effects 
-  DATA_SPARSE_MATRIX(Lt_Gc_sib);         //Design matrix for genetic random effects 
   //DATA_INTEGER(flag); // if flag=0 the prior for x is calculated
 
   // Parameters
@@ -35,8 +32,6 @@ template<class Type>
   
   //Transform parameters-------------------
   vector<Type> Lua = Lt_Ga * ua; 
-  vector<Type> Lucfam = Lt_Gc_fam * uc_fam; 
-  vector<Type> Lucsib = Lt_Gc_sib * uc_sib; 
   Type vc_a = pow(exp(log_sdvc_a),2);
   Type vc_c_fam = pow(exp(log_sdvc_c_fam),2);
   Type vc_c_sib = pow(exp(log_sdvc_c_sib),2);
@@ -51,12 +46,11 @@ template<class Type>
   // Return un-normalized density on request
   //if (flag == 0) return nll;
 
-  vector<Type> ual = Za*Lua ;
-  vector<Type> uc_fam_l = Zc_fam*Lucfam ;
-  vector<Type> uc_sib_l = Zc_sib*Lucsib ;
-  vector<Type> eta = X*beta + ual + uc_fam_l + uc_sib_l;
+  vector<Type> uc_fam_l = Zc_fam*uc_fam ;
+  vector<Type> uc_sib_l = Zc_sib*uc_sib ;
+  vector<Type> eta = X*beta + Lua + uc_fam_l + uc_sib_l;
 
-  for( int j=0; j< Za.cols(); j++){
+  for( int j=0; j< Lua.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
   } 
   for( int j=0; j< Zc_fam.cols(); j++){

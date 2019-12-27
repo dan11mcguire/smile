@@ -12,7 +12,6 @@ template<class Type>
   DATA_VECTOR( y );                
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
-  DATA_SPARSE_MATRIX(Za);         //Design matrix for genetic random effects 
   DATA_SPARSE_MATRIX(Zs);         //Design matrix for spatial random effects 
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
   DATA_STRUCT(spdeMatrices,spde_t); //Three matrices needed for representing the GMRF, see p. 8 in Lindgren et al. (2011)
@@ -55,10 +54,9 @@ template<class Type>
   // Return un-normalized density on request
   //if (flag == 0) return nll;
 
-  vector<Type> ual = Za*Lua ;
-  vector<Type> eta = X*beta + delta + ual ;
+  vector<Type> eta = X*beta + delta + Lua ;
 
-  for( int j=0; j< Za.cols(); j++){
+  for( int j=0; j< Lua.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
   } 
   for( int j=0; j< X.rows(); j++){

@@ -134,10 +134,10 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=2,bmax=NULL){
 make_matrix_lists<-function(family_data,
                             ...){
 
-    Za_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
-                 "dz"=diag(2), "",
-                 "trio" = diag(3),
-                 "quad" = diag(4)) 
+  #  Za_ref<-list("mz"=matrix(1,nrow=2,ncol=1),
+  #               "dz"=diag(2), "",
+  #               "trio" = diag(3),
+  #               "quad" = diag(4)) 
   
     Ga_ref<-list("mz"=matrix(1,nrow=1,ncol=1),
                  "dz"=matrix(c(1, .5, .5, 1),ncol=2),
@@ -160,10 +160,10 @@ make_matrix_lists<-function(family_data,
                                      0, 0, 1),nrow=4,byrow=T)
                      )
   
-    Gc_sib_ref<-list("mz"=matrix(1),
-                     "dz"=matrix(1),
-                     "trio"=diag(2),
-                     "quad"=diag(3))
+  #  Gc_sib_ref<-list("mz"=matrix(1),
+  #                   "dz"=matrix(1),
+  #                   "trio"=diag(2),
+  #                   "quad"=diag(3))
   
     Zc_par_ref<-list("mz"=diag(2),
                      "dz"=diag(2),
@@ -174,10 +174,10 @@ make_matrix_lists<-function(family_data,
                                      0, 0, 1),nrow=4,byrow=T)
                      )
   
-    Gc_par_ref<-list("mz"=diag(2),
-                     "dz"=diag(2),
-                     "trio"=diag(3),
-                     "quad"=diag(3))
+  #  Gc_par_ref<-list("mz"=diag(2),
+  #                   "dz"=diag(2),
+  #                   "trio"=diag(3),
+  #                   "quad"=diag(3))
   
     Zc_fam_ref<-list("mz"=matrix(1, nrow=2),
                      "dz"=matrix(1, nrow=2),
@@ -187,10 +187,10 @@ make_matrix_lists<-function(family_data,
     
   
   
-    Gc_fam_ref<-list("mz"=diag(1),
-                     "dz"=diag(1),
-                     "trio"=diag(1),
-                     "quad"=diag(1))
+  #  Gc_fam_ref<-list("mz"=diag(1),
+  #                   "dz"=diag(1),
+  #                   "trio"=diag(1),
+  #                   "quad"=diag(1))
       
      
 
@@ -207,18 +207,23 @@ make_matrix_lists<-function(family_data,
     #  print("wha") 
     #}
     uftype<-id_dt[,unique(ttype)] 
-    Za<-Ga<-c()
-    Zc_sib<-Gc_sib<-c()
-    Zc_par<-Gc_par<-c()
-    Zc_fam<-Gc_fam<-c()
+   # Za<-Ga<-c()
+   # Zc_sib<-Gc_sib<-c()
+   # Zc_par<-Gc_par<-c()
+   # Zc_fam<-Gc_fam<-c()
 
+    Ga<-c()
+    Zc_sib<-c()
+    Zc_par<-c()
+    Zc_fam<-c()
+    
     uftype<-id_dt[,.N,by=.(set,ttype,cc_group)][,.N,by=.(ttype,cc_group)] 
 
     for(ff in 1:uftype[,.N]){
       ffn<-uftype[ff,N]
       fftype<-uftype[ff,ttype]
-      Za<-c(Za,rep(list(Za_ref[fftype][[1]]),
-      	     ffn))
+     # Za<-c(Za,rep(list(Za_ref[fftype][[1]]),
+     # 	     ffn))
       Zc_sib<-c(Zc_sib,
       	  rep(list(Zc_sib_ref[fftype][[1]]),
       	      ffn))
@@ -231,35 +236,38 @@ make_matrix_lists<-function(family_data,
       
       Ga<-c(Ga,rep(list(Ga_ref[fftype][[1]]),
       	     ffn))
-      Gc_sib<-c(Gc_sib,rep(list(Gc_sib_ref[fftype][[1]]),
-      		    ffn ))
-      Gc_par<-c(Gc_par,rep(list(Gc_par_ref[fftype][[1]]),
-      		     ffn))
-      Gc_fam<-c(Gc_fam,rep(list(Gc_fam_ref[fftype][[1]]),
-			     ffn))
+#      Gc_sib<-c(Gc_sib,rep(list(Gc_sib_ref[fftype][[1]]),
+#      		    ffn ))
+#      Gc_par<-c(Gc_par,rep(list(Gc_par_ref[fftype][[1]]),
+#      		     ffn))
+#      Gc_fam<-c(Gc_fam,rep(list(Gc_fam_ref[fftype][[1]]),
+#			     ffn))
       
     }
     
-    Za<-.bdiag(Za)
+   # Za<-.bdiag(Za)
     Zc_sib<-.bdiag(Zc_sib)
     Zc_par<-.bdiag(Zc_par) 
     Zc_fam<-.bdiag(Zc_fam)
 
     Ga<-.bdiag(Ga)
-    Gc_sib<-.bdiag(Gc_sib)
-    Gc_par<-.bdiag(Gc_par) 
-    Gc_fam<-.bdiag(Gc_fam)
+   # Gc_sib<-.bdiag(Gc_sib)
+   # Gc_par<-.bdiag(Gc_par) 
+   # Gc_fam<-.bdiag(Gc_fam)
 
     Lt_Ga<-t(Matrix::chol(Ga))
-    Lt_Gc_sib<-t(Matrix::chol(Gc_sib))
-    Lt_Gc_par<-t(Matrix::chol(Gc_par))
-    Lt_Gc_fam<-t(Matrix::chol(Gc_fam))
+   # Lt_Gc_sib<-t(Matrix::chol(Gc_sib))
+   # Lt_Gc_par<-t(Matrix::chol(Gc_par))
+   # Lt_Gc_fam<-t(Matrix::chol(Gc_fam))
 
   return(list(
       d=id_dt,
-      Zlist=list(Za=Za,Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
-      Glist=list(Ga=Ga,Gc_sib=Gc_sib,Gc_par=Gc_par,Gc_fam=Gc_fam),
-      Ltlist=list(Lt_Ga=Lt_Ga,Lt_Gc_sib=Lt_Gc_sib,Lt_Gc_par=Lt_Gc_par,Lt_Gc_fam=Lt_Gc_fam)
+      Zlist=list(Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
+      Glist=list(Ga=Ga),
+      Ltlist=list(Lt_Ga=Lt_Ga)
+     # Zlist=list(Za=Za,Zc_sib=Zc_sib,Zc_par=Zc_par,Zc_fam=Zc_fam),
+     # Glist=list(Ga=Ga,Gc_sib=Gc_sib,Gc_par=Gc_par,Gc_fam=Gc_fam),
+     # Ltlist=list(Lt_Ga=Lt_Ga,Lt_Gc_sib=Lt_Gc_sib,Lt_Gc_par=Lt_Gc_par,Lt_Gc_fam=Lt_Gc_fam)
    )) 
 }
 
