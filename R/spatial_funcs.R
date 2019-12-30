@@ -90,31 +90,34 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=2,bmax=NULL){
   #if(mesh$n > n){
   #  mesh = inla.mesh.2d(loc = fake.locations, max.edge=c(0.5, 1),max.n=n/2)
   #}
-   
-  spde = inla.spde2.pcmatern(mesh, prior.range=c(rng, 0.5), prior.sigma=c(sigma.u,0.5))
-  spdeMatrices = spde$param.inla[c("M0","M1","M2")]
-  
-  Qu = inla.spde.precision(spde, theta=c(log(rng), log(sigma.u)))
-  
-  set.seed(inla.seed)
-  if(use_my_sample){
-  #  cholQu<-Matrix::chol(Qu) 
-  #  cholQuinv<-t(chol(chol2inv(cholQu)))  ## triple check this line later (t)?
-  #  u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1],sd=sigma.u),ncol=1)
-    cholQu<-t(Matrix::chol(Qu)) 
-   # all.equal(cholQu%*%t(cholQu), Qu)
-    cholQuinv<-chol(chol2inv(cholQu))
-   # all.equal(cholQuinv%*%t(cholQuinv), solve(Qu))
-    u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1]),ncol=1)
+  if(sigma.u > 0){
+    spde = inla.spde2.pcmatern(mesh, prior.range=c(rng, 0.5), prior.sigma=c(sigma.u,0.5))
+    spdeMatrices = spde$param.inla[c("M0","M1","M2")]
+    
+    Qu = inla.spde.precision(spde, theta=c(log(rng), log(sigma.u)))
+    
+    set.seed(inla.seed)
+    if(use_my_sample){
+    #  cholQu<-Matrix::chol(Qu) 
+    #  cholQuinv<-t(chol(chol2inv(cholQu)))  ## triple check this line later (t)?
+    #  u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1],sd=sigma.u),ncol=1)
+      cholQu<-t(Matrix::chol(Qu)) 
+     # all.equal(cholQu%*%t(cholQu), Qu)
+      cholQuinv<-chol(chol2inv(cholQu))
+     # all.equal(cholQuinv%*%t(cholQuinv), solve(Qu))
+      u<-cholQuinv%*%matrix(rnorm(dim(Qu)[1]),ncol=1)
+    } else {
+      u = inla.qsample(n=1, Q=Qu, seed = inla.seed)
+    }
+      # cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
+      # ma %*% chol2inv(cma)
+    
+    u = u[ ,1]
+    
+    set.seed(inla.seed)
   } else {
-    u = inla.qsample(n=1, Q=Qu, seed = inla.seed)
+    u<-rep(0, n) 
   }
-    # cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
-    # ma %*% chol2inv(cma)
-  
-  u = u[ ,1]
-  
-  set.seed(inla.seed)
   loc = matrix(runif(2*n), n)*bmax # coordinates
   colnames(loc)<-c("lat", "lon")
   A = inla.spde.make.A(mesh,loc)
@@ -333,7 +336,6 @@ sim_fam_spatial<-function(  n_trio = 5,
     } else {
       id_dt[,fixed:=mu]
     } 
-    
    # if(all(!missing(mesh, ustar))) 
     if(create_ustar){
       loc <- sim_spatial(n = id_dt[, uniqueN(set)], inla.seed = inla.seed, 
@@ -368,7 +370,6 @@ sim_fam_spatial<-function(  n_trio = 5,
       scaleus<-sqrt(S/vus)
       locdt[,u_s:=scaleus*u_s]
     }
-    
     id_dt<-merge(id_dt, locdt, by="set",sort=F)
     id_dt[,y:=fixed + u_a + u_sib + u_par + u_fam + u_s + eps]
     

@@ -40,6 +40,21 @@
 #include "fam_chol_matern_gmrf_f_us.hpp"
 #include "fam_chol_matern_gmrf_p_us.hpp"
 #include "fam_chol_matern_gmrf_s_us.hpp"
+#include "fam_chol_car_sgfps_us.hpp"
+#include "fam_chol_car_sgfp_us.hpp"
+#include "fam_chol_car_sgfs_us.hpp"
+#include "fam_chol_car_sgps_us.hpp"
+#include "fam_chol_car_sfps_us.hpp"
+#include "fam_chol_car_sgf_us.hpp"
+#include "fam_chol_car_sgp_us.hpp"
+#include "fam_chol_car_sgs_us.hpp"
+#include "fam_chol_car_sfp_us.hpp"
+#include "fam_chol_car_sfs_us.hpp"
+#include "fam_chol_car_sps_us.hpp"
+#include "fam_chol_car_sg_us.hpp"
+#include "fam_chol_car_sf_us.hpp"
+#include "fam_chol_car_sp_us.hpp"
+#include "fam_chol_car_s_us.hpp"
 
 template<class Type>
 Type objective_function<Type>::operator() () {
@@ -124,6 +139,36 @@ Type objective_function<Type>::operator() () {
             return fam_chol_matern_gmrf_p_us(this);
   } else if(model == "fam_chol_matern_gmrf_s_us") {
             return fam_chol_matern_gmrf_s_us(this);
+  } else if(model == "fam_chol_car_sgfps_us") {
+            return fam_chol_car_sgfps_us(this);
+  } else if(model == "fam_chol_car_sgfp_us") {
+            return fam_chol_car_sgfp_us(this);
+  } else if(model == "fam_chol_car_sgfs_us") {
+            return fam_chol_car_sgfs_us(this);
+  } else if(model == "fam_chol_car_sgps_us") {
+            return fam_chol_car_sgps_us(this);
+  } else if(model == "fam_chol_car_sfps_us") {
+            return fam_chol_car_sfps_us(this);
+  } else if(model == "fam_chol_car_sgf_us") {
+            return fam_chol_car_sgf_us(this);
+  } else if(model == "fam_chol_car_sgp_us") {
+            return fam_chol_car_sgp_us(this);
+  } else if(model == "fam_chol_car_sgs_us") {
+            return fam_chol_car_sgs_us(this);
+  } else if(model == "fam_chol_car_sfp_us") {
+            return fam_chol_car_sfp_us(this);
+  } else if(model == "fam_chol_car_sfs_us") {
+            return fam_chol_car_sfs_us(this);
+  } else if(model == "fam_chol_car_sps_us") {
+            return fam_chol_car_sps_us(this);
+  } else if(model == "fam_chol_car_sg_us") {
+            return fam_chol_car_sg_us(this);
+  } else if(model == "fam_chol_car_sf_us") {
+            return fam_chol_car_sf_us(this);
+  } else if(model == "fam_chol_car_sp_us") {
+            return fam_chol_car_sp_us(this);
+  } else if(model == "fam_chol_car_s_us") {
+            return fam_chol_car_s_us(this);
   } else {
     error("Unknown model.");
   }
