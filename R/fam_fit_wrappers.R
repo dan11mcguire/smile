@@ -19,11 +19,11 @@ summ<-function(report){
 ###################################################################
 ###################################################################
 
-fit_fam<-function(ss, vc_struct, ycol="y",family="gaussian", silent=TRUE){
+fit_fam<-function(ss, vc_struct, ycol="y",family="gaussian", silent=TRUE,tmplt=NULL){
 
   vc_str<-vc_f(vc_struct)
   link<-link_f(family) 
-  tmplt<-paste0(vc_str, link)
+  if(missing(tmplt)) tmplt<-paste0(vc_str, link)
   
   dl<-data_f(ss, tmplt, ycol)
   strt.fixed<-coef(glm(dl$y~dl$X-1,family=gsub("over","",family)))
@@ -101,14 +101,14 @@ data_f<-function(ss,tmplt,ycol){
             fam_chol_matern_gmrf_sgfps =  list(
                           y=y,
                           X=X,
-                          Za=ss$Zlist[["Za"]],
+                       #   Za=ss$Zlist[["Za"]],
                           Zc_fam=ss$Zlist[["Zc_fam"]],
                           Zc_par=ss$Zlist[["Zc_par"]],
                           Zc_sib=ss$Zlist[["Zc_sib"]],
                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                          Lt_Gc_fam=as(ss$Ltlist[["Lt_Gc_fam"]],"dgTMatrix"),
-                          Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                          Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                       #   Lt_Gc_fam=as(ss$Ltlist[["Lt_Gc_fam"]],"dgTMatrix"),
+                       #   Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #   Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
                           spdeMatrices=spdeMatrices,
                           A=A
                           ),
@@ -116,26 +116,26 @@ data_f<-function(ss,tmplt,ycol){
             fam_chol_matern_gmrf_gfps =  list(
                           y=y,
                           X=X,
-                          Za=ss$Zlist[["Za"]],
+                       #   Za=ss$Zlist[["Za"]],
                           Zc_fam=ss$Zlist[["Zc_fam"]],
                           Zc_par=ss$Zlist[["Zc_par"]],
                           Zc_sib=ss$Zlist[["Zc_sib"]],
                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                          Lt_Gc_fam=as(ss$Ltlist[["Lt_Gc_fam"]],"dgTMatrix"),
-                          Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                          Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix")
+                       #   Lt_Gc_fam=as(ss$Ltlist[["Lt_Gc_fam"]],"dgTMatrix"),
+                       #   Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #   Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix")
                           ),
 
             fam_chol_matern_gmrf_sgps =  list(
                           y=y,
                           X=X,
-                          Za=ss$Zlist[["Za"]],
+                       #   Za=ss$Zlist[["Za"]],
                           Zc_fam=ss$Zlist[["Zc_fam"]],
                           Zc_par=ss$Zlist[["Zc_par"]],
                           Zc_sib=ss$Zlist[["Zc_sib"]],
                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                          Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                          Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                       #   Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #   Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
                           spdeMatrices=spdeMatrices,
                           A=A
                           ),
@@ -143,24 +143,24 @@ data_f<-function(ss,tmplt,ycol){
             fam_chol_matern_gmrf_gps =  list(
                           y=y,
                           X=X,
-                          Za=ss$Zlist[["Za"]],
+                       #   Za=ss$Zlist[["Za"]],
                           Zc_par=ss$Zlist[["Zc_par"]],
                           Zc_sib=ss$Zlist[["Zc_sib"]],
                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                          Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                          Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix")
+                       #   Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #   Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix")
                           ),
 
               fam_chol_matern_gmrf_sgps_logit= list(
                             y=y,
                             X=X,
-                            Za=ss$Zlist[["Za"]],
+                       #     Za=ss$Zlist[["Za"]],
                             Zc_fam=ss$Zlist[["Zc_fam"]],
                             Zc_par=ss$Zlist[["Zc_par"]],
                             Zc_sib=ss$Zlist[["Zc_sib"]],
                             Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                            Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                            Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                       #     Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #     Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
                             spdeMatrices=spdeMatrices,
                             A=A
                             ),
@@ -168,13 +168,13 @@ data_f<-function(ss,tmplt,ycol){
                fam_chol_matern_gmrf_sgps_overlogit=list(
                            y=y,
                            X=X,
-                           Za=ss$Zlist[["Za"]],
+                       #    Za=ss$Zlist[["Za"]],
                            Zc_fam=ss$Zlist[["Zc_fam"]],
                            Zc_par=ss$Zlist[["Zc_par"]],
                            Zc_sib=ss$Zlist[["Zc_sib"]],
                            Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                           Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                           Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                       #    Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #    Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
                            spdeMatrices=spdeMatrices,
                            A=A
                            ),
@@ -182,13 +182,13 @@ data_f<-function(ss,tmplt,ycol){
                fam_chol_matern_gmrf_sgps_overpois=list(
                           y=y,
                           X=X,
-                          Za=ss$Zlist[["Za"]],
+                       #   Za=ss$Zlist[["Za"]],
                           Zc_fam=ss$Zlist[["Zc_fam"]],
                           Zc_par=ss$Zlist[["Zc_par"]],
                           Zc_sib=ss$Zlist[["Zc_sib"]],
                           Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-                          Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-                          Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+                       #   Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+                       #   Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
                           spdeMatrices=spdeMatrices,
                           A=A
                           )
@@ -205,7 +205,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                             log_sdvc_c_par = log(sqrt(0.1)),
                             log_sdvc_c_sib = 2,
                             log_sdvc_res   = log(sqrt(0.1)),
-                            ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                            ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                             uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
@@ -221,7 +221,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                             log_sdvc_c_par = log(sqrt(0.1)),
                             log_sdvc_c_sib = 2,
                             log_sdvc_res   = log(sqrt(0.1)),
-                            ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                            ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                             uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
@@ -233,7 +233,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                             log_sdvc_c_par = log(sqrt(0.1)),
                             log_sdvc_c_sib = 2,
                             log_sdvc_res   = log(sqrt(0.1)),
-                            ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                            ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
                             beta           = strt.fixed,
@@ -247,7 +247,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                             log_sdvc_c_par = log(sqrt(0.1)),
                             log_sdvc_c_sib = 2,
                             log_sdvc_res   = log(sqrt(0.1)),
-                            ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                            ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                             uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
                             uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                             uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
@@ -259,7 +259,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                                   log_sdvc_c_par = log(sqrt(0.2)),
                                   log_sdvc_c_sib = log(sqrt(0.2)),
                                   #log_sdvc_res   = log(sqrt(0.2)),
-                                  ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                                  ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                                   uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                                   uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
                                   #res            = rep(0.0, nrow(ss$Zlist$Zc_sib)),
@@ -274,7 +274,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                                   log_sdvc_c_par = log(sqrt(.1)),
                                   log_sdvc_c_sib = log(sqrt(.2)),
                                   log_sdvc_res   = log(sqrt(.3)),
-                                  ua             = runif(ncol(ss$Zlist$Za)),    #rep(0.0, ncol(ss$Zlist$Za)),
+                                  ua             = runif(ncol(ss$Ltlist$Lt_Ga)),    #rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                                   uc_par         = runif(ncol(ss$Zlist$Zc_par)),#rep(0.0, ncol(ss$Zlist$Zc_par)),
                                   uc_sib         = runif(ncol(ss$Zlist$Zc_sib)),#rep(0.0, ncol(ss$Zlist$Zc_sib)),
                                   res            = runif(nrow(ss$Zlist$Zc_sib)),#rep(0.0, nrow(ss$Zlist$Zc_sib)),
@@ -289,7 +289,7 @@ param_f<-function(ss, data, tmplt,strt.fixed){
                                   log_sdvc_c_par = log(sqrt(0.1*500)),
                                   log_sdvc_c_sib = log(sqrt(0.1*500)),
                                   log_sdvc_res   = log(sqrt(0.8*500)),
-                                  ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                                  ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                                   uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                                   uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
                                   res            = rep(0.0, nrow(ss$Zlist$Zc_sib)),
@@ -355,13 +355,13 @@ fit_fam_sgps_logit<-function(ss,ycol="yb"){
   data<-list(
              y=y,
              X=X,
-             Za=ss$Zlist[["Za"]],
+             #Za=ss$Zlist[["Za"]],
              Zc_fam=ss$Zlist[["Zc_fam"]],
              Zc_par=ss$Zlist[["Zc_par"]],
              Zc_sib=ss$Zlist[["Zc_sib"]],
              Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-             Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-             Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+             #Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+             #Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
              spdeMatrices=spdeMatrices,
              A=A
              )
@@ -370,7 +370,7 @@ fit_fam_sgps_logit<-function(ss,ycol="yb"){
                      log_sdvc_c_par = log(sqrt(0.2)),
                      log_sdvc_c_sib = log(sqrt(0.2)),
                      #log_sdvc_res   = log(sqrt(0.2)),
-                     ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                     ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                      uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                      uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
                      #res            = rep(0.0, nrow(ss$Zlist$Zc_sib)),
@@ -414,13 +414,13 @@ fit_fam_sgps_overlogit<-function(ss,ycol="yb",silent=T){
   data<-list(
              y=y,
              X=X,
-             Za=ss$Zlist[["Za"]],
+#             Za=ss$Zlist[["Za"]],
              Zc_fam=ss$Zlist[["Zc_fam"]],
              Zc_par=ss$Zlist[["Zc_par"]],
              Zc_sib=ss$Zlist[["Zc_sib"]],
              Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-             Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-             Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+#             Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+#             Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
              spdeMatrices=spdeMatrices,
              A=A
              )
@@ -430,7 +430,7 @@ fit_fam_sgps_overlogit<-function(ss,ycol="yb",silent=T){
                      log_sdvc_c_par = log(sqrt(.1)),
                      log_sdvc_c_sib = log(sqrt(.2)),
                      log_sdvc_res   = log(sqrt(.3)),
-                     ua             = runif(ncol(ss$Zlist$Za)),    #rep(0.0, ncol(ss$Zlist$Za)),
+                     ua             = runif(ncol(ss$Ltlist$Lt_Ga)),    #rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                      uc_par         = runif(ncol(ss$Zlist$Zc_par)),#rep(0.0, ncol(ss$Zlist$Zc_par)),
                      uc_sib         = runif(ncol(ss$Zlist$Zc_sib)),#rep(0.0, ncol(ss$Zlist$Zc_sib)),
                      res            = runif(nrow(ss$Zlist$Zc_sib)),#rep(0.0, nrow(ss$Zlist$Zc_sib)),
@@ -477,13 +477,13 @@ fit_fam_sgps_pois<-function(ss,ycol="yb"){
   data<-list(
              y=y,
              X=X,
-             Za=ss$Zlist[["Za"]],
+          #   Za=ss$Zlist[["Za"]],
              Zc_fam=ss$Zlist[["Zc_fam"]],
              Zc_par=ss$Zlist[["Zc_par"]],
              Zc_sib=ss$Zlist[["Zc_sib"]],
              Lt_Ga=as(ss$Ltlist[["Lt_Ga"]],"dgTMatrix"),
-             Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
-             Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
+          #   Lt_Gc_par=as(ss$Ltlist[["Lt_Gc_par"]],"dgTMatrix"),
+          #   Lt_Gc_sib=as(ss$Ltlist[["Lt_Gc_sib"]],"dgTMatrix"),
              spdeMatrices=spdeMatrices,
              A=A
              )
@@ -492,7 +492,7 @@ fit_fam_sgps_pois<-function(ss,ycol="yb"){
                      log_sdvc_c_par = log(sqrt(0.2)),
                      log_sdvc_c_sib = log(sqrt(0.2)),
                      log_sdvc_res   = log(sqrt(0.2)),
-                     ua             = rep(0.0, ncol(ss$Zlist$Za)),
+                     ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
                      uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
                      uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
                      res            = rep(0.0, nrow(ss$Zlist$Zc_sib)),
@@ -560,7 +560,7 @@ fit_fam_sgps_pois<-function(ss,ycol="yb"){
 #                     log_sdvc_c_par = log(sqrt(0.1)),
 #                     log_sdvc_c_sib = 2,
 #                     log_sdvc_res   = log(sqrt(0.1)),
-#                     ua             = rep(0.0, ncol(ss$Zlist$Za)),
+#                     ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
 #                     uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
 #                     uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
 #                     uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
@@ -610,7 +610,7 @@ fit_fam_sgps_pois<-function(ss,ycol="yb"){
 #                     log_sdvc_c_par = log(sqrt(0.1)),
 #                     log_sdvc_c_sib = 2,
 #                     log_sdvc_res   = log(sqrt(0.1)),
-#                     ua             = rep(0.0, ncol(ss$Zlist$Za)),
+#                     ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
 #                     uc_fam         = rep(0.0, ncol(ss$Zlist$Zc_fam)),
 #                     uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
 #                     uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
@@ -664,7 +664,7 @@ fit_fam_sgps_pois<-function(ss,ycol="yb"){
 #                     log_sdvc_c_par = log(sqrt(0.1)),
 #                     log_sdvc_c_sib = log(sqrt(0.1)),
 #                     log_sdvc_res   = log(sqrt(0.3)),
-#                     ua             = rep(0.0, ncol(ss$Zlist$Za)),
+#                     ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
 #                     uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
 #                     uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
 #                     beta           = rep(0, ncol(X)),
@@ -712,7 +712,7 @@ fit_fam_sgps_pois<-function(ss,ycol="yb"){
 #                     log_sdvc_c_par = log(sqrt(0.1)),
 #                     log_sdvc_c_sib = log(sqrt(0.1)),
 #                     log_sdvc_res   = log(sqrt(0.3)),
-#                     ua             = rep(0.0, ncol(ss$Zlist$Za)),
+#                     ua             = rep(0.0, ncol(ss$Ltlist$Lt_Ga)),
 #                     uc_par         = rep(0.0, ncol(ss$Zlist$Zc_par)),
 #                     uc_sib         = rep(0.0, ncol(ss$Zlist$Zc_sib)),
 #                     beta           = rep(0, ncol(X))

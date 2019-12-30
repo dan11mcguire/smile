@@ -116,7 +116,8 @@ sim_spatial<-function(n,inla.seed ,use_my_sample=T, sigma.u=1, rng=2,bmax=NULL){
     
     set.seed(inla.seed)
   } else {
-    u<-rep(0, n) 
+    u<-rep(0, mesh$n) 
+    Qu<-diag(mesh$n)
   }
   loc = matrix(runif(2*n), n)*bmax # coordinates
   colnames(loc)<-c("lat", "lon")
@@ -318,10 +319,10 @@ sim_fam_spatial<-function(  n_trio = 5,
     id_dt[emprel %in% 3,empreltype:="sib"]
     mlists<-make_matrix_lists(id_dt) 
      
-    u_a<-as.vector(mlists$Zlist$Za %*% mlists$Ltlist$Lt_Ga %*%matrix(rnorm(ncol(mlists$Zlist$Za), 0, sqrt(Ag)),ncol=1))
-    u_sib<-as.vector(mlists$Zlist$Zc_sib %*% mlists$Ltlist$Lt_Gc_sib%*%matrix(rnorm(ncol(mlists$Zlist$Zc_sib), 0, sqrt(C_sib)),ncol=1))
-    u_par<-as.vector(mlists$Zlist$Zc_par %*% mlists$Ltlist$Lt_Gc_par%*%matrix(rnorm(ncol(mlists$Zlist$Zc_par), 0, sqrt(C_par)),ncol=1))
-    u_fam<-as.vector(mlists$Zlist$Zc_fam %*% mlists$Ltlist$Lt_Gc_fam%*%matrix(rnorm(ncol(mlists$Zlist$Zc_fam), 0, sqrt(C_fam)),ncol=1))
+    u_a<-as.vector(mlists$Ltlist$Lt_Ga %*%matrix(rnorm(ncol(mlists$Ltlist$Lt_Ga), 0, sqrt(Ag)),ncol=1))
+    u_sib<-as.vector(mlists$Zlist$Zc_sib %*% matrix(rnorm(ncol(mlists$Zlist$Zc_sib), 0, sqrt(C_sib)),ncol=1))
+    u_par<-as.vector(mlists$Zlist$Zc_par %*% matrix(rnorm(ncol(mlists$Zlist$Zc_par), 0, sqrt(C_par)),ncol=1))
+    u_fam<-as.vector(mlists$Zlist$Zc_fam %*% matrix(rnorm(ncol(mlists$Zlist$Zc_fam), 0, sqrt(C_fam)),ncol=1))
     
     id_dt[,u_a:=u_a]
     id_dt[,u_sib:=u_sib]
