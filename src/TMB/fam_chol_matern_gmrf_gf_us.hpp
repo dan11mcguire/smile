@@ -45,7 +45,7 @@ template<class Type>
   vector<Type> uc_fam_l = Zc_fam*uc_fam ;
   vector<Type> eta = X*beta + Lua + uc_fam_l ;
 
-  for( int j=0; j< Lua.cols(); j++){
+  for( int j=0; j< Lt_Ga.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
   } 
   for( int j=0; j< Zc_fam.cols(); j++){

@@ -1,8 +1,8 @@
 Package: msr
 Type: Package
 Title: What the Package Does in One 'Title Case' Line
-Version: 1.8
-Date: 2019-03-21
+Version: 1.10
+Date: 2020-02-05
 Author: Your Name
 Maintainer: Your Name <your@email.com>
 Description: One paragraph description of what the package does as one

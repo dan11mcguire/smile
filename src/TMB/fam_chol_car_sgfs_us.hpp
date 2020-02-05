@@ -61,7 +61,7 @@ template<class Type>
   for( int j=0; j< Zs.cols(); j++){
     nll -= dnorm( us(j) , Type(0.0), sd_s/sqrt(1-rhocar*wj(j)), true );
   } 
-  for( int j=0; j< Lua.cols(); j++){
+  for( int j=0; j< Lt_Ga.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
   } 
   for( int j=0; j< Zc_fam.cols(); j++){

@@ -40,7 +40,7 @@ template<class Type>
 
   vector<Type> eta = X*beta + Lua ;
 
-  for( int j=0; j< Lua.cols(); j++){
+  for( int j=0; j< Lt_Ga.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
   } 
   for( int j=0; j< X.rows(); j++){

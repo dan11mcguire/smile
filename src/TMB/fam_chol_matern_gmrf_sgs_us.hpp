@@ -12,6 +12,7 @@ template<class Type>
   DATA_VECTOR( y );                
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
+  DATA_SCALAR(maxkap);
   DATA_SPARSE_MATRIX(Zc_sib);         //Design matrix for genetic random effects 
   DATA_SPARSE_MATRIX(Zs);         //Design matrix for spatial random effects 
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
@@ -36,7 +37,7 @@ template<class Type>
   //Transform parameters-------------------
   vector<Type> Lua = Lt_Ga * ua; 
   Type tau = exp(log_tau);
-  Type kappa = exp(log_kappa);
+  Type kappa = exp(log_kappa)/(1+exp(log_kappa))*maxkap;
   Type vc_a = pow(exp(log_sdvc_a),2);
   Type vc_c_sib = pow(exp(log_sdvc_c_sib),2);
   Type vc_res = pow(exp(log_sdvc_res),2);
@@ -61,7 +62,7 @@ template<class Type>
   vector<Type> uc_sib_l = Zc_sib*uc_sib ;
   vector<Type> eta = X*beta + delta + Lua + uc_sib_l;
 
-  for( int j=0; j< Lua.cols(); j++){
+  for( int j=0; j< Lt_Ga.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
   } 
   for( int j=0; j< Zc_sib.cols(); j++){
@@ -75,7 +76,7 @@ template<class Type>
   
   //Report what we want to report----------------
   Type range = sqrt(8)/kappa;   //Distance at which correlation has dropped to 0.1, see p. 4 in Lindgren et al. (2011);
-  Type vc_s = pow(exp(.5*log(Type(1.0)/(Type(4.0)*M_PI)) - log_kappa - log_tau),2);
+  Type vc_s = pow(exp(.5*log(Type(1.0)/(Type(4.0)*M_PI)) - log(kappa) - log_tau),2);
   ADREPORT(range);
   ADREPORT(vc_a);
   ADREPORT(vc_c_sib);
