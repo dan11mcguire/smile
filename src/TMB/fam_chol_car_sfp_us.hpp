@@ -12,7 +12,7 @@ template<class Type>
   DATA_VECTOR( y );                
   //Load data and parameters----------------
   DATA_MATRIX(X);         // Design matrix for fixed effects
-  DATA_MATRIX(Vw);        // eigenvectors of neighborhood (Weight) matrix W
+  DATA_SPARSE_MATRIX(Vw);        // eigenvectors of neighborhood (Weight) matrix W
   DATA_VECTOR(wj);        // eigenvalues of neighborhood (Weight) matrix W
   DATA_SCALAR(minrho);    // 1/min(eigenvalue)
   DATA_SCALAR(maxrho);    // 1/max(eigenvalue)
