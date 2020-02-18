@@ -55,6 +55,7 @@
 #include "fam_chol_car_sf_us.hpp"
 #include "fam_chol_car_sp_us.hpp"
 #include "fam_chol_car_s_us.hpp"
+#include "alpha1scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
 
 template<class Type>
 Type objective_function<Type>::operator() () {
@@ -169,6 +170,8 @@ Type objective_function<Type>::operator() () {
             return fam_chol_car_sp_us(this);
   } else if(model == "fam_chol_car_s_us") {
             return fam_chol_car_s_us(this);
+  } else if(model == "alpha1scrtch_fam_chol_matern_gmrf_sgps_us") {
+            return alpha1scrtch_fam_chol_matern_gmrf_sgps_us(this);
   } else {
     error("Unknown model.");
   }

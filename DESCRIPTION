@@ -1,12 +1,11 @@
 Package: msr
 Type: Package
 Title: What the Package Does in One 'Title Case' Line
-Version: 1.11
+Version: 1.12
 Date: 2020-02-05
 Author: Your Name
 Maintainer: Your Name <your@email.com>
-Description: One paragraph description of what the package does as one
-        or more full sentences.
+Description: experimental template.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.0), data.table
 LinkingTo: Rcpp, RcppEigen, TMB
