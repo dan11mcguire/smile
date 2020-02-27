@@ -1,32 +1,32 @@
 #undef TMB_OBJECTIVE_PTR
 #define TMB_OBJECTIVE_PTR obj
 
-namespace R_inla_generalized {
-using namespace Eigen;
-using namespace tmbutils;
-using namespace R_inla;
+//namespace R_inla_generalized {
+//using namespace Eigen;
+//using namespace tmbutils;
+//using namespace R_inla;
+//
+//template<class Type>
+//  SparseMatrix<Type> Q_spde_generalized(spde_t<Type> spde, Type kappa, int alpha=2){
+//  Type kappa_pow2 = kappa*kappa;
+//  Type kappa_pow4 = kappa_pow2*kappa_pow2;
+//  	
+//  if( alpha==1 ) return kappa_pow2*spde.M0 + spde.M1;
+//  if( alpha==2 ) return kappa_pow4*spde.M0 + Type(2.0)*kappa_pow2*spde.M1 + spde.M2;
+//}
+//}
 
 template<class Type>
-  SparseMatrix<Type> Q_spde_generalized(spde_t<Type> spde, Type kappa, int alpha=2){
-  Type kappa_pow2 = kappa*kappa;
-  Type kappa_pow4 = kappa_pow2*kappa_pow2;
-  	
-  if( alpha==1 ) return kappa_pow2*spde.M0 + spde.M1;
-  if( alpha==2 ) return kappa_pow4*spde.M0 + Type(2.0)*kappa_pow2*spde.M1 + spde.M2;
-}
-}
-
-template<class Type>
-  Type alpha1scrtch_fam_chol_matern_gmrf_sgps_us(objective_function<Type>* obj)
+  Type ratescrtch_fam_chol_matern_gmrf_sgps_us(objective_function<Type>* obj)
 {
   using namespace R_inla; //includes SPDE-spesific functions, e.g. Q_spde()
-  using namespace R_inla_generalized; //includes SPDE-spesific functions, e.g. Q_spde()
+//  using namespace R_inla_generalized; //includes SPDE-spesific functions, e.g. Q_spde()
   using namespace density; 
   using namespace Eigen; //Needed for utilisation of sparse structures
 
   // Data
   DATA_VECTOR( y );                
-  DATA_VECTOR( cens );                
+  DATA_VECTOR( offset );                
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
   DATA_SCALAR(maxkap);
@@ -40,11 +40,11 @@ template<class Type>
 
   // Parameters
   //PARAMETER( mu );
-  PARAMETER( shp );
+  PARAMETER( log_phi );
   PARAMETER( log_sdvc_a );
   PARAMETER( log_sdvc_c_par );
   PARAMETER( log_sdvc_c_sib );
-  PARAMETER( log_sdvc_res );
+//  PARAMETER( log_sdvc_res );
   PARAMETER_VECTOR( ua );
   PARAMETER_VECTOR( uc_par );
   PARAMETER_VECTOR( uc_sib );
@@ -62,7 +62,8 @@ template<class Type>
   Type vc_a = pow(exp(log_sdvc_a),2);
   Type vc_c_par = pow(exp(log_sdvc_c_par),2);
   Type vc_c_sib = pow(exp(log_sdvc_c_sib),2);
-  Type vc_res = pow(exp(log_sdvc_res),2);
+//  Type vc_res = pow(exp(log_sdvc_res),2);
+  Type phi = exp(log_phi);
   //------------------------------------------
 
   // Spatial interpolation
@@ -70,7 +71,7 @@ template<class Type>
   vector<Type> delta = (AA*x)/tau;
   
   //Construct sparce precision matrix for latent field---
-  SparseMatrix<Type> Q = Q_spde_generalized(spdeMatrices,kappa);
+  SparseMatrix<Type> Q = Q_spde(spdeMatrices,kappa);
   //---------------------------------------------
   
   //Calculates nll-------------------------------
@@ -84,6 +85,7 @@ template<class Type>
   vector<Type> uc_par_l = Zc_par*uc_par ;
   vector<Type> uc_sib_l = Zc_sib*uc_sib ;
   vector<Type> eta = X*beta + delta + Lua + uc_par_l + uc_sib_l;
+  vector<Type> muhat = exp(eta + offset);
 
   for( int j=0; j< Lt_Ga.cols(); j++){
     nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
@@ -94,15 +96,16 @@ template<class Type>
   for( int j=0; j< Zc_sib.cols(); j++){
     nll -= dnorm( uc_sib(j) , Type(0.0), exp(log_sdvc_c_sib), true );
   } 
-  for( int j=0; j< X.rows(); j++){
-    nll -= cens(j) * -log(1 + pow(eta(j)*y(j),shp)) + //(S(y)
-	    (eta(j)*shp)*pow(eta(j)*y(j),shp-1.0) - log(1 + pow(eta(j)*y(j),shp)) ;//h(y)
-  } 
+  //for( int j=0; j< X.rows(); j++){
+  //  nll -= cens(j) * -log(1 + pow(eta(j)*y(j),shp)) + //(S(y)
+  //          (eta(j)*shp)*pow(eta(j)*y(j),shp-1.0) - log(1 + pow(eta(j)*y(j),shp)) ;//h(y)
+  //} 
 
   for( int j=0; j< X.rows(); j++){
-    nll -=  -log(1 + pow(eta(j)*y(j),shp)) + //(S(y)
-	    cens(j) * (eta(j)*shp)*pow(eta(j)*y(j),shp-1.0) - 
-	    cens(j)* log(1 + pow(eta(j)*y(j),shp)) ;//h(y)
+    nll -=  dnbinom2(y(j),
+		    muhat(j),
+		    muhat(j) + pow(muhat(j),2)*phi,
+		    true) ;//h(y)
   } 
   //---------------------------------------------
   
@@ -113,9 +116,9 @@ template<class Type>
   ADREPORT(vc_a);
   ADREPORT(vc_c_par);
   ADREPORT(vc_c_sib);
-  ADREPORT(vc_res);
+//  ADREPORT(vc_res);
   ADREPORT(vc_s);
-  ADREPORT(shp);
+  ADREPORT(phi);
 
   //---------------------------------------------
   
