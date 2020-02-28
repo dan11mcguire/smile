@@ -75,7 +75,7 @@ template<class Type>
   // Spatial interpolation
   //matrix<Type> AA = Zs*A; 
   //vector<Type> delta = (AA*x)/tau;
-  vector<Type> delta = (Zs*x)/sqrt(vc_s);
+  vector<Type> delta = (Zs*x)*sqrt(vc_s);
   
   //Construct sparce precision matrix for latent field---
   SparseMatrix<Type> Q = Q_car(car_mats,rho);
