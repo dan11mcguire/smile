@@ -19,9 +19,9 @@ struct car_gmrf_t{
 };
 
 template<class Type> 
-  SparseMatrix<Type> Q_car(car_gmrf_t<Type> car_mats,Type rho, Type s2_s){
+  SparseMatrix<Type> Q_car(car_gmrf_t<Type> car_mats,Type rho){
 	  //See Proposition 1 J.M.VerHoefetal./SpatialStatistics25(2018)68–8
-  return Type(1.0)/s2_s*car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5; 
+  return car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5; 
   }
 };
 
@@ -75,10 +75,10 @@ template<class Type>
   // Spatial interpolation
   //matrix<Type> AA = Zs*A; 
   //vector<Type> delta = (AA*x)/tau;
-  vector<Type> delta = Zs*x;
+  vector<Type> delta = (Zs*x)/sqrt(vc_s);
   
   //Construct sparce precision matrix for latent field---
-  SparseMatrix<Type> Q = Q_car(car_mats,rho,vc_s);
+  SparseMatrix<Type> Q = Q_car(car_mats,rho);
   //---------------------------------------------
   
   //Calculates nll-------------------------------
