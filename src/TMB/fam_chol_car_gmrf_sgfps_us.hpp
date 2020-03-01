@@ -45,7 +45,6 @@ template<class Type>
   DATA_SPARSE_MATRIX(Zs);         //Design matrix for spatial random effects 
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
   DATA_STRUCT(car_mats,car_gmrf_t); //Three matrices needed for representing the GMRF, see p. 8 in Lindgren et al. (2011)
-  DATA_SPARSE_MATRIX(A);  //Matrix for interpolating points witin triangles 
   //DATA_INTEGER(flag); // if flag=0 the prior for x is calculated
 
   // Parameters
@@ -70,6 +69,7 @@ template<class Type>
   vector<Type> Lua = Lt_Ga * ua; 
   Type rho = exp(logit_rho)/(1+exp(logit_rho))*rhomax;
   Type vc_a = pow(exp(log_sdvc_a),2);
+  Type vc_s = pow(exp(log_sdvc_s),2);
   Type vc_c_fam = pow(exp(log_sdvc_c_fam),2);
   Type vc_c_par = pow(exp(log_sdvc_c_par),2);
   Type vc_c_sib = pow(exp(log_sdvc_c_sib),2);

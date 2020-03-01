@@ -1,30 +1,30 @@
 #undef TMB_OBJECTIVE_PTR
 #define TMB_OBJECTIVE_PTR obj
 
-namespace car_gmrf {
-using namespace Eigen;
-using namespace tmbutils;
-
-
-template<class Type>
-struct car_gmrf_t{  
-  SparseMatrix<Type> diagI;        // G0 eqn (10) in Lindgren 
-  SparseMatrix<Type> N;        // G1 eqn (10) in Lindgren 
-  SparseMatrix<Type> Mpm5;        // G2 eqn (10) in Lindgren 
-  car_gmrf_t(SEXP x){  /* x = List passed from R */
-  diagI = asSparseMatrix<Type>(getListElement(x,"diagI"));
-  N = asSparseMatrix<Type>(getListElement(x,"N"));
-  Mpm5 = asSparseMatrix<Type>(getListElement(x,"Mpm5"));
-}
-};
-
-template<class Type> 
-  SparseMatrix<Type> Q_car(car_gmrf_t<Type> car_mats,Type rho, Type s2_s){
-	  //See Proposition 1 J.M.VerHoefetal./SpatialStatistics25(2018)68–8
-    Type tau2=Type(1.0) / s2_s;
-  return tau2*(car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5); 
-  }
-};
+//namespace car_gmrf {
+//using namespace Eigen;
+//using namespace tmbutils;
+//
+//
+//template<class Type>
+//struct car_gmrf_t{  
+//  SparseMatrix<Type> diagI;        // G0 eqn (10) in Lindgren 
+//  SparseMatrix<Type> N;        // G1 eqn (10) in Lindgren 
+//  SparseMatrix<Type> Mpm5;        // G2 eqn (10) in Lindgren 
+//  car_gmrf_t(SEXP x){  /* x = List passed from R */
+//  diagI = asSparseMatrix<Type>(getListElement(x,"diagI"));
+//  N = asSparseMatrix<Type>(getListElement(x,"N"));
+//  Mpm5 = asSparseMatrix<Type>(getListElement(x,"Mpm5"));
+//}
+//};
+//
+//template<class Type> 
+//  SparseMatrix<Type> Q_car(car_gmrf_t<Type> car_mats,Type rho, Type s2_s){
+//	  //See Proposition 1 J.M.VerHoefetal./SpatialStatistics25(2018)68–8
+//    Type tau2=Type(1.0) / s2_s;
+//  return tau2*(car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5); 
+//  }
+//};
 
 
 template<class Type>
@@ -43,7 +43,6 @@ template<class Type>
   DATA_SPARSE_MATRIX(Zs);         //Design matrix for spatial random effects 
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
   DATA_STRUCT(car_mats,car_gmrf_t); //Three matrices needed for representing the GMRF, see p. 8 in Lindgren et al. (2011)
-  DATA_SPARSE_MATRIX(A);  //Matrix for interpolating points witin triangles 
   //DATA_INTEGER(flag); // if flag=0 the prior for x is calculated
 
   // Parameters
@@ -64,6 +63,7 @@ template<class Type>
   vector<Type> Lua = Lt_Ga * ua; 
   Type rho = exp(logit_rho)/(1+exp(logit_rho))*rhomax;
   Type vc_a = pow(exp(log_sdvc_a),2);
+  Type vc_s = pow(exp(log_sdvc_s),2);
   Type vc_c_fam = pow(exp(log_sdvc_c_fam),2);
   Type vc_res = pow(exp(log_sdvc_res),2);
   //------------------------------------------
