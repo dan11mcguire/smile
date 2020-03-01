@@ -55,6 +55,23 @@
 #include "fam_chol_car_sf_us.hpp"
 #include "fam_chol_car_sp_us.hpp"
 #include "fam_chol_car_s_us.hpp"
+#include "fam_chol_car_gmrf_sgfps_us.hpp"
+#include "fam_chol_car_gmrf_sgfp_us.hpp"
+#include "fam_chol_car_gmrf_sgfs_us.hpp"
+#include "fam_chol_car_gmrf_sgps_us.hpp"
+#include "fam_chol_car_gmrf_sfps_us.hpp"
+#include "fam_chol_car_gmrf_sgf_us.hpp"
+#include "fam_chol_car_gmrf_sgp_us.hpp"
+#include "fam_chol_car_gmrf_sgs_us.hpp"
+#include "fam_chol_car_gmrf_sfp_us.hpp"
+#include "fam_chol_car_gmrf_sfs_us.hpp"
+#include "fam_chol_car_gmrf_sps_us.hpp"
+#include "fam_chol_car_gmrf_sg_us.hpp"
+#include "fam_chol_car_gmrf_sf_us.hpp"
+#include "fam_chol_car_gmrf_sp_us.hpp"
+#include "fam_chol_car_gmrf_ss_us.hpp"
+#include "fam_chol_car_gmrf_s_us.hpp"
+#include "fam_chol_car_gmrf_s_us.hpp"
 #include "alpha1scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
 #include "ratescrtch_fam_chol_matern_gmrf_sgps_us.hpp"
 #include "car_scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
@@ -172,6 +189,40 @@ Type objective_function<Type>::operator() () {
             return fam_chol_car_sp_us(this);
   } else if(model == "fam_chol_car_s_us") {
             return fam_chol_car_s_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgfps_us") {
+            return fam_chol_car_gmrf_sgfps_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgfp_us") {
+            return fam_chol_car_gmrf_sgfp_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgfs_us") {
+            return fam_chol_car_gmrf_sgfs_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgps_us") {
+            return fam_chol_car_gmrf_sgps_us(this);
+  } else if(model == "fam_chol_car_gmrf_sfps_us") {
+            return fam_chol_car_gmrf_sfps_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgf_us") {
+            return fam_chol_car_gmrf_sgf_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgp_us") {
+            return fam_chol_car_gmrf_sgp_us(this);
+  } else if(model == "fam_chol_car_gmrf_sgs_us") {
+            return fam_chol_car_gmrf_sgs_us(this);
+  } else if(model == "fam_chol_car_gmrf_sfp_us") {
+            return fam_chol_car_gmrf_sfp_us(this);
+  } else if(model == "fam_chol_car_gmrf_sfs_us") {
+            return fam_chol_car_gmrf_sfs_us(this);
+  } else if(model == "fam_chol_car_gmrf_sps_us") {
+            return fam_chol_car_gmrf_sps_us(this);
+  } else if(model == "fam_chol_car_gmrf_sg_us") {
+            return fam_chol_car_gmrf_sg_us(this);
+  } else if(model == "fam_chol_car_gmrf_sf_us") {
+            return fam_chol_car_gmrf_sf_us(this);
+  } else if(model == "fam_chol_car_gmrf_sp_us") {
+            return fam_chol_car_gmrf_sp_us(this);
+  } else if(model == "fam_chol_car_gmrf_ss_us") {
+            return fam_chol_car_gmrf_ss_us(this);
+  } else if(model == "fam_chol_car_gmrf_s_us") {
+            return fam_chol_car_gmrf_s_us(this);
+  } else if(model == "fam_chol_car_gmrf_s_us") {
+            return fam_chol_car_gmrf_s_us(this);
   } else if(model == "alpha1scrtch_fam_chol_matern_gmrf_sgps_us") {
             return alpha1scrtch_fam_chol_matern_gmrf_sgps_us(this);
   } else if(model == "ratescrtch_fam_chol_matern_gmrf_sgps_us") {
@@ -183,3 +234,54 @@ Type objective_function<Type>::operator() () {
   }
   return 0;
 }
+} else if(model == "fam_chol_car_gmrf_sgfps_us") {
+          return fam_chol_car_gmrf_sgfps_us(this);
+} else if(model == "fam_chol_car_gmrf_sgfp_us") {
+          return fam_chol_car_gmrf_sgfp_us(this);
+} else if(model == "fam_chol_car_gmrf_sgfs_us") {
+          return fam_chol_car_gmrf_sgfs_us(this);
+} else if(model == "fam_chol_car_gmrf_sgps_us") {
+          return fam_chol_car_gmrf_sgps_us(this);
+} else if(model == "fam_chol_car_gmrf_sfps_us") {
+          return fam_chol_car_gmrf_sfps_us(this);
+} else if(model == "fam_chol_car_gmrf_sgf_us") {
+          return fam_chol_car_gmrf_sgf_us(this);
+} else if(model == "fam_chol_car_gmrf_sgp_us") {
+          return fam_chol_car_gmrf_sgp_us(this);
+} else if(model == "fam_chol_car_gmrf_sgs_us") {
+          return fam_chol_car_gmrf_sgs_us(this);
+} else if(model == "fam_chol_car_gmrf_sfp_us") {
+          return fam_chol_car_gmrf_sfp_us(this);
+} else if(model == "fam_chol_car_gmrf_sfs_us") {
+          return fam_chol_car_gmrf_sfs_us(this);
+} else if(model == "fam_chol_car_gmrf_sps_us") {
+          return fam_chol_car_gmrf_sps_us(this);
+} else if(model == "fam_chol_car_gmrf_sg_us") {
+          return fam_chol_car_gmrf_sg_us(this);
+} else if(model == "fam_chol_car_gmrf_sf_us") {
+          return fam_chol_car_gmrf_sf_us(this);
+} else if(model == "fam_chol_car_gmrf_sp_us") {
+          return fam_chol_car_gmrf_sp_us(this);
+} else if(model == "fam_chol_car_gmrf_ss_us") {
+          return fam_chol_car_gmrf_ss_us(this);
+} else if(model == "fam_chol_car_gmrf_s_us") {
+          return fam_chol_car_gmrf_s_us(this);
+} else if(model == "fam_chol_car_gmrf_s_us") {
+          return fam_chol_car_gmrf_s_us(this);
+#include "fam_chol_car_gmrf_sgfps_us.hpp"
+#include "fam_chol_car_gmrf_sgfp_us.hpp"
+#include "fam_chol_car_gmrf_sgfs_us.hpp"
+#include "fam_chol_car_gmrf_sgps_us.hpp"
+#include "fam_chol_car_gmrf_sfps_us.hpp"
+#include "fam_chol_car_gmrf_sgf_us.hpp"
+#include "fam_chol_car_gmrf_sgp_us.hpp"
+#include "fam_chol_car_gmrf_sgs_us.hpp"
+#include "fam_chol_car_gmrf_sfp_us.hpp"
+#include "fam_chol_car_gmrf_sfs_us.hpp"
+#include "fam_chol_car_gmrf_sps_us.hpp"
+#include "fam_chol_car_gmrf_sg_us.hpp"
+#include "fam_chol_car_gmrf_sf_us.hpp"
+#include "fam_chol_car_gmrf_sp_us.hpp"
+#include "fam_chol_car_gmrf_ss_us.hpp"
+#include "fam_chol_car_gmrf_s_us.hpp"
+#include "fam_chol_car_gmrf_s_us.hpp"
