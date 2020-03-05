@@ -65,7 +65,7 @@
 #include "fam_chol_car_gmrf_sg_us.hpp"
 #include "fam_chol_car_gmrf_s_us.hpp"
 #include "alpha1scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
-#include "ratescrtch_fam_chol_matern_gmrf_sgps_us.hpp"
+#include "ratescrtch_fam_chol_car_gmrf_sgps_us.hpp"
 #include "car_scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
 //#include "car_gmrf.hpp"
 
@@ -202,8 +202,8 @@ Type objective_function<Type>::operator() () {
             return fam_chol_car_gmrf_s_us(this);
   } else if(model == "alpha1scrtch_fam_chol_matern_gmrf_sgps_us") {
             return alpha1scrtch_fam_chol_matern_gmrf_sgps_us(this);
-  } else if(model == "ratescrtch_fam_chol_matern_gmrf_sgps_us") {
-            return ratescrtch_fam_chol_matern_gmrf_sgps_us(this);
+  } else if(model == "ratescrtch_fam_chol_car_gmrf_sgps_us") {
+            return ratescrtch_fam_chol_car_gmrf_sgps_us(this);
   } else if(model == "car_scrtch_fam_chol_matern_gmrf_sgps_us") {
             return car_scrtch_fam_chol_matern_gmrf_sgps_us(this);
   } else {
