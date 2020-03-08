@@ -35,7 +35,7 @@ template<class Type>
   DATA_SPARSE_MATRIX(Zs);         //Design matrix for spatial random effects 
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
   DATA_STRUCT(car_mats,car_gmrf_t); //Three matrices needed for representing the GMRF, see p. 8 in Lindgren et al. (2011)
-  DATA_SPARSE_MATRIX(A);  //Matrix for interpolating points witin triangles 
+//  DATA_SPARSE_MATRIX(A);  //Matrix for interpolating points witin triangles 
   //DATA_INTEGER(flag); // if flag=0 the prior for x is calculated
 
   // Parameters
