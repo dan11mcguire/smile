@@ -48,7 +48,26 @@ template<class Type>
   } 
 
   //---------------------------------------------
+
+  Type vc_ps = .5*vc_a;
+
+  Type khat = y.mean();
+  Type t=qnorm(1-khat);
+  Type z=dnorm(t, Type(0.0), Type(1.0));
+  Type i=z/khat;
   
+  Type Eb_ps=khat + vc_ps/khat;
+
+  Type tvc_ps=qnorm(1-Eb_ps);
+
+  Type vc_ps_adj = (t - tvc_ps*sqrt(1-(pow(t,2.0) - pow(tvc_ps,2.0))*(1-t/i))) / (i + pow(tvc_ps,2.0)*(i-t));
+  
+  Type vc_a_lia=2*vc_ps_adj; 
+  
+  ADREPORT(vc_a_lia);
+  ADREPORT(khat);
+
+
   //Report what we want to report----------------
   ADREPORT(vc_a);
   ADREPORT(vc_res);

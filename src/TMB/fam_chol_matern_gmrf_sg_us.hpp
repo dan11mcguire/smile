@@ -65,7 +65,25 @@ template<class Type>
   } 
 
   //---------------------------------------------
+
+  Type vc_ps = .5*vc_a;
+
+  Type khat = y.mean();
+  Type t=qnorm(1-khat);
+  Type z=dnorm(t, Type(0.0), Type(1.0));
+  Type i=z/khat;
   
+  Type Eb_ps=khat + vc_ps/khat;
+
+  Type tvc_ps=qnorm(1-Eb_ps);
+
+  Type vc_ps_adj = (t - tvc_ps*sqrt(1-(pow(t,2.0) - pow(tvc_ps,2.0))*(1-t/i))) / (i + pow(tvc_ps,2.0)*(i-t));
+  
+  Type vc_a_lia=2*vc_ps_adj; 
+  
+  ADREPORT(vc_a_lia);
+  ADREPORT(khat);
+
   //Report what we want to report----------------
   Type range = sqrt(8)/kappa;   //Distance at which correlation has dropped to 0.1, see p. 4 in Lindgren et al. (2011);
   Type vc_s = pow(exp(.5*log(Type(1.0)/(Type(4.0)*M_PI)) - log(kappa) - log_tau),2);

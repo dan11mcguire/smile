@@ -105,7 +105,37 @@ template<class Type>
   } 
 
   //---------------------------------------------
+
+  Type vc_pp = vc_c_fam; 
+  Type vc_ps = .5*vc_a + vc_c_fam;
+  Type vc_ss = .5*vc_a + vc_c_fam + vc_c_sib; 
+
+  Type khat = y.mean();
+  Type t=qnorm(1-khat);
+  Type z=dnorm(t, Type(0.0), Type(1.0));
+  Type i=z/khat;
   
+  Type Eb_pp=khat + vc_pp/khat;
+  Type Eb_ps=khat + vc_ps/khat;
+  Type Eb_ss=khat + vc_ss/khat;
+
+  Type tvc_pp=qnorm(1-Eb_pp);
+  Type tvc_ps=qnorm(1-Eb_ps);
+  Type tvc_ss=qnorm(1-Eb_ss);
+
+  Type vc_pp_adj = (t - tvc_pp*sqrt(1-(pow(t,2.0) - pow(tvc_pp,2.0))*(1-t/i))) / (i + pow(tvc_pp,2.0)*(i-t));
+  Type vc_ps_adj = (t - tvc_ps*sqrt(1-(pow(t,2.0) - pow(tvc_ps,2.0))*(1-t/i))) / (i + pow(tvc_ps,2.0)*(i-t));
+  Type vc_ss_adj = (t - tvc_ss*sqrt(1-(pow(t,2.0) - pow(tvc_ss,2.0))*(1-t/i))) / (i + pow(tvc_ss,2.0)*(i-t));
+  
+  Type vc_a_lia=2*(vc_ps_adj - vc_pp_adj); 
+  Type vc_c_fam_lia=vc_pp_adj; 
+  Type vc_c_sib_lia=vc_ss_adj - vc_ps_adj; 
+  
+  ADREPORT(vc_a_lia);
+  ADREPORT(vc_c_fam_lia);
+  ADREPORT(vc_c_sib_lia);
+  ADREPORT(khat);
+
   //Report what we want to report----------------
   ADREPORT(vc_a);
   ADREPORT(vc_c_fam);

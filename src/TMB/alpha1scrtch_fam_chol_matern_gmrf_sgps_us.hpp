@@ -109,6 +109,38 @@ template<class Type>
   //Report what we want to report----------------
   Type range = sqrt(8)/kappa;   //Distance at which correlation has dropped to 0.1, see p. 4 in Lindgren et al. (2011);
   Type vc_s = pow(exp(.5*log(Type(1.0)/(Type(4.0)*M_PI)) - log(kappa) - log_tau),2);
+
+  Type vc_pp = vc_c_par; 
+  Type vc_ps = .5*vc_a;
+  Type vc_ss = .5*vc_a + vc_c_sib; 
+  Type khat = y.mean();
+  Type t=qnorm(1-khat);
+  Type z=dnorm(t, Type(0.0), Type(1.0));
+  Type i=z/khat;
+  
+  Type Eb_pp=khat + vc_pp/khat;
+  Type Eb_ps=khat + vc_ps/khat;
+  Type Eb_ss=khat + vc_ss/khat;
+
+  Type tvc_pp=qnorm(1-Eb_pp);
+  Type tvc_ps=qnorm(1-Eb_ps);
+  Type tvc_ss=qnorm(1-Eb_ss);
+
+  Type vc_pp_adj = (t - tvc_pp*sqrt(1-(pow(t,2.0) - pow(tvc_pp,2.0))*(1-t/i))) / (i + pow(tvc_pp,2.0)*(i-t));
+  Type vc_ps_adj = (t - tvc_ps*sqrt(1-(pow(t,2.0) - pow(tvc_ps,2.0))*(1-t/i))) / (i + pow(tvc_ps,2.0)*(i-t));
+  Type vc_ss_adj = (t - tvc_ss*sqrt(1-(pow(t,2.0) - pow(tvc_ss,2.0))*(1-t/i))) / (i + pow(tvc_ss,2.0)*(i-t));
+  
+  Type vc_a_lia=2*vc_ps_adj; 
+  Type vc_c_par_lia=vc_pp_adj; 
+  Type vc_c_sib_lia=vc_ss_adj - vc_ps_adj; 
+  
+  ADREPORT(vc_a_lia);
+  ADREPORT(vc_c_par_lia);
+  ADREPORT(vc_c_sib_lia);
+  ADREPORT(khat);
+
+
+
   ADREPORT(range);
   ADREPORT(vc_a);
   ADREPORT(vc_c_par);
