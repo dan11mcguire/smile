@@ -10,6 +10,8 @@ template<class Type>
 
   // Data
   DATA_VECTOR( y );                
+  DATA_INTEGER( binary_ind );
+
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
   DATA_SCALAR(maxkap);
@@ -73,6 +75,7 @@ template<class Type>
   } 
 
   //---------------------------------------------
+  if( binary_ind == 1){
 
   Type vc_pp = vc_c_fam; 
   Type vc_ps = .5*vc_a + vc_c_fam;
@@ -97,10 +100,7 @@ template<class Type>
   ADREPORT(vc_a_lia);
   ADREPORT(vc_c_fam_lia);
   ADREPORT(khat);
-
-
-
-
+  }
 
   //Report what we want to report----------------
   Type range = sqrt(8)/kappa;   //Distance at which correlation has dropped to 0.1, see p. 4 in Lindgren et al. (2011);

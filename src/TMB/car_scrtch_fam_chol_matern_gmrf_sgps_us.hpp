@@ -36,6 +36,7 @@ template<class Type>
   using namespace Eigen; //Needed for utilisation of sparse structures
 
   // Data
+  DATA_INTEGER( binary_ind );
   DATA_VECTOR( y );                
   //DATA_VECTOR( cens );                
   //Load data and parameters----------------
@@ -133,6 +134,8 @@ template<class Type>
   //ADREPORT(range);
   //
 
+  if( binary_ind == 1){
+
   Type vc_pp = vc_c_par; 
   Type vc_ps = .5*vc_a;
   Type vc_ss = .5*vc_a + vc_c_sib; 
@@ -157,16 +160,18 @@ template<class Type>
   Type vc_c_par_lia=vc_pp_adj; 
   Type vc_c_sib_lia=2*(vc_ss_adj - vc_ps_adj); 
 
+  ADREPORT(vc_a_lia);
+  ADREPORT(vc_c_par_lia);
+  ADREPORT(vc_c_sib_lia);
+  ADREPORT(khat);
+  }
+  
   ADREPORT(vc_a);
   ADREPORT(vc_c_par);
   ADREPORT(vc_c_sib);
   ADREPORT(vc_res);
   ADREPORT(vc_s);
   ADREPORT(rho);
-  ADREPORT(vc_a_lia);
-  ADREPORT(vc_c_par_lia);
-  ADREPORT(vc_c_sib_lia);
-  ADREPORT(khat);
   //ADREPORT(shp);
 
   //---------------------------------------------

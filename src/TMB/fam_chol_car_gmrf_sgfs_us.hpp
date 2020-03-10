@@ -35,6 +35,7 @@ template<class Type>
   using namespace Eigen; //Needed for utilisation of sparse structures
 
   // Data
+  DATA_INTEGER( binary_ind );
   DATA_VECTOR( y );                
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
@@ -105,6 +106,7 @@ template<class Type>
   } 
 
   //---------------------------------------------
+  if( binary_ind == 1){
 
   Type vc_pp = vc_c_fam; 
   Type vc_ps = .5*vc_a + vc_c_fam;
@@ -135,7 +137,8 @@ template<class Type>
   ADREPORT(vc_c_fam_lia);
   ADREPORT(vc_c_sib_lia);
   ADREPORT(khat);
-
+  
+  }
   //Report what we want to report----------------
   ADREPORT(vc_a);
   ADREPORT(vc_c_fam);

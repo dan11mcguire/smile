@@ -10,6 +10,8 @@ template<class Type>
 
   // Data
   DATA_VECTOR( y );                
+  DATA_INTEGER( binary_ind );
+
   //Load data and parameters----------------
   DATA_MATRIX(X);         //Design matrix for fixed effects
   DATA_SPARSE_MATRIX(Lt_Ga);         //Design matrix for genetic random effects 
@@ -48,7 +50,7 @@ template<class Type>
   } 
 
   //---------------------------------------------
-
+  if( binary_ind == 1){
   Type vc_ps = .5*vc_a;
 
   Type khat = y.mean();
@@ -66,7 +68,7 @@ template<class Type>
   
   ADREPORT(vc_a_lia);
   ADREPORT(khat);
-
+  }
 
   //Report what we want to report----------------
   ADREPORT(vc_a);
