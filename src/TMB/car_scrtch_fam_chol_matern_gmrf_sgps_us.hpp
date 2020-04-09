@@ -37,6 +37,7 @@ template<class Type>
 
   // Data
   DATA_INTEGER( binary_ind );
+  DATA_INTEGER( report_us );
   DATA_VECTOR( y );                
   //DATA_VECTOR( cens );                
   //Load data and parameters----------------
@@ -172,6 +173,9 @@ template<class Type>
   ADREPORT(vc_res);
   ADREPORT(vc_s);
   ADREPORT(rho);
+  if(report_us == 1){
+  REPORT(x) ;
+  }
   //ADREPORT(shp);
 
   //---------------------------------------------
