@@ -3,7 +3,7 @@
 
 
 template<class Type>
-  Type ratescrtch_fam_chol_car_gmrf_ps_us(objective_function<Type>* obj)
+  Type rate_fam_chol_car_gmrf_ps_us(objective_function<Type>* obj)
 {
   using namespace car_gmrf; //
 //  using namespace R_inla_generalized; //includes SPDE-spesific functions, e.g. Q_spde()
@@ -71,7 +71,6 @@ template<class Type>
   ADREPORT(vc_c_par);
   ADREPORT(vc_c_sib);
   ADREPORT(phi);
-  ADREPORT(rho);
 
   //---------------------------------------------
   

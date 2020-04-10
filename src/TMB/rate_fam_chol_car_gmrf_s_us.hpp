@@ -3,7 +3,7 @@
 
 
 template<class Type>
-  Type ratescrtch_fam_chol_car_gmrf_s_us(objective_function<Type>* obj)
+  Type rate_fam_chol_car_gmrf_s_us(objective_function<Type>* obj)
 {
   using namespace car_gmrf; //
 //  using namespace R_inla_generalized; //includes SPDE-spesific functions, e.g. Q_spde()
@@ -52,12 +52,8 @@ template<class Type>
   // Return un-normalized density on request
   //if (flag == 0) return nll;
 
-  vector<Type> eta = X*beta + delta + Lua ;
+  vector<Type> eta = X*beta + delta ;
   vector<Type> muhat = eta + offset;
-
-  for( int j=0; j< Lt_Ga.cols(); j++){
-    nll -= dnorm( ua(j) , Type(0.0), exp(log_sdvc_a), true );
-  } 
 
   for( int j=0; j< X.rows(); j++){
     nll -=  dnbinom_robust(y(j),
