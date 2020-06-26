@@ -47,6 +47,7 @@
 #include "fam_chol_car_gmrf_sgf_us.hpp"
 #include "fam_chol_car_gmrf_sgp_us.hpp"
 #include "fam_chol_car_gmrf_sgs_us.hpp"
+#include "fam_chol_car_gmrf_sps_us.hpp"
 #include "fam_chol_car_gmrf_sg_us.hpp"
 #include "fam_chol_car_gmrf_s_us.hpp"
 #include "rate_fam_chol_car_gmrf_g_us.hpp"
@@ -165,6 +166,8 @@ Type objective_function<Type>::operator() () {
             return fam_chol_car_gmrf_sgp_us(this);
   } else if(model == "fam_chol_car_gmrf_sgs_us") {
             return fam_chol_car_gmrf_sgs_us(this);
+  } else if(model == "fam_chol_car_gmrf_sps_us") {
+            return fam_chol_car_gmrf_sps_us(this);
   } else if(model == "fam_chol_car_gmrf_sg_us") {
             return fam_chol_car_gmrf_sg_us(this);
   } else if(model == "fam_chol_car_gmrf_s_us") {

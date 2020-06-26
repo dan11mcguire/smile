@@ -1,8 +1,8 @@
 Package: msr
 Type: Package
 Title: What the Package Does in One 'Title Case' Line
-Version: 1.25
-Date: 2020-02-05
+Version: 1.26
+Date: 2020-06-20
 Author: Your Name
 Maintainer: Your Name <your@email.com>
 Description: experimental template.
