@@ -50,6 +50,24 @@
 #include "fam_chol_car_gmrf_sps_us.hpp"
 #include "fam_chol_car_gmrf_sg_us.hpp"
 #include "fam_chol_car_gmrf_s_us.hpp"
+#include "fam_chol_sar_gmrf_sgfp_us.hpp"
+#include "fam_chol_sar_gmrf_sgfs_us.hpp"
+#include "fam_chol_sar_gmrf_sgps_us.hpp"
+#include "fam_chol_sar_gmrf_sgf_us.hpp"
+#include "fam_chol_sar_gmrf_sgp_us.hpp"
+#include "fam_chol_sar_gmrf_sgs_us.hpp"
+#include "fam_chol_sar_gmrf_sps_us.hpp"
+#include "fam_chol_sar_gmrf_sg_us.hpp"
+#include "fam_chol_sar_gmrf_s_us.hpp"
+#include "fam_chol_iid_gmrf_sgfp_us.hpp"
+#include "fam_chol_iid_gmrf_sgfs_us.hpp"
+#include "fam_chol_iid_gmrf_sgps_us.hpp"
+#include "fam_chol_iid_gmrf_sgf_us.hpp"
+#include "fam_chol_iid_gmrf_sgp_us.hpp"
+#include "fam_chol_iid_gmrf_sgs_us.hpp"
+#include "fam_chol_iid_gmrf_sps_us.hpp"
+#include "fam_chol_iid_gmrf_sg_us.hpp"
+#include "fam_chol_iid_gmrf_s_us.hpp"
 #include "rate_fam_chol_car_gmrf_g_us.hpp"
 #include "rate_fam_chol_car_gmrf_gf_us.hpp"
 #include "rate_fam_chol_car_gmrf_gfs_us.hpp"
@@ -172,6 +190,42 @@ Type objective_function<Type>::operator() () {
             return fam_chol_car_gmrf_sg_us(this);
   } else if(model == "fam_chol_car_gmrf_s_us") {
             return fam_chol_car_gmrf_s_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sgfp_us") {
+            return fam_chol_sar_gmrf_sgfp_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sgfs_us") {
+            return fam_chol_sar_gmrf_sgfs_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sgps_us") {
+            return fam_chol_sar_gmrf_sgps_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sgf_us") {
+            return fam_chol_sar_gmrf_sgf_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sgp_us") {
+            return fam_chol_sar_gmrf_sgp_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sgs_us") {
+            return fam_chol_sar_gmrf_sgs_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sps_us") {
+            return fam_chol_sar_gmrf_sps_us(this);
+  } else if(model == "fam_chol_sar_gmrf_sg_us") {
+            return fam_chol_sar_gmrf_sg_us(this);
+  } else if(model == "fam_chol_sar_gmrf_s_us") {
+            return fam_chol_sar_gmrf_s_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sgfp_us") {
+            return fam_chol_iid_gmrf_sgfp_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sgfs_us") {
+            return fam_chol_iid_gmrf_sgfs_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sgps_us") {
+            return fam_chol_iid_gmrf_sgps_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sgf_us") {
+            return fam_chol_iid_gmrf_sgf_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sgp_us") {
+            return fam_chol_iid_gmrf_sgp_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sgs_us") {
+            return fam_chol_iid_gmrf_sgs_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sps_us") {
+            return fam_chol_iid_gmrf_sps_us(this);
+  } else if(model == "fam_chol_iid_gmrf_sg_us") {
+            return fam_chol_iid_gmrf_sg_us(this);
+  } else if(model == "fam_chol_iid_gmrf_s_us") {
+            return fam_chol_iid_gmrf_s_us(this);
   } else if(model == "rate_fam_chol_car_gmrf_g_us") {
             return rate_fam_chol_car_gmrf_g_us(this);
   } else if(model == "rate_fam_chol_car_gmrf_gf_us") {
