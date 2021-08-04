@@ -22,21 +22,23 @@ struct car_gmrf_t{
 template<class Type> 
   SparseMatrix<Type> Q_car(car_gmrf_t<Type> car_mats,Type rho, Type s2_s){
 	  //See Proposition 1 J.M.VerHoefetal./SpatialStatistics25(2018)68–8
-    Type tau2=Type(1.0) / s2_s;
-  return tau2*(car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5); 
+    //Type tau2=Type(1.0) / s2_s;
+  //return tau2*(car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5); 
+  return (car_mats.Mpm5*(car_mats.diagI - rho*car_mats.N)*car_mats.Mpm5); 
   }
 template<class Type> 
   SparseMatrix<Type> Q_sar(car_gmrf_t<Type> car_mats,Type rho, Type s2_s){
 	  //See Proposition 1 J.M.VerHoefetal./SpatialStatistics25(2018)68–8
-    Type tau2=Type(1.0) / s2_s;
+    //Type tau2=Type(1.0) / s2_s;
     SparseMatrix<Type> Nt = car_mats.N.transpose();
-  return tau2*((car_mats.diagI - rho*car_mats.N)*(car_mats.Mpm5*car_mats.Mpm5)*(car_mats.diagI - rho*Nt)); 
+  //return tau2*((car_mats.diagI - rho*car_mats.N)*(car_mats.Mpm5*car_mats.Mpm5)*(car_mats.diagI - rho*Nt)); 
+  return ((car_mats.diagI - rho*car_mats.N)*(car_mats.Mpm5*car_mats.Mpm5)*(car_mats.diagI - rho*Nt)); 
   }
 template<class Type> 
   SparseMatrix<Type> Q_iid(car_gmrf_t<Type> car_mats,Type rho, Type s2_s){
 	  //See Proposition 1 J.M.VerHoefetal./SpatialStatistics25(2018)68–8
-    Type tau2=Type(1.0) / s2_s;
-  return tau2*(car_mats.diagI); 
+    //Type tau2=Type(1.0) / s2_s;
+  return (car_mats.diagI); 
   }
 };
 
@@ -91,7 +93,7 @@ template<class Type>
   //------------------------------------------
 
   // Spatial interpolation
-  vector<Type> delta = Zs*x;
+  vector<Type> delta = Zs*x*sqrt(vc_s);
   
   //Construct sparce precision matrix for latent field---
   SparseMatrix<Type> Q = Q_car(car_mats,rho,vc_s);
