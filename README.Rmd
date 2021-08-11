@@ -55,10 +55,13 @@ A **S**patial-**M****I**xed **L**inear **E**ffects model for estimating the cont
 
 
 ##  Detailed example 
+1. Simulate genetic, spatial community-level, and family-level environment variance components.
+2. Then, try to recapture the simulated variances with the estimated SMILE model.
 
+##### Part 1.
 ```{r}
-library(data.table)
 library(smile)
+library(data.table)
 library(Matrix)
 library(parallel)
 library(sf)
@@ -66,21 +69,16 @@ library(ggplot2)
 library(broom)
 library(spdep)
 library(sandwich)
-#source("mod_fit_func_sim.R")
 
-### 
-#lgeo_opt<-st_read("../pipeline_scripts/fam2_geo_opt_key.shp") %>% as.data.table()
-#lgeo_opt[,rn:=1:.N]
-#lgeo_opt[,prop:=N/sum(N)]
-#lgeo_opt[1:10]
+
 data(lgeo_opt)
+lgeo_opt[1:20]
+seed<-808
+n_quad=10*10**3
 ```
+
 Calculate spatial neighborhood matrix
 ```{r}
-seed<-808
-n_quad=50*10**3
-n_quad=5*10**3
-#n_quad=10*10**3
 
 sampleloc<-as.character(sample(x=lgeo_opt[,key], 
 			       size=n_quad, 
@@ -135,7 +133,8 @@ Zs<-sparseMatrix(i=unlist(ivec), j=unlist(jvec), x=1,giveCsparse=F)
 
 ```
 
-Simulate (S) spatial random effects with CAR covariance structure, and simulate (G) genetic ,(P) parental-, and (C) child- level environment random effects.  \\
+Simulate (S) spatial random effects with CAR covariance structure, and simulate (G) genetic ,(P) parental-, and (C) child- level environment random effects.  
+
 Let G=0.4, P=0.05, C=0.2, S=0.03
 ```{r}
 
@@ -217,9 +216,10 @@ yvec<-ss$d[,yb]
 
 ```
  
+##### Part 2.
 Fit the smile model using the `smile()` function like below.
 
-```{r}
+```{r,out.lines=20}
 model_output<-
      smile(
        X=matrix(rep(1,nrow(ss$d),ncol=1))
