@@ -78,6 +78,7 @@ n_quad=10*10**3
 ```
 
 Calculate spatial neighborhood matrix
+First take a weighted random sample of locations to assign a community to each of the 10,000 families.
 ```{r}
 
 sampleloc<-as.character(sample(x=lgeo_opt[,key], 
@@ -100,8 +101,15 @@ jvec<-unlist(lapply(1:length(whch),
 wspm<-sparseMatrix(i=ivec, j=jvec)
 isSymmetric(wspm)
 wmatd<-fillin_nearest_neighb(as.data.table(ngeo_opt),wspm)$wnew
+```
+`wmatd` is a spatial neighborhood matrix for each of the locations in the `ngeo_opt` data.table.
 
+```{r}
+ngeo_opt[1:10]
+wmatd[1:10,1:10]
+```
 
+```{r}
 rs<-rowSums(wmatd)
 print(mean(1/rs))
 wmatplus<-as(do.call(rbind, 

@@ -679,7 +679,7 @@ install_github(&quot;dan11mcguire/smile&quot;)
 <span id="cb2-63"><a href="#cb2-63" aria-hidden="true"></a><span class="co">#&gt; 20: 20 9.405860e-05</span></span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true"></a>seed&lt;-<span class="dv">808</span></span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true"></a>n_quad=<span class="dv">10</span><span class="op">*</span><span class="dv">10</span><span class="op">**</span><span class="dv">3</span></span></code></pre></div>
-<p>Calculate spatial neighborhood matrix</p>
+<p>Calculate spatial neighborhood matrix First take a weighted random sample of locations to assign a community to each of the 10,000 families.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>sampleloc&lt;-<span class="kw">as.character</span>(<span class="kw">sample</span>(<span class="dt">x=</span>lgeo_opt[,key], </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>                   <span class="dt">size=</span>n_quad, </span>
@@ -701,356 +701,391 @@ install_github(&quot;dan11mcguire/smile&quot;)
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>wspm&lt;-<span class="kw">sparseMatrix</span>(<span class="dt">i=</span>ivec, <span class="dt">j=</span>jvec)</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="kw">isSymmetric</span>(wspm)</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a>wmatd&lt;-<span class="kw">fillin_nearest_neighb</span>(<span class="kw">as.data.table</span>(ngeo_opt),wspm)<span class="op">$</span>wnew</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a>rs&lt;-<span class="kw">rowSums</span>(wmatd)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a><span class="kw">print</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">/</span>rs))</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a><span class="co">#&gt; [1] 0.2793672</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a>wmatplus&lt;-<span class="kw">as</span>(<span class="kw">do.call</span>(rbind, </span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a>             <span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(wmatd), <span class="cf">function</span>(i) wmatd[i,]<span class="op">/</span>rs[i])), <span class="st">&quot;dgTMatrix&quot;</span>)</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true"></a>Mpm5&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span><span class="op">/</span>rs<span class="op">^-</span>.<span class="dv">5</span>),</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true"></a>Mpp5&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span><span class="op">/</span>rs<span class="op">^</span>.<span class="dv">5</span>),</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true"></a>diagI&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span>),</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true"></a>N&lt;-Mpm5<span class="op">%*%</span><span class="st"> </span>wmatplus <span class="op">%*%</span><span class="st"> </span>Mpp5</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true"></a>      </span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true"></a><span class="co">### Zs:  loading matrix mapping individuals to their location-specific spatial random effects  </span><span class="al">###</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true"></a>ds&lt;-<span class="kw">data.table</span>(<span class="dt">kid=</span><span class="kw">rep</span>(sampleloc,<span class="dt">each=</span><span class="dv">4</span>))</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true"></a>ds&lt;-<span class="kw">merge</span>(ds,ngeo_opt[,.(gid,<span class="dt">kid=</span>key,rn)],<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;kid&quot;</span>),<span class="dt">sort=</span>F)    </span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true"></a>ivec&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span>ds[,<span class="kw">max</span>(rn)], <span class="cf">function</span>(x) ds[rn<span class="op">==</span>x,<span class="dt">which=</span><span class="ot">TRUE</span>]) </span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true"></a>jvec&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(ivec), <span class="cf">function</span>(x) <span class="kw">rep</span>(x, <span class="kw">length</span>(ivec[[x]])))  </span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true"></a>Zs&lt;-<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="kw">unlist</span>(ivec), <span class="dt">j=</span><span class="kw">unlist</span>(jvec), <span class="dt">x=</span><span class="dv">1</span>,<span class="dt">giveCsparse=</span>F)</span></code></pre></div>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a>wmatd&lt;-<span class="kw">fillin_nearest_neighb</span>(<span class="kw">as.data.table</span>(ngeo_opt),wspm)<span class="op">$</span>wnew</span></code></pre></div>
+<p><code>wmatd</code> is a spatial neighborhood matrix for each of the locations in the <code>ngeo_opt</code> data.table.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>ngeo_opt[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">#&gt;       key         X        Y opt_map    N   state  geoname  gid  nto geometry</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt;  1: 01001 -86.64274 32.53492  empcty  699 Alabama  Autauga 1924  699     &lt;XY&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">#&gt;  2: 01003 -87.72257 30.72748  empcty 1239 Alabama  Baldwin 1826 1467     &lt;XY&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co">#&gt;  3: 01005 -85.39321 31.86958  empcty  431 Alabama  Barbour 2073  431     &lt;XY&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">#&gt;  4: 01007 -87.12648 32.99863  empcty  260 Alabama     Bibb 1876  260     &lt;XY&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="co">#&gt;  5: 01009 -86.56738 33.98087  empcty  420 Alabama   Blount 1930  420     &lt;XY&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="co">#&gt;  6: 01015 -85.82604 33.77143  empcty  817 Alabama  Calhoun 2012  926     &lt;XY&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="co">#&gt;  7: 01017 -85.39203 32.91435  empcty  180 Alabama Chambers 2074  180     &lt;XY&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="co">#&gt;  8: 01021 -86.71880 32.84786  empcty  489 Alabama  Chilton 1916  489     &lt;XY&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="co">#&gt;  9: 01031 -85.98815 31.40265  empcty  314 Alabama   Coffee 1997  314     &lt;XY&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a><span class="co">#&gt; 10: 01047 -87.10647 32.32598  empcty  268 Alabama   Dallas 1879  268     &lt;XY&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="co">#&gt;     rn         prop</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="co">#&gt;  1:  1 2.087205e-04</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a><span class="co">#&gt;  2:  2 3.699638e-04</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="co">#&gt;  3:  3 1.286961e-04</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="co">#&gt;  4:  4 7.763567e-05</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="co">#&gt;  5:  5 1.254115e-04</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="co">#&gt;  6:  6 2.439552e-04</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a><span class="co">#&gt;  7:  7 5.374777e-05</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a><span class="co">#&gt;  8:  8 1.460148e-04</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a><span class="co">#&gt;  9:  9 9.376000e-05</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a><span class="co">#&gt; 10: 10 8.002446e-05</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>wmatd[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a><span class="co">#&gt; 10 x 10 sparse Matrix of class &quot;ngCMatrix&quot;</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a><span class="co">#&gt;                          </span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a><span class="co">#&gt;  [1,] . . . . . . . | . |</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a><span class="co">#&gt;  [2,] . . . . . . . . . .</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a><span class="co">#&gt;  [3,] . . . . . . . . . .</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . . . . . . | . .</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . . . . . . . .</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . . . . . . . .</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . . . . . . .</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true"></a><span class="co">#&gt;  [8,] | . . | . . . . . |</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . . . . .</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true"></a><span class="co">#&gt; [10,] | . . . . . . | . .</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>rs&lt;-<span class="kw">rowSums</span>(wmatd)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">print</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">/</span>rs))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="co">#&gt; [1] 0.2746493</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>wmatplus&lt;-<span class="kw">as</span>(<span class="kw">do.call</span>(rbind, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>             <span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(wmatd), <span class="cf">function</span>(i) wmatd[i,]<span class="op">/</span>rs[i])), <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>Mpm5&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span><span class="op">/</span>rs<span class="op">^-</span>.<span class="dv">5</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>Mpp5&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span><span class="op">/</span>rs<span class="op">^</span>.<span class="dv">5</span>),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a>diagI&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a>N&lt;-Mpm5<span class="op">%*%</span><span class="st"> </span>wmatplus <span class="op">%*%</span><span class="st"> </span>Mpp5</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a>      </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="co">### Zs:  loading matrix mapping individuals to their location-specific spatial random effects  </span><span class="al">###</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a>ds&lt;-<span class="kw">data.table</span>(<span class="dt">kid=</span><span class="kw">rep</span>(sampleloc,<span class="dt">each=</span><span class="dv">4</span>))</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a>ds&lt;-<span class="kw">merge</span>(ds,ngeo_opt[,.(gid,<span class="dt">kid=</span>key,rn)],<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;kid&quot;</span>),<span class="dt">sort=</span>F)    </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a>ivec&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span>ds[,<span class="kw">max</span>(rn)], <span class="cf">function</span>(x) ds[rn<span class="op">==</span>x,<span class="dt">which=</span><span class="ot">TRUE</span>]) </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a>jvec&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(ivec), <span class="cf">function</span>(x) <span class="kw">rep</span>(x, <span class="kw">length</span>(ivec[[x]])))  </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a>Zs&lt;-<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="kw">unlist</span>(ivec), <span class="dt">j=</span><span class="kw">unlist</span>(jvec), <span class="dt">x=</span><span class="dv">1</span>,<span class="dt">giveCsparse=</span>F)</span></code></pre></div>
 <p>Simulate (S) spatial random effects with CAR covariance structure, and simulate (G) genetic ,(P) parental-, and (C) child- level environment random effects.</p>
 <p>Let G=0.4, P=0.05, C=0.2, S=0.03</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>S&lt;-<span class="fl">0.03</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>rho&lt;-<span class="fl">0.9</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>sigma_inv&lt;-(Mpm5<span class="op">%*%</span>(diagI <span class="op">-</span><span class="st"> </span>rho<span class="op">*</span>N)<span class="op">%*%</span>Mpm5) <span class="co">### CAR specification of covariance matrix</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>sigma_s&lt;-<span class="kw">chol2inv</span>(<span class="kw">chol</span>(sigma_inv))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>sets2&lt;-S<span class="op">/</span>(<span class="kw">gowfac</span>(<span class="dt">Z=</span>Zs,<span class="dt">G=</span>sigma_s) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(Zs))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="kw">all.equal</span>(<span class="kw">t</span>(<span class="kw">chol</span>(sigma_inv)) <span class="op">%*%</span><span class="st"> </span>(<span class="kw">chol</span>(sigma_inv)), sigma_inv)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">apply</span>(sigma_inv, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">!=</span><span class="dv">0</span>)))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="co">#&gt;   2.000   4.000   6.000   6.446   8.000  36.000</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">apply</span>(sigma_s, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">!=</span><span class="dv">0</span>)))   </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="co">#&gt;     2.0   176.0  1074.0   744.8  1074.0  1074.0</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>chsigma_s&lt;-<span class="kw">t</span>(<span class="kw">chol</span>(sigma_s))</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>ustar&lt;-<span class="kw">rnorm</span>(<span class="kw">nrow</span>(wmatd), <span class="dt">sd=</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sqrt</span>(sets2)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="kw">var</span>(ustar)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="co">#&gt; [1] 0.08990551</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>ustar&lt;-chsigma_s <span class="op">%*%</span><span class="st"> </span>ustar</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>ustar&lt;-<span class="kw">as.vector</span>(Zs <span class="op">%*%</span><span class="st"> </span>ustar)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>ds[[<span class="st">&quot;u_s&quot;</span>]]&lt;-ustar</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>G=<span class="fl">0.4</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>Fam=<span class="dv">0</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>P=<span class="fl">0.05</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a>C=<span class="fl">0.2</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a>E&lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>G <span class="op">-</span><span class="st"> </span>Fam <span class="op">-</span><span class="st"> </span>P <span class="op">-</span><span class="st"> </span>C <span class="op">-</span><span class="st"> </span>S</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a>n_trio&lt;-<span class="dv">0</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true"></a>mu&lt;-<span class="dv">0</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true"></a><span class="kw">print</span>(<span class="st">&quot;simulating data.&quot;</span>)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;simulating data.&quot;</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true"></a>ss&lt;-smile<span class="op">::</span><span class="kw">sim_fam_nonspatial</span>(</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true"></a>                        <span class="dt">n_quad=</span>n_quad</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true"></a>                       ,<span class="dt">Ag=</span>G</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true"></a>                       ,<span class="dt">C_fam=</span>Fam</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true"></a>                       ,<span class="dt">C_par=</span>P</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true"></a>                       ,<span class="dt">C_sib=</span>C</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true"></a>                       ,<span class="dt">S=</span>S</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true"></a>                       ,<span class="dt">mu=</span><span class="dv">0</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true"></a>                          )</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true"></a></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true"></a>ss<span class="op">$</span>d&lt;-<span class="kw">cbind</span>(ss<span class="op">$</span>d, ds)</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true"></a>ss<span class="op">$</span>d[,y<span class="op">:</span><span class="er">=</span>u_a <span class="op">+</span><span class="st"> </span>u_sib <span class="op">+</span><span class="st"> </span>u_par <span class="op">+</span><span class="st"> </span>u_fam <span class="op">+</span><span class="st"> </span>eps <span class="op">+</span><span class="st"> </span>fixed <span class="op">+</span><span class="st"> </span>u_s]</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true"></a>ss<span class="op">$</span>d[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true"></a><span class="co">#&gt;    set emprel ttype pid empreltype        u_a      u_sib      u_par u_fam</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true"></a><span class="co">#&gt; 1:   1      1  quad   1     parent -0.4547499 -0.7180906 0.05526169     0</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true"></a><span class="co">#&gt; 2:   1      2  quad   2     parent -0.1465048 -0.2057012 0.05526169     0</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true"></a><span class="co">#&gt; 3:   1      3  quad   3        sib -0.6589747  0.4520573 0.27486008     0</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true"></a><span class="co">#&gt; 4:   1      3  quad   4        sib -0.1542205  0.4520573 0.20155806     0</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true"></a><span class="co">#&gt; 5:   2      1  quad   5     parent  0.9949360  0.3110330 0.12758908     0</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true"></a><span class="co">#&gt; 6:   2      2  quad   6     parent  0.4148473  0.3524012 0.12758908     0</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true"></a><span class="co">#&gt; 7:   2      3  quad   7        sib  1.0403881  0.2292141 0.36512113     0</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true"></a><span class="co">#&gt; 8:   2      3  quad   8        sib  1.4617490  0.2292141 0.24731909     0</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true"></a><span class="co">#&gt;              eps fixed   kid  gid   rn         u_s          y</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true"></a><span class="co">#&gt; 1:  3.458450e-01     0 06059  142   91 -0.14677277 -0.9185066</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true"></a><span class="co">#&gt; 2: -8.266989e-05     0 06059  142   91 -0.14677277 -0.4437997</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true"></a><span class="co">#&gt; 3: -2.050654e-01     0 06059  142   91 -0.14677277 -0.2838955</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true"></a><span class="co">#&gt; 4:  2.260212e-01     0 06059  142   91 -0.14677277  0.5786433</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true"></a><span class="co">#&gt; 5: -4.399024e-01     0 47093 2298 1117  0.06761274  1.0612683</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true"></a><span class="co">#&gt; 6:  4.957666e-01     0 47093 2298 1117  0.06761274  1.4582169</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true"></a><span class="co">#&gt; 7: -4.111011e-02     0 47093 2298 1117  0.06761274  1.6612260</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true"></a><span class="co">#&gt; 8:  2.811920e-01     0 47093 2298 1117  0.06761274  2.2870869</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true"></a>ss<span class="op">$</span>d[,<span class="kw">lapply</span>(.SD, var),.SDcols=<span class="kw">grep</span>(<span class="st">&quot;u_|eps&quot;</span>,<span class="kw">names</span>(ss<span class="op">$</span>d),<span class="dt">value=</span>T)]</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true"></a><span class="co">#&gt;          u_a     u_sib      u_par u_fam       eps        u_s</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true"></a><span class="co">#&gt; 1: 0.4001115 0.2031868 0.04983674     0 0.3232322 0.02684367</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true"></a></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true"></a>ss<span class="op">$</span>d[,<span class="kw">lapply</span>(.SD, var),.SDcols=<span class="kw">c</span>(<span class="kw">grep</span>(<span class="st">&quot;^[yu]&quot;</span>, <span class="kw">names</span>(ss<span class="op">$</span>d),<span class="dt">value=</span>T))] <span class="co">## Actual variance of the outcome and the random effects</span></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true"></a><span class="co">#&gt;          u_a     u_sib      u_par u_fam        u_s     y</span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true"></a><span class="co">#&gt; 1: 0.4001115 0.2031868 0.04983674     0 0.02684367 1.011</span></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true"></a>mlists&lt;-<span class="kw">list</span>(<span class="dt">Ltlist=</span>ss<span class="op">$</span>Ltlist, <span class="dt">Zlist=</span>ss<span class="op">$</span>Zlist,<span class="dt">Glist=</span>ss<span class="op">$</span>Glist)</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true"></a>ss<span class="op">$</span>Zlist&lt;-<span class="ot">NULL</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true"></a>ss<span class="op">$</span>Glist&lt;-<span class="ot">NULL</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true"></a>ss<span class="op">$</span>Ltlist&lt;-<span class="ot">NULL</span></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true"></a></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true"></a>mlists<span class="op">$</span>Glist<span class="op">$</span>Ga[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>]</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true"></a><span class="co">#&gt; 12 x 12 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true"></a><span class="co">#&gt;                                                      </span></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1.0 .   0.5 0.5 .   .   .   .   .   .   .   .  </span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true"></a><span class="co">#&gt;  [2,] .   1.0 0.5 0.5 .   .   .   .   .   .   .   .  </span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true"></a><span class="co">#&gt;  [3,] 0.5 0.5 1.0 0.5 .   .   .   .   .   .   .   .  </span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true"></a><span class="co">#&gt;  [4,] 0.5 0.5 0.5 1.0 .   .   .   .   .   .   .   .  </span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true"></a><span class="co">#&gt;  [5,] .   .   .   .   1.0 .   0.5 0.5 .   .   .   .  </span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true"></a><span class="co">#&gt;  [6,] .   .   .   .   .   1.0 0.5 0.5 .   .   .   .  </span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true"></a><span class="co">#&gt;  [7,] .   .   .   .   0.5 0.5 1.0 0.5 .   .   .   .  </span></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true"></a><span class="co">#&gt;  [8,] .   .   .   .   0.5 0.5 0.5 1.0 .   .   .   .  </span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true"></a><span class="co">#&gt;  [9,] .   .   .   .   .   .   .   .   1.0 .   0.5 0.5</span></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true"></a><span class="co">#&gt; [10,] .   .   .   .   .   .   .   .   .   1.0 0.5 0.5</span></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true"></a><span class="co">#&gt; [11,] .   .   .   .   .   .   .   .   0.5 0.5 1.0 0.5</span></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true"></a><span class="co">#&gt; [12,] .   .   .   .   .   .   .   .   0.5 0.5 0.5 1.0</span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_par[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true"></a><span class="co">#&gt; 12 x 9 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true"></a><span class="co">#&gt;                        </span></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . . . . . . . .</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true"></a><span class="co">#&gt;  [2,] 1 . . . . . . . .</span></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true"></a><span class="co">#&gt;  [3,] . 1 . . . . . . .</span></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . 1 . . . . . .</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . 1 . . . . .</span></span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . 1 . . . . .</span></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . 1 . . . .</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true"></a><span class="co">#&gt;  [8,] . . . . . 1 . . .</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . 1 . .</span></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true"></a><span class="co">#&gt; [10,] . . . . . . 1 . .</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true"></a><span class="co">#&gt; [11,] . . . . . . . 1 .</span></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true"></a><span class="co">#&gt; [12,] . . . . . . . . 1</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_sib[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]</span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true"></a><span class="co">#&gt; 12 x 9 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true"></a><span class="co">#&gt;                        </span></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . . . . . . . .</span></span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true"></a><span class="co">#&gt;  [2,] . 1 . . . . . . .</span></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true"></a><span class="co">#&gt;  [3,] . . 1 . . . . . .</span></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . 1 . . . . . .</span></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . 1 . . . . .</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . . 1 . . . .</span></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . . 1 . . .</span></span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true"></a><span class="co">#&gt;  [8,] . . . . . 1 . . .</span></span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . 1 . .</span></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true"></a><span class="co">#&gt; [10,] . . . . . . . 1 .</span></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true"></a><span class="co">#&gt; [11,] . . . . . . . . 1</span></span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true"></a><span class="co">#&gt; [12,] . . . . . . . . 1</span></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_fam[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true"></a><span class="co">#&gt; 12 x 3 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true"></a><span class="co">#&gt;            </span></span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . .</span></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true"></a><span class="co">#&gt;  [2,] 1 . .</span></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true"></a><span class="co">#&gt;  [3,] 1 . .</span></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true"></a><span class="co">#&gt;  [4,] 1 . .</span></span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true"></a><span class="co">#&gt;  [5,] . 1 .</span></span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true"></a><span class="co">#&gt;  [6,] . 1 .</span></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true"></a><span class="co">#&gt;  [7,] . 1 .</span></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true"></a><span class="co">#&gt;  [8,] . 1 .</span></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . 1</span></span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true"></a><span class="co">#&gt; [10,] . . 1</span></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true"></a><span class="co">#&gt; [11,] . . 1</span></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true"></a><span class="co">#&gt; [12,] . . 1</span></span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true"></a></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true"></a></span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true"></a>vc_struct&lt;-<span class="st">&quot;sgps&quot;</span></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true"></a>vcl&lt;-<span class="kw">strsplit</span>(vc_struct,<span class="st">&quot;&quot;</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true"></a>tmplt&lt;-<span class="kw">paste0</span>(<span class="st">&quot;fam_chol_car_gmrf_&quot;</span>,vc_struct,<span class="st">&quot;_us&quot;</span>)</span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true"></a><span class="co">#tmplt&lt;-paste0(&quot;fam_chol_sar_gmrf_&quot;,vc_struct,&quot;_us&quot;)</span></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true"></a><span class="cf">if</span>(vcl[<span class="dv">1</span>]<span class="op">!=</span><span class="st">&quot;s&quot;</span>){</span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true"></a>  tmplt&lt;-<span class="kw">gsub</span>(<span class="st">&quot;car&quot;</span>,<span class="st">&quot;matern&quot;</span>,tmplt)</span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true"></a>}</span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true"></a></span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true"></a></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true"></a>K&lt;-<span class="fl">0.05</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true"></a>ss<span class="op">$</span>d[,yb<span class="op">:</span><span class="er">=</span><span class="kw">as.numeric</span>(y <span class="op">&gt;</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>K))]</span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true"></a></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true"></a> </span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true"></a>binaryind&lt;-<span class="kw">ifelse</span>(K<span class="op">==</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>) </span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true"></a>khat&lt;-ss<span class="op">$</span>d[,<span class="kw">mean</span>(yb)]</span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true"></a>z&lt;-<span class="kw">dnorm</span>(<span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>khat))</span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true"></a>yvec&lt;-ss<span class="op">$</span>d[,yb]</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>S&lt;-<span class="fl">0.03</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>rho&lt;-<span class="fl">0.9</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>sigma_inv&lt;-(Mpm5<span class="op">%*%</span>(diagI <span class="op">-</span><span class="st"> </span>rho<span class="op">*</span>N)<span class="op">%*%</span>Mpm5) <span class="co">### CAR specification of covariance matrix</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>sigma_s&lt;-<span class="kw">chol2inv</span>(<span class="kw">chol</span>(sigma_inv))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>sets2&lt;-S<span class="op">/</span>(<span class="kw">gowfac</span>(<span class="dt">Z=</span>Zs,<span class="dt">G=</span>sigma_s) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(Zs))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="kw">all.equal</span>(<span class="kw">t</span>(<span class="kw">chol</span>(sigma_inv)) <span class="op">%*%</span><span class="st"> </span>(<span class="kw">chol</span>(sigma_inv)), sigma_inv)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">apply</span>(sigma_inv, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">!=</span><span class="dv">0</span>)))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">#&gt;    2.00    4.00    6.00    6.42    8.00   32.00</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">apply</span>(sigma_s, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">!=</span><span class="dv">0</span>)))   </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="co">#&gt;     2.0  1218.0  1218.0   935.3  1218.0  1218.0</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>chsigma_s&lt;-<span class="kw">t</span>(<span class="kw">chol</span>(sigma_s))</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>ustar&lt;-<span class="kw">rnorm</span>(<span class="kw">nrow</span>(wmatd), <span class="dt">sd=</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sqrt</span>(sets2)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a><span class="kw">var</span>(ustar)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="co">#&gt; [1] 0.09364819</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a>ustar&lt;-chsigma_s <span class="op">%*%</span><span class="st"> </span>ustar</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a>ustar&lt;-<span class="kw">as.vector</span>(Zs <span class="op">%*%</span><span class="st"> </span>ustar)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a>ds[[<span class="st">&quot;u_s&quot;</span>]]&lt;-ustar</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a>G=<span class="fl">0.4</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a>Fam=<span class="dv">0</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a>P=<span class="fl">0.05</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a>C=<span class="fl">0.2</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a>E&lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>G <span class="op">-</span><span class="st"> </span>Fam <span class="op">-</span><span class="st"> </span>P <span class="op">-</span><span class="st"> </span>C <span class="op">-</span><span class="st"> </span>S</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a>n_trio&lt;-<span class="dv">0</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a>mu&lt;-<span class="dv">0</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a><span class="kw">print</span>(<span class="st">&quot;simulating data.&quot;</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;simulating data.&quot;</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true"></a>ss&lt;-smile<span class="op">::</span><span class="kw">sim_fam_nonspatial</span>(</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true"></a>                        <span class="dt">n_quad=</span>n_quad</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true"></a>                       ,<span class="dt">Ag=</span>G</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true"></a>                       ,<span class="dt">C_fam=</span>Fam</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true"></a>                       ,<span class="dt">C_par=</span>P</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true"></a>                       ,<span class="dt">C_sib=</span>C</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true"></a>                       ,<span class="dt">S=</span>S</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true"></a>                       ,<span class="dt">mu=</span><span class="dv">0</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true"></a>                          )</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true"></a>ss<span class="op">$</span>d&lt;-<span class="kw">cbind</span>(ss<span class="op">$</span>d, ds)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true"></a>ss<span class="op">$</span>d[,y<span class="op">:</span><span class="er">=</span>u_a <span class="op">+</span><span class="st"> </span>u_sib <span class="op">+</span><span class="st"> </span>u_par <span class="op">+</span><span class="st"> </span>u_fam <span class="op">+</span><span class="st"> </span>eps <span class="op">+</span><span class="st"> </span>fixed <span class="op">+</span><span class="st"> </span>u_s]</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true"></a>ss<span class="op">$</span>d[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true"></a><span class="co">#&gt;    set emprel ttype pid empreltype        u_a      u_sib       u_par u_fam</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true"></a><span class="co">#&gt; 1:   1      1  quad   1     parent  0.2856087 -0.1759811  0.05023624     0</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true"></a><span class="co">#&gt; 2:   1      2  quad   2     parent  0.3521049  0.7804724  0.05023624     0</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true"></a><span class="co">#&gt; 3:   1      3  quad   3        sib -0.2596390 -0.5636323 -0.13923269     0</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true"></a><span class="co">#&gt; 4:   1      3  quad   4        sib  0.2847946 -0.5636323  0.29238055     0</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true"></a><span class="co">#&gt; 5:   2      1  quad   5     parent  0.8362206  0.6912616 -0.20792723     0</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true"></a><span class="co">#&gt; 6:   2      2  quad   6     parent  0.3829977 -0.1380916 -0.20792723     0</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true"></a><span class="co">#&gt; 7:   2      3  quad   7        sib  0.6736118  0.3535593 -0.17374926     0</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true"></a><span class="co">#&gt; 8:   2      3  quad   8        sib  0.3489379  0.3535593 -0.04854736     0</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true"></a><span class="co">#&gt;            eps fixed   kid  gid   rn        u_s          y</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true"></a><span class="co">#&gt; 1: -0.42298122     0 12057 2528  164  0.2005934 -0.0625241</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true"></a><span class="co">#&gt; 2:  0.07482450     0 12057 2528  164  0.2005934  1.4582314</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true"></a><span class="co">#&gt; 3: -0.88686273     0 12057 2528  164  0.2005934 -1.6487733</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true"></a><span class="co">#&gt; 4:  0.12518786     0 12057 2528  164  0.2005934  0.3393240</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true"></a><span class="co">#&gt; 5: -0.14872827     0 34580   61 1501 -0.1215483  1.0492784</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true"></a><span class="co">#&gt; 6:  1.07584283     0 34580   61 1501 -0.1215483  0.9912734</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true"></a><span class="co">#&gt; 7: -0.05439081     0 34580   61 1501 -0.1215483  0.6774828</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true"></a><span class="co">#&gt; 8: -0.16374868     0 34580   61 1501 -0.1215483  0.3686529</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true"></a></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true"></a>ss<span class="op">$</span>d[,<span class="kw">lapply</span>(.SD, var),.SDcols=<span class="kw">grep</span>(<span class="st">&quot;u_|eps&quot;</span>,<span class="kw">names</span>(ss<span class="op">$</span>d),<span class="dt">value=</span>T)]</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true"></a><span class="co">#&gt;          u_a     u_sib      u_par u_fam       eps        u_s</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true"></a><span class="co">#&gt; 1: 0.4013279 0.2026454 0.05032043     0 0.3186449 0.02759281</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true"></a></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true"></a></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true"></a>ss<span class="op">$</span>d[,<span class="kw">lapply</span>(.SD, var),.SDcols=<span class="kw">c</span>(<span class="kw">grep</span>(<span class="st">&quot;^[yu]&quot;</span>, <span class="kw">names</span>(ss<span class="op">$</span>d),<span class="dt">value=</span>T))] <span class="co">## Actual variance of the outcome and the random effects</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true"></a><span class="co">#&gt;          u_a     u_sib      u_par u_fam        u_s        y</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true"></a><span class="co">#&gt; 1: 0.4013279 0.2026454 0.05032043     0 0.02759281 0.996959</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true"></a>mlists&lt;-<span class="kw">list</span>(<span class="dt">Ltlist=</span>ss<span class="op">$</span>Ltlist, <span class="dt">Zlist=</span>ss<span class="op">$</span>Zlist,<span class="dt">Glist=</span>ss<span class="op">$</span>Glist)</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true"></a>ss<span class="op">$</span>Zlist&lt;-<span class="ot">NULL</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true"></a>ss<span class="op">$</span>Glist&lt;-<span class="ot">NULL</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true"></a>ss<span class="op">$</span>Ltlist&lt;-<span class="ot">NULL</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true"></a></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true"></a></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true"></a>mlists<span class="op">$</span>Glist<span class="op">$</span>Ga[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>]</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true"></a><span class="co">#&gt; 12 x 12 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true"></a><span class="co">#&gt;                                                      </span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1.0 .   0.5 0.5 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true"></a><span class="co">#&gt;  [2,] .   1.0 0.5 0.5 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true"></a><span class="co">#&gt;  [3,] 0.5 0.5 1.0 0.5 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true"></a><span class="co">#&gt;  [4,] 0.5 0.5 0.5 1.0 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true"></a><span class="co">#&gt;  [5,] .   .   .   .   1.0 .   0.5 0.5 .   .   .   .  </span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true"></a><span class="co">#&gt;  [6,] .   .   .   .   .   1.0 0.5 0.5 .   .   .   .  </span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true"></a><span class="co">#&gt;  [7,] .   .   .   .   0.5 0.5 1.0 0.5 .   .   .   .  </span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true"></a><span class="co">#&gt;  [8,] .   .   .   .   0.5 0.5 0.5 1.0 .   .   .   .  </span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true"></a><span class="co">#&gt;  [9,] .   .   .   .   .   .   .   .   1.0 .   0.5 0.5</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true"></a><span class="co">#&gt; [10,] .   .   .   .   .   .   .   .   .   1.0 0.5 0.5</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true"></a><span class="co">#&gt; [11,] .   .   .   .   .   .   .   .   0.5 0.5 1.0 0.5</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true"></a><span class="co">#&gt; [12,] .   .   .   .   .   .   .   .   0.5 0.5 0.5 1.0</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_par[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true"></a><span class="co">#&gt; 12 x 9 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true"></a><span class="co">#&gt;                        </span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . . . . . . . .</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true"></a><span class="co">#&gt;  [2,] 1 . . . . . . . .</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true"></a><span class="co">#&gt;  [3,] . 1 . . . . . . .</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . 1 . . . . . .</span></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . 1 . . . . .</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . 1 . . . . .</span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . 1 . . . .</span></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true"></a><span class="co">#&gt;  [8,] . . . . . 1 . . .</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . 1 . .</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true"></a><span class="co">#&gt; [10,] . . . . . . 1 . .</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true"></a><span class="co">#&gt; [11,] . . . . . . . 1 .</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true"></a><span class="co">#&gt; [12,] . . . . . . . . 1</span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_sib[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true"></a><span class="co">#&gt; 12 x 9 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true"></a><span class="co">#&gt;                        </span></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . . . . . . . .</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true"></a><span class="co">#&gt;  [2,] . 1 . . . . . . .</span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true"></a><span class="co">#&gt;  [3,] . . 1 . . . . . .</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . 1 . . . . . .</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . 1 . . . . .</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . . 1 . . . .</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . . 1 . . .</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true"></a><span class="co">#&gt;  [8,] . . . . . 1 . . .</span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . 1 . .</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true"></a><span class="co">#&gt; [10,] . . . . . . . 1 .</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true"></a><span class="co">#&gt; [11,] . . . . . . . . 1</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true"></a><span class="co">#&gt; [12,] . . . . . . . . 1</span></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_fam[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true"></a><span class="co">#&gt; 12 x 3 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true"></a><span class="co">#&gt;            </span></span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . .</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true"></a><span class="co">#&gt;  [2,] 1 . .</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true"></a><span class="co">#&gt;  [3,] 1 . .</span></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true"></a><span class="co">#&gt;  [4,] 1 . .</span></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true"></a><span class="co">#&gt;  [5,] . 1 .</span></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true"></a><span class="co">#&gt;  [6,] . 1 .</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true"></a><span class="co">#&gt;  [7,] . 1 .</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true"></a><span class="co">#&gt;  [8,] . 1 .</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . 1</span></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true"></a><span class="co">#&gt; [10,] . . 1</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true"></a><span class="co">#&gt; [11,] . . 1</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true"></a><span class="co">#&gt; [12,] . . 1</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true"></a></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true"></a></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true"></a>vc_struct&lt;-<span class="st">&quot;sgps&quot;</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true"></a>vcl&lt;-<span class="kw">strsplit</span>(vc_struct,<span class="st">&quot;&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true"></a>tmplt&lt;-<span class="kw">paste0</span>(<span class="st">&quot;fam_chol_car_gmrf_&quot;</span>,vc_struct,<span class="st">&quot;_us&quot;</span>)</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true"></a><span class="co">#tmplt&lt;-paste0(&quot;fam_chol_sar_gmrf_&quot;,vc_struct,&quot;_us&quot;)</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true"></a><span class="cf">if</span>(vcl[<span class="dv">1</span>]<span class="op">!=</span><span class="st">&quot;s&quot;</span>){</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true"></a>  tmplt&lt;-<span class="kw">gsub</span>(<span class="st">&quot;car&quot;</span>,<span class="st">&quot;matern&quot;</span>,tmplt)</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true"></a>}</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true"></a></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true"></a></span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true"></a>K&lt;-<span class="fl">0.05</span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true"></a>ss<span class="op">$</span>d[,yb<span class="op">:</span><span class="er">=</span><span class="kw">as.numeric</span>(y <span class="op">&gt;</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>K))]</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true"></a></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true"></a> </span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true"></a>binaryind&lt;-<span class="kw">ifelse</span>(K<span class="op">==</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>) </span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true"></a>khat&lt;-ss<span class="op">$</span>d[,<span class="kw">mean</span>(yb)]</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true"></a>z&lt;-<span class="kw">dnorm</span>(<span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>khat))</span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true"></a>yvec&lt;-ss<span class="op">$</span>d[,yb]</span></code></pre></div>
 <h5 id="part-2">Part 2.</h5>
 <p>Fit the smile model using the <code>smile()</code> function like below.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>model_output&lt;-</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="st">     </span><span class="kw">smile</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>       <span class="dt">X=</span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">nrow</span>(ss<span class="op">$</span>d),<span class="dt">ncol=</span><span class="dv">1</span>))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>      ,<span class="dt">y=</span>yvec</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>      ,<span class="dt">Zs=</span>Zs</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>      ,<span class="dt">wmatd=</span>wmatd</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>      ,<span class="dt">vc_structure=</span><span class="st">&quot;gpcs&quot;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>      ,<span class="dt">spatial_structure=</span><span class="st">&quot;car&quot;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>      ,<span class="dt">mlists=</span>mlists</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>        )</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">#&gt; lm(formula = dl$y ~ X - 1)</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="co">#&gt; -0.05088 -0.05088 -0.05088 -0.05088  0.94912 </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="co">#&gt;   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="co">#&gt; X 0.050875   0.001099    46.3   &lt;2e-16 ***</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a><span class="co">#&gt; ---</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a><span class="co">#&gt; Residual standard error: 0.2197 on 39999 degrees of freedom</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a><span class="co">#&gt; Multiple R-squared:  0.05088,    Adjusted R-squared:  0.05085 </span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a><span class="co">#&gt; F-statistic:  2144 on 1 and 39999 DF,  p-value: &lt; 2.2e-16</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a><span class="co">#&gt; Order of parameters:</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a><span class="co">#&gt;  [1] &quot;beta&quot;           &quot;log_sdvc_res&quot;   &quot;logit_rho&quot;      &quot;log_sdvc_s&quot;    </span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a>....</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true"></a>....</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.697043e-14 </span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  46.90366 </span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -204883.7 mgc: 0.08051005 ustep: 1 </span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.220446e-14 </span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  46.94764 </span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -204873.9 mgc: 0.6733089 ustep: 1 </span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.442491e-14 </span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  389.1064 </span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -204873.9 mgc: 0.6733089 ustep: 1 </span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  389.0942 </span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -204874 mgc: 0.0008267623 ustep: 1 </span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.197442e-14 </span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.04804158 </span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -204874.1 mgc: 0.0008272814 ustep: 1 </span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.03586956 </span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.7559082 </span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;calculating liability scale variance components&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>model_output&lt;-</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="st">     </span><span class="kw">smile</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>       <span class="dt">X=</span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">nrow</span>(ss<span class="op">$</span>d),<span class="dt">ncol=</span><span class="dv">1</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>      ,<span class="dt">y=</span>yvec</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>      ,<span class="dt">Zs=</span>Zs</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>      ,<span class="dt">wmatd=</span>wmatd</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>      ,<span class="dt">vc_structure=</span><span class="st">&quot;gpcs&quot;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>      ,<span class="dt">spatial_structure=</span><span class="st">&quot;car&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>      ,<span class="dt">mlists=</span>mlists</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>        )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="co">#&gt; lm(formula = dl$y ~ X - 1)</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a><span class="co">#&gt; -0.05188 -0.05188 -0.05188 -0.05188  0.94812 </span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a><span class="co">#&gt;   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a><span class="co">#&gt; X 0.051875   0.001109   46.78   &lt;2e-16 ***</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a><span class="co">#&gt; ---</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a><span class="co">#&gt; Residual standard error: 0.2218 on 39999 degrees of freedom</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true"></a><span class="co">#&gt; Multiple R-squared:  0.05188,    Adjusted R-squared:  0.05185 </span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true"></a><span class="co">#&gt; F-statistic:  2188 on 1 and 39999 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a><span class="co">#&gt; Order of parameters:</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a><span class="co">#&gt;  [1] &quot;beta&quot;           &quot;log_sdvc_res&quot;   &quot;logit_rho&quot;      &quot;log_sdvc_s&quot;    </span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>....</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a>....</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.197442e-14 </span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  49.5361 </span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -216167.5 mgc: 0.07881897 ustep: 1 </span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  49.53198 </span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -216158.5 mgc: 0.3821762 ustep: 1 </span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.264855e-14 </span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  369.3994 </span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -216158.5 mgc: 0.3821762 ustep: 1 </span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.130829e-14 </span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  369.3748 </span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -216158.6 mgc: 0.0003169883 ustep: 1 </span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 4.307665e-14 </span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.03245477 </span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -216158.7 mgc: 0.0003172778 ustep: 1 </span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.176037e-14 </span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.009659882 </span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.723282 </span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;calculating liability scale variance components&quot;</span></span></code></pre></div>
 <p><code>vc_a_lia</code>, <code>vc_c_par_lia</code>, <code>vc_c_sib_lia</code>, <code>gvc_s_lia</code>, represent the G, P, C, and S variance compoenents respectively. The model estimates are close to the true simulated variances.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>model_output<span class="op">$</span>vc_rpt</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">#&gt; $outrprt</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">#&gt;            param     Estimate    Std.Error</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">#&gt;  1:     vc_a_lia 0.4645948577 0.0295112262</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">#&gt;  2: vc_c_par_lia 0.0627896126 0.0360400403</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">#&gt;  3: vc_c_sib_lia 0.1863731181 0.0198047245</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">#&gt;  4:    gvc_s_lia 0.0254107764 0.0087622823</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">#&gt;  5:         vc_a 0.0071897123 0.0005393348</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="co">#&gt;  6:     vc_c_par 0.0007944552 0.0004896795</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="co">#&gt;  7:     vc_c_sib 0.0043928880 0.0005008102</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">#&gt;  8:        gvc_s 0.0002874069 0.0001024222</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="co">#&gt;  9:    vc_pp_lia 0.0882003890 0.0360341514</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="co">#&gt; 10:    vc_ps_lia 0.2577082052 0.0139037130</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="co">#&gt; 11:    vc_ss_lia 0.4440813233 0.0169588679</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="co">#&gt; 12:    gvc_s_lia 0.0254107764 0.0087622823</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a><span class="co">#&gt; 13:        vc_pp 0.0010818621 0.0004913923</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="co">#&gt; 14:        vc_ps 0.0038822631 0.0002724399</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a><span class="co">#&gt; 15:        vc_ss 0.0082751511 0.0004745721</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="co">#&gt; 16:        gvc_s 0.0002874069 0.0001024222</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a><span class="co">#&gt; $vclia.cov</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a><span class="co">#&gt;                   vc_a      vc_c_par      vc_c_sib         gvc_s</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a><span class="co">#&gt; vc_a      0.0008709125  1.931494e-04 -2.818659e-04 -1.011925e-04</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a><span class="co">#&gt; vc_c_par  0.0001931494  1.298885e-03 -5.627765e-05 -3.860101e-05</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a><span class="co">#&gt; vc_c_sib -0.0002818659 -5.627765e-05  3.922271e-04 -8.035605e-06</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a><span class="co">#&gt; gvc_s    -0.0001011925 -3.860101e-05 -8.035605e-06  7.677759e-05</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a><span class="co">#&gt; $vcobs.cov</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a><span class="co">#&gt;                   vc_a      vc_c_par      vc_c_sib         gvc_s</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a><span class="co">#&gt; vc_a      2.908821e-07  4.179080e-08 -9.969333e-08 -8.987305e-09</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a><span class="co">#&gt; vc_c_par  4.179080e-08  2.397860e-07 -1.485417e-08 -4.404922e-09</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a><span class="co">#&gt; vc_c_sib -9.969333e-08 -1.485417e-08  2.508108e-07 -6.115553e-11</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a><span class="co">#&gt; gvc_s    -8.987305e-09 -4.404922e-09 -6.115553e-11  1.049030e-08</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true"></a><span class="co">#&gt; $rlia.cov</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true"></a><span class="co">#&gt;              vc_pp        vc_ps        vc_ss        gvc_s</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true"></a><span class="co">#&gt; vc_pp 1.298460e-03 8.415502e-05 1.984176e-05 3.817658e-05</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true"></a><span class="co">#&gt; vc_ps 8.415502e-05 1.933132e-04 4.434466e-05 2.618135e-05</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true"></a><span class="co">#&gt; vc_ss 1.984176e-05 4.434466e-05 2.876032e-04 1.814575e-05</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true"></a><span class="co">#&gt; gvc_s 3.817658e-05 2.618135e-05 1.814575e-05 7.677759e-05</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true"></a><span class="co">#&gt; $robs.cov</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true"></a><span class="co">#&gt;              vc_pp        vc_ps        vc_ss        gvc_s</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true"></a><span class="co">#&gt; vc_pp 2.414664e-07 2.248713e-08 7.571811e-09 6.085383e-09</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true"></a><span class="co">#&gt; vc_ps 2.248713e-08 7.422351e-08 2.431570e-08 5.996652e-09</span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true"></a><span class="co">#&gt; vc_ss 7.571811e-09 2.431570e-08 2.252187e-07 5.935497e-09</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true"></a><span class="co">#&gt; gvc_s 6.085383e-09 5.996652e-09 5.935497e-09 1.049030e-08</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>model_output<span class="op">$</span>vc_rpt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co">#&gt; $outrprt</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">#&gt;            param     Estimate    Std.Error</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="co">#&gt;  1:     vc_a_lia 0.4472942939 2.891835e-02</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">#&gt;  2: vc_c_par_lia 0.0310615839 3.998070e-02</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">#&gt;  3: vc_c_sib_lia 0.1856823683 2.044139e-02</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="co">#&gt;  4:    gvc_s_lia 0.0137619851 6.586203e-03</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="co">#&gt;  5:         vc_a 0.0068637168 5.385110e-04</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co">#&gt;  6:     vc_c_par 0.0003779470 5.052097e-04</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="co">#&gt;  7:     vc_c_sib 0.0043059296 5.079936e-04</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a><span class="co">#&gt;  8:        gvc_s 0.0001580622 7.701079e-05</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a><span class="co">#&gt;  9:    vc_pp_lia 0.0448235690 4.001669e-02</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a><span class="co">#&gt; 10:    vc_ps_lia 0.2374091320 1.410631e-02</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a><span class="co">#&gt; 11:    vc_ss_lia 0.4230915004 1.736471e-02</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a><span class="co">#&gt; 12:    gvc_s_lia 0.0137619851 6.586203e-03</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a><span class="co">#&gt; 13:        vc_pp 0.0005360092 5.061095e-04</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a><span class="co">#&gt; 14:        vc_ps 0.0035899206 2.721769e-04</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a><span class="co">#&gt; 15:        vc_ss 0.0078958502 4.773074e-04</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a><span class="co">#&gt; 16:        gvc_s 0.0001580622 7.701079e-05</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true"></a><span class="co">#&gt; $vclia.cov</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true"></a><span class="co">#&gt;                   vc_a      vc_c_par      vc_c_sib         gvc_s</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true"></a><span class="co">#&gt; vc_a      8.362707e-04  1.731992e-04 -3.067454e-04 -5.345775e-05</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true"></a><span class="co">#&gt; vc_c_par  1.731992e-04  1.598457e-03 -6.362209e-05 -2.024965e-05</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true"></a><span class="co">#&gt; vc_c_sib -3.067454e-04 -6.362209e-05  4.178503e-04 -4.279795e-06</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true"></a><span class="co">#&gt; gvc_s    -5.345775e-05 -2.024965e-05 -4.279795e-06  4.337807e-05</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true"></a><span class="co">#&gt; $vcobs.cov</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true"></a><span class="co">#&gt;                   vc_a      vc_c_par      vc_c_sib         gvc_s</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true"></a><span class="co">#&gt; vc_a      2.899941e-07  3.801667e-08 -1.047540e-07 -4.348948e-09</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true"></a><span class="co">#&gt; vc_c_par  3.801667e-08  2.552368e-07 -1.522507e-08 -2.510351e-09</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true"></a><span class="co">#&gt; vc_c_sib -1.047540e-07 -1.522507e-08  2.580575e-07  2.193458e-10</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true"></a><span class="co">#&gt; gvc_s    -4.348948e-09 -2.510351e-09  2.193458e-10  5.930662e-09</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true"></a><span class="co">#&gt; $rlia.cov</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true"></a><span class="co">#&gt;              vc_pp        vc_ps        vc_ss        gvc_s</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true"></a><span class="co">#&gt; vc_pp 1.601335e-03 8.299912e-05 1.509723e-05 2.312841e-05</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true"></a><span class="co">#&gt; vc_ps 8.299912e-05 1.989880e-04 4.133548e-05 1.664919e-05</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true"></a><span class="co">#&gt; vc_ss 1.509723e-05 4.133548e-05 3.015333e-04 1.236939e-05</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true"></a><span class="co">#&gt; gvc_s 2.312841e-05 1.664919e-05 1.236939e-05 4.337807e-05</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true"></a><span class="co">#&gt; $robs.cov</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true"></a><span class="co">#&gt;              vc_pp        vc_ps        vc_ss        gvc_s</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true"></a><span class="co">#&gt; vc_pp 2.561468e-07 2.025417e-08 5.248451e-09 3.420311e-09</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true"></a><span class="co">#&gt; vc_ps 2.025417e-08 7.408024e-08 2.192256e-08 3.756188e-09</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true"></a><span class="co">#&gt; vc_ss 5.248451e-09 2.192256e-08 2.278224e-07 3.975534e-09</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true"></a><span class="co">#&gt; gvc_s 3.420311e-09 3.756188e-09 3.975534e-09 5.930662e-09</span></span></code></pre></div>
 <p>The full model report from TMB with all fitted parameters are found in the <code>tmb_rpt</code> object.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>model_output<span class="op">$</span>tmb_rpt</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">#&gt;                  param      Estimate   Std. Error            ll           ul</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="co">#&gt;      1:     log_sdvc_a -2.4675520600 0.0375073995 -2.5410652121 -2.394038908</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="co">#&gt;      2:     log_sdvc_s -3.3964258547 0.1781833203 -3.7456587452 -3.047192964</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="co">#&gt;      3: log_sdvc_c_par -3.5689270048 0.3081857107 -4.1729598983 -2.964894111</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="co">#&gt;      4: log_sdvc_c_sib -2.7138841996 0.0570023834 -2.8256068182 -2.602161581</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="co">#&gt;      5:   log_sdvc_res -1.6674749684 0.0109850991 -1.6890053669 -1.645944570</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="co">#&gt;     ---                                                                     </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="co">#&gt; 101634:       vc_c_par  0.0007944552 0.0004896795 -0.0001652989  0.001754209</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="co">#&gt; 101635:       vc_c_sib  0.0043928880 0.0005008102  0.0034113181  0.005374458</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="co">#&gt; 101636:         vc_res  0.0356163692 0.0007824987  0.0340827000  0.037150038</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="co">#&gt; 101637:           vc_s  0.0011217653 0.0003997597  0.0003382506  0.001905280</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="co">#&gt; 101638:            rho  0.8138778224 0.1163323459  0.5858706141  1.041885031</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a><span class="co">#&gt;         objective                     mess fit_time sd_time modeltype</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a><span class="co">#&gt;      1:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a><span class="co">#&gt;      2:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a><span class="co">#&gt;      3:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a><span class="co">#&gt;      4:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a><span class="co">#&gt;      5:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a><span class="co">#&gt;     ---                                                              </span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a><span class="co">#&gt; 101634:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a><span class="co">#&gt; 101635:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a><span class="co">#&gt; 101636:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a><span class="co">#&gt; 101637:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a><span class="co">#&gt; 101638:  -4134.37 relative convergence (4)   25.572   5.113  car_gmrf</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>model_output<span class="op">$</span>tmb_rpt</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="co">#&gt;                  param      Estimate   Std. Error            ll            ul</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="co">#&gt;      1:     log_sdvc_a -2.4907530913 0.0392288190 -2.567640e+00 -2.4138660190</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="co">#&gt;      2:     log_sdvc_s -3.9667241273 0.2436090941 -4.444189e+00 -3.4892590765</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="co">#&gt;      3: log_sdvc_c_par -3.9403783023 0.6683604923 -5.250341e+00 -2.6304158087</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">#&gt;      4: log_sdvc_c_sib -2.7238811133 0.0589876779 -2.839495e+00 -2.6082673891</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="co">#&gt;      5:   log_sdvc_res -1.6422822191 0.0106473167 -1.663151e+00 -1.6214138619</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co">#&gt;     ---                                                                      </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="co">#&gt; 101618:       vc_c_par  0.0003779470 0.0005052097 -6.122458e-04  0.0013681398</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="co">#&gt; 101619:       vc_c_sib  0.0043059296 0.0005079936  3.310280e-03  0.0053015787</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="co">#&gt; 101620:         vc_res  0.0374568963 0.0007976309  3.589357e-02  0.0390202241</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a><span class="co">#&gt; 101621:           vc_s  0.0003585479 0.0001746911  1.615972e-05  0.0007009361</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="co">#&gt; 101622:            rho  0.9563912052 0.0293073324  8.989499e-01  1.0138325212</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="co">#&gt;         objective                     mess fit_time sd_time modeltype</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="co">#&gt;      1: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="co">#&gt;      2: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="co">#&gt;      3: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="co">#&gt;      4: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="co">#&gt;      5: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="co">#&gt;     ---                                                              </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="co">#&gt; 101618: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="co">#&gt; 101619: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="co">#&gt; 101620: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="co">#&gt; 101621: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="co">#&gt; 101622: -3726.723 relative convergence (4)    29.15   4.966  car_gmrf</span></span></code></pre></div>
 <p>The <code>indlevel_dt</code> object is a data-table showing all fitted effects and the response variable.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>model_output<span class="op">$</span>indlevel_dt</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co">#&gt;        V1 y        fe          us           ua          upar         usib</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">#&gt;     1:  1 0 0.0504759  0.04759013 -0.012628762 -0.0015065164 -0.004165092</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="co">#&gt;     2:  1 0 0.0504759  0.04759013 -0.012628762 -0.0015065164 -0.004165092</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">#&gt;     3:  1 0 0.0504759  0.04759013 -0.004109617 -0.0006422059 -0.007102071</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">#&gt;     4:  1 0 0.0504759  0.04759013 -0.004109617 -0.0006422059 -0.007102071</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="co">#&gt;     5:  1 0 0.0504759 -0.08025647  0.100026730 -0.0056460223 -0.015609656</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="co">#&gt;    ---                                                                   </span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co">#&gt; 39996:  1 0 0.0504759  0.27146140 -0.021957900 -0.0034313395  0.071859871</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="co">#&gt; 39997:  1 0 0.0504759 -0.07964166 -0.011595236 -0.0013832245 -0.003824225</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a><span class="co">#&gt; 39998:  1 0 0.0504759 -0.07964166 -0.011595236 -0.0013832245 -0.003824225</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a><span class="co">#&gt; 39999:  1 0 0.0504759 -0.07964166 -0.003773290 -0.0005896484 -0.006520844</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a><span class="co">#&gt; 40000:  1 0 0.0504759 -0.07964166 -0.003773290 -0.0005896484 -0.006520844</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a><span class="co">#&gt;               yhat</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a><span class="co">#&gt;     1:  0.07976567</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a><span class="co">#&gt;     2:  0.07976567</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a><span class="co">#&gt;     3:  0.08621214</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a><span class="co">#&gt;     4:  0.08621214</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a><span class="co">#&gt;     5:  0.04899048</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a><span class="co">#&gt;    ---            </span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true"></a><span class="co">#&gt; 39996:  0.36840793</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true"></a><span class="co">#&gt; 39997: -0.04596844</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true"></a><span class="co">#&gt; 39998: -0.04596844</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true"></a><span class="co">#&gt; 39999: -0.04004954</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true"></a><span class="co">#&gt; 40000: -0.04004954</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>model_output<span class="op">$</span>indlevel_dt</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="co">#&gt;        V1 y         fe          us           ua          upar         usib</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="co">#&gt;     1:  1 0 0.05148101  0.47622747 -0.013926692 -0.0008279503 -0.004716396</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="co">#&gt;     2:  1 0 0.05148101  0.47622747 -0.013926692 -0.0008279503 -0.004716396</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="co">#&gt;     3:  1 0 0.05148101  0.47622747 -0.004531625 -0.0003528909 -0.008040935</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="co">#&gt;     4:  1 0 0.05148101  0.47622747 -0.004531625 -0.0003528909 -0.008040935</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="co">#&gt;     5:  1 0 0.05148101 -0.06614711 -0.011562537 -0.0006873998 -0.003915754</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">#&gt;    ---                                                                    </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="co">#&gt; 39996:  1 0 0.05148101  0.17344462 -0.004102174 -0.0003194483 -0.007278915</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="co">#&gt; 39997:  1 0 0.05148101 -0.55024405 -0.009452408 -0.0005619514 -0.003201141</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a><span class="co">#&gt; 39998:  1 0 0.05148101 -0.55024405 -0.009452408 -0.0005619514 -0.003201141</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a><span class="co">#&gt; 39999:  1 0 0.05148101 -0.55024405 -0.003075732 -0.0002395163 -0.005457592</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a><span class="co">#&gt; 40000:  1 0 0.05148101 -0.55024405 -0.003075732 -0.0002395163 -0.005457592</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a><span class="co">#&gt;               yhat</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="co">#&gt;     1:  0.50823744</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a><span class="co">#&gt;     2:  0.50823744</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="co">#&gt;     3:  0.51478303</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a><span class="co">#&gt;     4:  0.51478303</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="co">#&gt;     5: -0.03083179</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a><span class="co">#&gt;    ---            </span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a><span class="co">#&gt; 39996:  0.21322510</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="co">#&gt; 39997: -0.51197854</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a><span class="co">#&gt; 39998: -0.51197854</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a><span class="co">#&gt; 39999: -0.50753588</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a><span class="co">#&gt; 40000: -0.50753588</span></span></code></pre></div>
 
 </body>
 </html>
