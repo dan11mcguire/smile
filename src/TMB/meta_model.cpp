@@ -3,9 +3,6 @@
 #define TMB_LIB_INIT R_init_meta_model
 #include <TMB.hpp>
 #include "fam_chol_matern_gmrf_sgps.hpp"
-#include "fam_chol_matern_gmrf_sgps_logit.hpp"
-#include "fam_chol_matern_gmrf_sgps_overlogit.hpp"
-#include "fam_chol_matern_gmrf_sgps_overpois.hpp"
 #include "fam_chol_matern_gmrf_s.hpp"
 #include "fam_chol_matern_gmrf_gfps.hpp"
 #include "fam_chol_matern_gmrf_gps.hpp"
@@ -68,23 +65,6 @@
 #include "fam_chol_iid_gmrf_sps_us.hpp"
 #include "fam_chol_iid_gmrf_sg_us.hpp"
 #include "fam_chol_iid_gmrf_s_us.hpp"
-#include "rate_fam_chol_car_gmrf_g_us.hpp"
-#include "rate_fam_chol_car_gmrf_gf_us.hpp"
-#include "rate_fam_chol_car_gmrf_gfs_us.hpp"
-#include "rate_fam_chol_car_gmrf_gp_us.hpp"
-#include "rate_fam_chol_car_gmrf_gps_us.hpp"
-#include "rate_fam_chol_car_gmrf_gs_us.hpp"
-#include "rate_fam_chol_car_gmrf_s_us.hpp"
-#include "rate_fam_chol_car_gmrf_sg_us.hpp"
-#include "rate_fam_chol_car_gmrf_sgf_us.hpp"
-#include "rate_fam_chol_car_gmrf_sgfs_us.hpp"
-#include "rate_fam_chol_car_gmrf_sgp_us.hpp"
-#include "rate_fam_chol_car_gmrf_sgps_us.hpp"
-#include "rate_fam_chol_car_gmrf_sgs_us.hpp"
-#include "alpha1scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
-#include "ratescrtch_fam_chol_car_gmrf_sgps_us.hpp"
-#include "car_scrtch_fam_chol_matern_gmrf_sgps_us.hpp"
-#include "fam_chol_car_gmrf_sgps_us_normalize.hpp"
 //#include "car_gmrf.hpp"
 
 template<class Type>
@@ -92,12 +72,6 @@ Type objective_function<Type>::operator() () {
   DATA_STRING(model);
   if(model ==        "fam_chol_matern_gmrf_sgps") {
     return fam_chol_matern_gmrf_sgps(this);
-  } else if(model == "fam_chol_matern_gmrf_sgps_logit") {
-    return fam_chol_matern_gmrf_sgps_logit(this);
-  } else if(model == "fam_chol_matern_gmrf_sgps_overlogit") {
-    return fam_chol_matern_gmrf_sgps_overlogit(this);
-  } else if(model == "fam_chol_matern_gmrf_sgps_overpois") {
-    return fam_chol_matern_gmrf_sgps_overpois(this);
   } else if(model == "fam_chol_matern_gmrf_s") {
     return fam_chol_matern_gmrf_s(this);
   } else if(model == "fam_chol_matern_gmrf_gfps") {
@@ -226,40 +200,6 @@ Type objective_function<Type>::operator() () {
             return fam_chol_iid_gmrf_sg_us(this);
   } else if(model == "fam_chol_iid_gmrf_s_us") {
             return fam_chol_iid_gmrf_s_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_g_us") {
-            return rate_fam_chol_car_gmrf_g_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_gf_us") {
-            return rate_fam_chol_car_gmrf_gf_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_gfs_us") {
-            return rate_fam_chol_car_gmrf_gfs_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_gp_us") {
-            return rate_fam_chol_car_gmrf_gp_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_gps_us") {
-            return rate_fam_chol_car_gmrf_gps_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_gs_us") {
-            return rate_fam_chol_car_gmrf_gs_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_s_us") {
-            return rate_fam_chol_car_gmrf_s_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_sg_us") {
-            return rate_fam_chol_car_gmrf_sg_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_sgf_us") {
-            return rate_fam_chol_car_gmrf_sgf_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_sgfs_us") {
-            return rate_fam_chol_car_gmrf_sgfs_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_sgp_us") {
-            return rate_fam_chol_car_gmrf_sgp_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_sgps_us") {
-            return rate_fam_chol_car_gmrf_sgps_us(this);
-  } else if(model == "rate_fam_chol_car_gmrf_sgs_us") {
-          return rate_fam_chol_car_gmrf_sgs_us(this);
-  } else if(model == "alpha1scrtch_fam_chol_matern_gmrf_sgps_us") {
-            return alpha1scrtch_fam_chol_matern_gmrf_sgps_us(this);
-  } else if(model == "ratescrtch_fam_chol_car_gmrf_sgps_us") {
-            return ratescrtch_fam_chol_car_gmrf_sgps_us(this);
-  } else if(model == "car_scrtch_fam_chol_matern_gmrf_sgps_us") {
-            return car_scrtch_fam_chol_matern_gmrf_sgps_us(this);
-  } else if(model == "fam_chol_car_gmrf_sgps_us_normalize") {
-            return fam_chol_car_gmrf_sgps_us_normalize(this);
   } else {
     error("Unknown model.");
   }
