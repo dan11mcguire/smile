@@ -1,0 +1,263 @@
+---
+title: " Example SMILE model Analysis"
+author: "Dan McGuire"
+date: "`r Sys.Date()`"
+output: rmarkdown::github_document
+vignette: >
+  %\VignetteIndexEntry{Selectorgadget}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r,echo=F} 
+
+#library(data.table)
+##library(INLA)
+#library(msr)
+#library(Matrix)
+#library(parallel)
+#library(sf)
+#library(ggplot2)
+#library(broom)
+##library(inlabru)
+#library(sandwich)
+## output: rmarkdown::html_vignette
+library(knitr)
+opts_chunk$set(comment = "#>", collapse = TRUE)
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x = knitr:::split_lines(x)
+    if (length(x) > n) {
+      # truncate the output
+      h = c(head(x, n), '....\n','....\n')
+      t = c(tail(x, n))
+      x = c(h, t)
+    }
+    x = paste(x, collapse = '\n') # paste first n lines together
+  }
+  hook_output(x, options)
+})
+
+#opts_chunk$set(eval=FALSE)
+#Rscript -e "rmarkdown::render('mamba_example/example_mamba_analysis.Rmd')"
+
+```
+# SMILE 
+A **S**patial-**M****I**xed **L**inear **E**ffects model for estimating the contributions of genetic heritability, family-, and community-level environment to phenotype variation.
+
+
+## Installation
+
+    library(devtools)
+    install_github("dan11mcguire/smile")
+
+
+##  Detailed example 
+
+```{r}
+library(data.table)
+library(smile)
+library(Matrix)
+library(parallel)
+library(sf)
+library(ggplot2)
+library(broom)
+library(spdep)
+library(sandwich)
+#source("mod_fit_func_sim.R")
+
+### 
+lgeo_opt<-st_read("fam2_geo_opt_key.shp") %>% as.data.table()
+lgeo_opt[,rn:=1:.N]
+lgeo_opt[,prop:=N/sum(N)]
+lgeo_opt[1:10]
+```
+Calculate spatial neighborhood matrix
+```{r}
+seed<-808
+n_quad=50*10**3
+n_quad=5*10**3
+#n_quad=10*10**3
+
+sampleloc<-as.character(sample(x=lgeo_opt[,key], 
+			       size=n_quad, 
+			       prob=lgeo_opt[,prop],replace=TRUE))
+
+ngeo_opt<-lgeo_opt[key %in% sampleloc,head(.SD,1),by=key]
+ngeo_opt<-as.data.table(ngeo_opt)[,rn:=1:.N]
+wsp<-poly2nb(as(st_as_sf(ngeo_opt), "Spatial"),snap=0.01)
+whch<-sapply(1:length(wsp), function(x) ifelse(wsp[[x]][1]!=0,x,-9))
+fillin<-which(whch==-9)
+whch<-which(whch!=-9)
+ivec<-rep(whch, 
+	  times=sapply(wsp[whch], length))
+jvec<-unlist(lapply(1:length(whch), 
+		    function(x){
+		      wsp[[whch[x]]] 
+		    }))
+
+wspm<-sparseMatrix(i=ivec, j=jvec)
+isSymmetric(wspm)
+wmatd<-fillin_nearest_neighb(as.data.table(ngeo_opt),wspm)$wnew
+
+
+rs<-rowSums(wmatd)
+print(mean(1/rs))
+wmatplus<-as(do.call(rbind, 
+    		 lapply(1:nrow(wmatd), function(i) wmatd[i,]/rs[i])), "dgTMatrix")
+
+Mpm5<-as(sparseMatrix(i=1:length(rs), 
+		      j=1:length(rs),
+		      x=1/rs^-.5),
+	 "dgTMatrix")
+
+Mpp5<-as(sparseMatrix(i=1:length(rs), 
+		      j=1:length(rs),
+		      x=1/rs^.5),
+	 "dgTMatrix")
+
+diagI<-as(sparseMatrix(i=1:length(rs), 
+		      j=1:length(rs),
+		      x=1),
+	 "dgTMatrix")
+N<-Mpm5%*% wmatplus %*% Mpp5
+      
+
+### Zs:  loading matrix mapping individuals to their location-specific spatial random effects  ###
+ds<-data.table(kid=rep(sampleloc,each=4))
+ds<-merge(ds,ngeo_opt[,.(gid,kid=key,rn)],by=c("kid"),sort=F)    
+ivec<-lapply(1:ds[,max(rn)], function(x) ds[rn==x,which=TRUE]) 
+jvec<-lapply(1:length(ivec), function(x) rep(x, length(ivec[[x]])))  
+Zs<-sparseMatrix(i=unlist(ivec), j=unlist(jvec), x=1,giveCsparse=F)
+
+```
+
+Simulate (S) spatial random effects with CAR covariance structure, and simulate (G) genetic ,(P) parental-, and (C) child- level environment random effects.  \\
+Let G=0.4, P=0.05, C=0.2, S=0.03
+```{r}
+
+S<-0.03
+rho<-0.9
+sigma_inv<-(Mpm5%*%(diagI - rho*N)%*%Mpm5) ### CAR specification of covariance matrix
+sigma_s<-chol2inv(chol(sigma_inv))
+sets2<-S/(gowfac(Z=Zs,G=sigma_s) / nrow(Zs))
+all.equal(t(chol(sigma_inv)) %*% (chol(sigma_inv)), sigma_inv)
+summary(apply(sigma_inv, 2, function(x) sum(x!=0)))
+summary(apply(sigma_s, 2, function(x) sum(x!=0)))   
+chsigma_s<-t(chol(sigma_s))
+
+ustar<-rnorm(nrow(wmatd), sd=1)*sqrt(sets2)
+var(ustar)
+ustar<-chsigma_s %*% ustar
+ustar<-as.vector(Zs %*% ustar)
+ds[["u_s"]]<-ustar
+
+G=0.4
+Fam=0
+P=0.05
+C=0.2
+E<- 1 - G - Fam - P - C - S
+
+n_trio<-0
+mu<-0
+print("simulating data.")
+
+
+ss<-smile::sim_fam_nonspatial(
+                        n_quad=n_quad
+                       ,Ag=G
+      	               ,C_fam=Fam
+      	               ,C_par=P
+                       ,C_sib=C
+      	               ,S=S
+                       ,mu=0
+                          )
+
+
+ss$d<-cbind(ss$d, ds)
+ss$d[,y:=u_a + u_sib + u_par + u_fam + eps + fixed + u_s]
+ss$d[1:8]
+
+ss$d[,lapply(.SD, var),.SDcols=grep("u_|eps",names(ss$d),value=T)]
+
+
+ss$d[,lapply(.SD, var),.SDcols=c(grep("^[yu]", names(ss$d),value=T))] ## Actual variance of the outcome and the random effects
+mlists<-list(Ltlist=ss$Ltlist, Zlist=ss$Zlist,Glist=ss$Glist)
+ss$Zlist<-NULL
+ss$Glist<-NULL
+ss$Ltlist<-NULL
+
+
+mlists$Glist$Ga[1:12,1:12]
+mlists$Zlist$Zc_par[1:12,1:9]
+mlists$Zlist$Zc_sib[1:12,1:9]
+mlists$Zlist$Zc_fam[1:12,1:3]
+
+
+vc_struct<-"sgps"
+vcl<-strsplit(vc_struct,"")[[1]]
+tmplt<-paste0("fam_chol_car_gmrf_",vc_struct,"_us")
+#tmplt<-paste0("fam_chol_sar_gmrf_",vc_struct,"_us")
+if(vcl[1]!="s"){
+  tmplt<-gsub("car","matern",tmplt)
+}
+
+
+K<-0.05
+ss$d[,yb:=as.numeric(y > qnorm(1-K))]
+
+ 
+binaryind<-ifelse(K==1,0,1) 
+khat<-ss$d[,mean(yb)]
+z<-dnorm(qnorm(1-khat))
+yvec<-ss$d[,yb]
+
+```
+ 
+Fit the smile model using the `smile()` function like below.
+
+```{r}
+model_output<-
+     smile(
+       X=matrix(rep(1,nrow(ss$d),ncol=1))
+      ,y=yvec
+      ,Zs=Zs
+      ,wmatd=wmatd
+      ,vc_structure="gpcs"
+      ,spatial_structure="car"
+      ,mlists=mlists
+        )
+```
+
+`vc_a_lia`, `vc_c_par_lia`, `vc_c_sib_lia`, `gvc_s_lia`, represent the G, P, C, and S variance compoenents respectively.
+The model estimates are close to the true simulated variances.
+```{r}
+model_output$vc_rpt
+```
+The full model report from TMB with all fitted parameters are found in the `tmb_rpt` object.
+```{r}
+model_output$tmb_rpt
+```
+
+The `indlevel_dt` object is a data-table showing all fitted effects and the response variable.
+```{r}
+model_output$indlevel_dt
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
