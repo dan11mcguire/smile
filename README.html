@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAZwABAAAAAACFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEU0lHAAAGaAAAAAgAAAAIAAAAAUdTVUIAAAZcAAAACgAAAAoAAQAAT1MvMgAAAyQAAABJAAAAYFYEU3RjbWFwAAADcAAAAEUAAACAAJThvmN2dCAAAATkAAAABAAAAAQAAAAAZnBnbQAAA7gAAACyAAABCUM+8IhnYXNwAAAGTAAAABAAAAAQABoAI2dseWYAAAFsAAABPAAAAZwcEq9taGVhZAAAAsgAAAA0AAAANgh4a91oaGVhAAADCAAAABoAAAAkCA8DRGhtdHgAAAL8AAAADAAAAAwGAACfbG9jYQAAAsAAAAAIAAAACABiATBtYXhwAAACqAAAABgAAAAgAA8ASm5hbWUAAAToAAABQgAAAlXu73sOcG9zdAAABiwAAAAeAAAAME3QpOBwcmVwAAAEbAAAAHYAAAB/aFGpk3jaTY6xa8JAGMW/O62BDi0tJLYQincXEypYIiGJjSgHniQ6umTsUEyLm5BV6NDBP8Tpts6F0v+k/0an2i+itHDw3v2+9+DBKTzsJNnWJNTgHEy4BgG3EMI9DCEDOGEXzDADU5hBKMIgNPZqoD3SilVaXZCER3/I7AtxEJLtzzuZfI+VVkprxTlXShWKb3TBecG11rwoNlmmn1P2WYcJczl32etSpKnziC7lQyWe1smVPy/Lt7Kc+0vWY/gAgIIEqAN9we0pwKXreiMasxvabDQMM4riO+qxM2ogwDGOZTXxwxDiycQIcoYFBLj5K3EIaSctAq2kTYiw+ymhce7vwM9jSqO8JyVd5RH9gyTt2+J/yUmYlIR0s04n6+7Vm1ozezUeLEaUjhaDSuXHwVRgvLJn1tQ7xiuVv/ocTRF42mNgZGBgYGbwZOBiAAFGJBIMAAizAFoAAABiAGIAznjaY2BkYGAA4in8zwXi+W2+MjCzMIDApSwvXzC97Z4Ig8N/BxYGZgcgl52BCSQKAA3jCV8CAABfAAAAAAQAAEB42mNgZGBg4f3vACQZQABIMjKgAmYAKEgBXgAAeNpjYGY6wTiBgZWBg2kmUxoDA4MPhGZMYzBi1AHygVLYQUCaawqDA4PChxhmh/8ODDEsvAwHgMKMIDnGL0x7gJQCAwMAJd4MFwAAAHjaY2BgYGaA4DAGRgYQkAHyGMF8NgYrIM3JIAGVYYDT+AEjAwuDFpBmA9KMDEwMCh9i/v8H8sH0/4dQc1iAmAkALaUKLgAAAHjaTY9LDsIgEIbtgqHUPpDi3gPoBVyRTmTddOmqTXThEXqrob2gQ1FjwpDvfwCBdmdXC5AVKFu3e5MfNFJ29KTQT48Ob9/lqYwOGZxeUelN2U2R6+cArgtCJpauW7UQBqnFkUsjAY/kOU1cP+DAgvxwn1chZDwUbd6CFimGXwzwF6tPbFIcjEl+vvmM/byA48e6tWrKArm4ZJlCbdsrxksL1AwWn/yBSJKpYbq8AXaaTb8AAHja28jAwOC00ZrBeQNDQOWO//sdBBgYGRiYWYAEELEwMTE4uzo5Zzo5b2BxdnFOcALxNjA6b2ByTswC8jYwg0VlNuoCTWAMqNzMzsoK1rEhNqByEyerg5PMJlYuVueETKcd/89uBpnpvIEVomeHLoMsAAe1Id4AAAAAAAB42oWQT07CQBTGv0JBhagk7HQzKxca2sJCE1hDt4QF+9JOS0nbaaYDCQfwCJ7Au3AHj+LO13FMmm6cl7785vven0kBjHCBhfpYuNa5Ph1c0e2Xu3jEvWG7UdPDLZ4N92nOm+EBXuAbHmIMSRMs+4aUEd4Nd3CHD8NdvOLTsA2GL8M9PODbcL+hD7C1xoaHeLJSEao0FEW14ckxC+TU8TxvsY6X0eLPmRhry2WVioLpkrbp84LLQPGI7c6sOiUzpWIWS5GzlSgUzzLBSikOPFTOXqly7rqx0Z1Q5BAIoZBSFihQYQOOBEdkCOgXTOHA07HAGjGWiIjaPZNW13/+lm6S9FT7rLHFJ6fQbkATOG1j2OFMucKJJsxIVfQORl+9Jyda6Sl1dUYhSCm1dyClfoeDve4qMYdLEbfqHf3O/AdDumsjAAB42mNgYoAAZQYjBmyAGYQZmdhL8zLdDEydARfoAqIAAAABAAMABwAKABMAB///AA8AAQAAAAAAAAAAAAAAAAABAAAAAA==) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="example-smile-model-analysis">Example SMILE model Analysis</h1>
+<p>Dan McGuire 2021-08-11</p>
+<h1 id="smile">SMILE</h1>
+<p>A <strong>S</strong>patial-<strong>MI</strong>xed <strong>L</strong>inear <strong>E</strong>ffects model for estimating the contributions of genetic heritability, family-, and community-level environment to phenotype variation.</p>
+<h2 id="installation">Installation</h2>
+<pre><code>library(devtools)
+install_github(&quot;dan11mcguire/smile&quot;)
+</code></pre>
+<h2 id="detailed-example">Detailed example</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">library</span>(data.table)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">library</span>(smile)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">#&gt; Loading required package: Rcpp</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt; Loading required package: TMB</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="kw">library</span>(Matrix)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="kw">library</span>(parallel)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="kw">library</span>(sf)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="kw">library</span>(broom)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="kw">library</span>(spdep)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; Loading required package: sp</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; Loading required package: spData</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; To access larger datasets in this package, install the spDataLarge</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; package with: `install.packages(&#39;spDataLarge&#39;,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt; repos=&#39;https://nowosad.github.io/drat/&#39;, type=&#39;source&#39;)`</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="kw">library</span>(sandwich)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="co">#source(&quot;mod_fit_func_sim.R&quot;)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="co">### </span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="co">#lgeo_opt&lt;-st_read(&quot;../pipeline_scripts/fam2_geo_opt_key.shp&quot;) %&gt;% as.data.table()</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="co">#lgeo_opt[,rn:=1:.N]</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="co">#lgeo_opt[,prop:=N/sum(N)]</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a><span class="co">#lgeo_opt[1:10]</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a><span class="kw">data</span>(lgeo_opt)</span></code></pre></div>
+<p>Calculate spatial neighborhood matrix</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>seed&lt;-<span class="dv">808</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>n_quad=<span class="dv">50</span><span class="op">*</span><span class="dv">10</span><span class="op">**</span><span class="dv">3</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>n_quad=<span class="dv">5</span><span class="op">*</span><span class="dv">10</span><span class="op">**</span><span class="dv">3</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co">#n_quad=10*10**3</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>sampleloc&lt;-<span class="kw">as.character</span>(<span class="kw">sample</span>(<span class="dt">x=</span>lgeo_opt[,key], </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>                   <span class="dt">size=</span>n_quad, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>                   <span class="dt">prob=</span>lgeo_opt[,prop],<span class="dt">replace=</span><span class="ot">TRUE</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>ngeo_opt&lt;-lgeo_opt[key <span class="op">%in%</span><span class="st"> </span>sampleloc,<span class="kw">head</span>(.SD,<span class="dv">1</span>),by=key]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>ngeo_opt&lt;-<span class="kw">as.data.table</span>(ngeo_opt)[,rn<span class="op">:</span><span class="er">=</span><span class="dv">1</span><span class="op">:</span>.N]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>wsp&lt;-<span class="kw">poly2nb</span>(<span class="kw">as</span>(<span class="kw">st_as_sf</span>(ngeo_opt), <span class="st">&quot;Spatial&quot;</span>),<span class="dt">snap=</span><span class="fl">0.01</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>whch&lt;-<span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(wsp), <span class="cf">function</span>(x) <span class="kw">ifelse</span>(wsp[[x]][<span class="dv">1</span>]<span class="op">!=</span><span class="dv">0</span>,x,<span class="op">-</span><span class="dv">9</span>))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>fillin&lt;-<span class="kw">which</span>(whch<span class="op">==-</span><span class="dv">9</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>whch&lt;-<span class="kw">which</span>(whch<span class="op">!=-</span><span class="dv">9</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>ivec&lt;-<span class="kw">rep</span>(whch, </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>      <span class="dt">times=</span><span class="kw">sapply</span>(wsp[whch], length))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>jvec&lt;-<span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(whch), </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>            <span class="cf">function</span>(x){</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a>              wsp[[whch[x]]] </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a>            }))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a>wspm&lt;-<span class="kw">sparseMatrix</span>(<span class="dt">i=</span>ivec, <span class="dt">j=</span>jvec)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a><span class="kw">isSymmetric</span>(wspm)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a>wmatd&lt;-<span class="kw">fillin_nearest_neighb</span>(<span class="kw">as.data.table</span>(ngeo_opt),wspm)<span class="op">$</span>wnew</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a>rs&lt;-<span class="kw">rowSums</span>(wmatd)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a><span class="kw">print</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">/</span>rs))</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true"></a><span class="co">#&gt; [1] 0.3176212</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true"></a>wmatplus&lt;-<span class="kw">as</span>(<span class="kw">do.call</span>(rbind, </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true"></a>             <span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(wmatd), <span class="cf">function</span>(i) wmatd[i,]<span class="op">/</span>rs[i])), <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true"></a>Mpm5&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span><span class="op">/</span>rs<span class="op">^-</span>.<span class="dv">5</span>),</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true"></a>Mpp5&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span><span class="op">/</span>rs<span class="op">^</span>.<span class="dv">5</span>),</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true"></a>diagI&lt;-<span class="kw">as</span>(<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs), </span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true"></a>              <span class="dt">j=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(rs),</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true"></a>              <span class="dt">x=</span><span class="dv">1</span>),</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true"></a>     <span class="st">&quot;dgTMatrix&quot;</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true"></a>N&lt;-Mpm5<span class="op">%*%</span><span class="st"> </span>wmatplus <span class="op">%*%</span><span class="st"> </span>Mpp5</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true"></a>      </span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true"></a><span class="co">### Zs:  loading matrix mapping individuals to their location-specific spatial random effects  </span><span class="al">###</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true"></a>ds&lt;-<span class="kw">data.table</span>(<span class="dt">kid=</span><span class="kw">rep</span>(sampleloc,<span class="dt">each=</span><span class="dv">4</span>))</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true"></a>ds&lt;-<span class="kw">merge</span>(ds,ngeo_opt[,.(gid,<span class="dt">kid=</span>key,rn)],<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;kid&quot;</span>),<span class="dt">sort=</span>F)    </span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true"></a>ivec&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span>ds[,<span class="kw">max</span>(rn)], <span class="cf">function</span>(x) ds[rn<span class="op">==</span>x,<span class="dt">which=</span><span class="ot">TRUE</span>]) </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true"></a>jvec&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(ivec), <span class="cf">function</span>(x) <span class="kw">rep</span>(x, <span class="kw">length</span>(ivec[[x]])))  </span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true"></a>Zs&lt;-<span class="kw">sparseMatrix</span>(<span class="dt">i=</span><span class="kw">unlist</span>(ivec), <span class="dt">j=</span><span class="kw">unlist</span>(jvec), <span class="dt">x=</span><span class="dv">1</span>,<span class="dt">giveCsparse=</span>F)</span></code></pre></div>
+<p>Simulate (S) spatial random effects with CAR covariance structure, and simulate (G) genetic ,(P) parental-, and (C) child- level environment random effects. \ Let G=0.4, P=0.05, C=0.2, S=0.03</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>S&lt;-<span class="fl">0.03</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>rho&lt;-<span class="fl">0.9</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>sigma_inv&lt;-(Mpm5<span class="op">%*%</span>(diagI <span class="op">-</span><span class="st"> </span>rho<span class="op">*</span>N)<span class="op">%*%</span>Mpm5) <span class="co">### CAR specification of covariance matrix</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>sigma_s&lt;-<span class="kw">chol2inv</span>(<span class="kw">chol</span>(sigma_inv))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>sets2&lt;-S<span class="op">/</span>(<span class="kw">gowfac</span>(<span class="dt">Z=</span>Zs,<span class="dt">G=</span>sigma_s) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(Zs))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="kw">all.equal</span>(<span class="kw">t</span>(<span class="kw">chol</span>(sigma_inv)) <span class="op">%*%</span><span class="st"> </span>(<span class="kw">chol</span>(sigma_inv)), sigma_inv)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">apply</span>(sigma_inv, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">!=</span><span class="dv">0</span>)))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="co">#&gt;   2.000   4.000   5.000   5.942   7.000  30.000</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">apply</span>(sigma_s, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">!=</span><span class="dv">0</span>)))   </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="co">#&gt;     2.0    46.0   205.0   179.9   289.0   298.0</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>chsigma_s&lt;-<span class="kw">t</span>(<span class="kw">chol</span>(sigma_s))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>ustar&lt;-<span class="kw">rnorm</span>(<span class="kw">nrow</span>(wmatd), <span class="dt">sd=</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sqrt</span>(sets2)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="kw">var</span>(ustar)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="co">#&gt; [1] 0.07381008</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>ustar&lt;-chsigma_s <span class="op">%*%</span><span class="st"> </span>ustar</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>ustar&lt;-<span class="kw">as.vector</span>(Zs <span class="op">%*%</span><span class="st"> </span>ustar)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>ds[[<span class="st">&quot;u_s&quot;</span>]]&lt;-ustar</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>G=<span class="fl">0.4</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>Fam=<span class="dv">0</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>P=<span class="fl">0.05</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a>C=<span class="fl">0.2</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a>E&lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>G <span class="op">-</span><span class="st"> </span>Fam <span class="op">-</span><span class="st"> </span>P <span class="op">-</span><span class="st"> </span>C <span class="op">-</span><span class="st"> </span>S</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a>n_trio&lt;-<span class="dv">0</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true"></a>mu&lt;-<span class="dv">0</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true"></a><span class="kw">print</span>(<span class="st">&quot;simulating data.&quot;</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;simulating data.&quot;</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true"></a>ss&lt;-smile<span class="op">::</span><span class="kw">sim_fam_nonspatial</span>(</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true"></a>                        <span class="dt">n_quad=</span>n_quad</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true"></a>                       ,<span class="dt">Ag=</span>G</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true"></a>                       ,<span class="dt">C_fam=</span>Fam</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true"></a>                       ,<span class="dt">C_par=</span>P</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true"></a>                       ,<span class="dt">C_sib=</span>C</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true"></a>                       ,<span class="dt">S=</span>S</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true"></a>                       ,<span class="dt">mu=</span><span class="dv">0</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true"></a>                          )</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true"></a>ss<span class="op">$</span>d&lt;-<span class="kw">cbind</span>(ss<span class="op">$</span>d, ds)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true"></a>ss<span class="op">$</span>d[,y<span class="op">:</span><span class="er">=</span>u_a <span class="op">+</span><span class="st"> </span>u_sib <span class="op">+</span><span class="st"> </span>u_par <span class="op">+</span><span class="st"> </span>u_fam <span class="op">+</span><span class="st"> </span>eps <span class="op">+</span><span class="st"> </span>fixed <span class="op">+</span><span class="st"> </span>u_s]</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true"></a>ss<span class="op">$</span>d[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true"></a><span class="co">#&gt;    set emprel ttype pid empreltype         u_a       u_sib       u_par u_fam</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true"></a><span class="co">#&gt; 1:   1      1  quad   1     parent -0.29958885 -0.14564158 -0.18709948     0</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true"></a><span class="co">#&gt; 2:   1      2  quad   2     parent  0.21218133 -0.17229776 -0.18709948     0</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true"></a><span class="co">#&gt; 3:   1      3  quad   3        sib  0.71505496 -0.33746791  0.18989103     0</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true"></a><span class="co">#&gt; 4:   1      3  quad   4        sib  0.59110056 -0.33746791  0.04438050     0</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true"></a><span class="co">#&gt; 5:   2      1  quad   5     parent  0.76648259  0.03070334  0.05643138     0</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true"></a><span class="co">#&gt; 6:   2      2  quad   6     parent  0.05321685  0.21498273  0.05643138     0</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true"></a><span class="co">#&gt; 7:   2      3  quad   7        sib -0.22273021 -0.34555542  0.05779187     0</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true"></a><span class="co">#&gt; 8:   2      3  quad   8        sib  0.03553109 -0.34555542 -0.02098226     0</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true"></a><span class="co">#&gt;            eps fixed   kid  gid  rn         u_s          y</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true"></a><span class="co">#&gt; 1: -0.69001873     0 17115 1683 269 -0.04372492 -1.3660736</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true"></a><span class="co">#&gt; 2: -0.27053930     0 17115 1683 269 -0.04372492 -0.4614801</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true"></a><span class="co">#&gt; 3:  0.74017054     0 17115 1683 269 -0.04372492  1.2639237</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true"></a><span class="co">#&gt; 4: -0.55231558     0 17115 1683 269 -0.04372492 -0.2980274</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true"></a><span class="co">#&gt; 5:  1.00178214     0 06067   72  71 -0.06495228  1.7904472</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true"></a><span class="co">#&gt; 6: -0.08430955     0 06067   72  71 -0.06495228  0.1753691</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true"></a><span class="co">#&gt; 7:  0.42950432     0 06067   72  71 -0.06495228 -0.1459417</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true"></a><span class="co">#&gt; 8: -0.19476727     0 06067   72  71 -0.06495228 -0.5907261</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true"></a></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true"></a>ss<span class="op">$</span>d[,<span class="kw">lapply</span>(.SD, var),.SDcols=<span class="kw">grep</span>(<span class="st">&quot;u_|eps&quot;</span>,<span class="kw">names</span>(ss<span class="op">$</span>d),<span class="dt">value=</span>T)]</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true"></a><span class="co">#&gt;         u_a     u_sib     u_par u_fam       eps        u_s</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true"></a><span class="co">#&gt; 1: 0.391497 0.1996407 0.0494618     0 0.3177995 0.02896509</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true"></a></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true"></a>ss<span class="op">$</span>d[,<span class="kw">lapply</span>(.SD, var),.SDcols=<span class="kw">c</span>(<span class="kw">grep</span>(<span class="st">&quot;^[yu]&quot;</span>, <span class="kw">names</span>(ss<span class="op">$</span>d),<span class="dt">value=</span>T))] <span class="co">## Actual variance of the outcome and the random effects</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true"></a><span class="co">#&gt;         u_a     u_sib     u_par u_fam        u_s         y</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true"></a><span class="co">#&gt; 1: 0.391497 0.1996407 0.0494618     0 0.02896509 0.9887033</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true"></a>mlists&lt;-<span class="kw">list</span>(<span class="dt">Ltlist=</span>ss<span class="op">$</span>Ltlist, <span class="dt">Zlist=</span>ss<span class="op">$</span>Zlist,<span class="dt">Glist=</span>ss<span class="op">$</span>Glist)</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true"></a>ss<span class="op">$</span>Zlist&lt;-<span class="ot">NULL</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true"></a>ss<span class="op">$</span>Glist&lt;-<span class="ot">NULL</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true"></a>ss<span class="op">$</span>Ltlist&lt;-<span class="ot">NULL</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true"></a></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true"></a></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true"></a>mlists<span class="op">$</span>Glist<span class="op">$</span>Ga[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>]</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true"></a><span class="co">#&gt; 12 x 12 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true"></a><span class="co">#&gt;                                                      </span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1.0 .   0.5 0.5 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true"></a><span class="co">#&gt;  [2,] .   1.0 0.5 0.5 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true"></a><span class="co">#&gt;  [3,] 0.5 0.5 1.0 0.5 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true"></a><span class="co">#&gt;  [4,] 0.5 0.5 0.5 1.0 .   .   .   .   .   .   .   .  </span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true"></a><span class="co">#&gt;  [5,] .   .   .   .   1.0 .   0.5 0.5 .   .   .   .  </span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true"></a><span class="co">#&gt;  [6,] .   .   .   .   .   1.0 0.5 0.5 .   .   .   .  </span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true"></a><span class="co">#&gt;  [7,] .   .   .   .   0.5 0.5 1.0 0.5 .   .   .   .  </span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true"></a><span class="co">#&gt;  [8,] .   .   .   .   0.5 0.5 0.5 1.0 .   .   .   .  </span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true"></a><span class="co">#&gt;  [9,] .   .   .   .   .   .   .   .   1.0 .   0.5 0.5</span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true"></a><span class="co">#&gt; [10,] .   .   .   .   .   .   .   .   .   1.0 0.5 0.5</span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true"></a><span class="co">#&gt; [11,] .   .   .   .   .   .   .   .   0.5 0.5 1.0 0.5</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true"></a><span class="co">#&gt; [12,] .   .   .   .   .   .   .   .   0.5 0.5 0.5 1.0</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_par[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true"></a><span class="co">#&gt; 12 x 9 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true"></a><span class="co">#&gt;                        </span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . . . . . . . .</span></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true"></a><span class="co">#&gt;  [2,] 1 . . . . . . . .</span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true"></a><span class="co">#&gt;  [3,] . 1 . . . . . . .</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . 1 . . . . . .</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . 1 . . . . .</span></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . 1 . . . . .</span></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . 1 . . . .</span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true"></a><span class="co">#&gt;  [8,] . . . . . 1 . . .</span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . 1 . .</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true"></a><span class="co">#&gt; [10,] . . . . . . 1 . .</span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true"></a><span class="co">#&gt; [11,] . . . . . . . 1 .</span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true"></a><span class="co">#&gt; [12,] . . . . . . . . 1</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_sib[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]</span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true"></a><span class="co">#&gt; 12 x 9 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true"></a><span class="co">#&gt;                        </span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . . . . . . . .</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true"></a><span class="co">#&gt;  [2,] . 1 . . . . . . .</span></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true"></a><span class="co">#&gt;  [3,] . . 1 . . . . . .</span></span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true"></a><span class="co">#&gt;  [4,] . . 1 . . . . . .</span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true"></a><span class="co">#&gt;  [5,] . . . 1 . . . . .</span></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true"></a><span class="co">#&gt;  [6,] . . . . 1 . . . .</span></span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true"></a><span class="co">#&gt;  [7,] . . . . . 1 . . .</span></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true"></a><span class="co">#&gt;  [8,] . . . . . 1 . . .</span></span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . . . . . 1 . .</span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true"></a><span class="co">#&gt; [10,] . . . . . . . 1 .</span></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true"></a><span class="co">#&gt; [11,] . . . . . . . . 1</span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true"></a><span class="co">#&gt; [12,] . . . . . . . . 1</span></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true"></a>mlists<span class="op">$</span>Zlist<span class="op">$</span>Zc_fam[<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true"></a><span class="co">#&gt; 12 x 3 sparse Matrix of class &quot;dgTMatrix&quot;</span></span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true"></a><span class="co">#&gt;            </span></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true"></a><span class="co">#&gt;  [1,] 1 . .</span></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true"></a><span class="co">#&gt;  [2,] 1 . .</span></span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true"></a><span class="co">#&gt;  [3,] 1 . .</span></span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true"></a><span class="co">#&gt;  [4,] 1 . .</span></span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true"></a><span class="co">#&gt;  [5,] . 1 .</span></span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true"></a><span class="co">#&gt;  [6,] . 1 .</span></span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true"></a><span class="co">#&gt;  [7,] . 1 .</span></span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true"></a><span class="co">#&gt;  [8,] . 1 .</span></span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true"></a><span class="co">#&gt;  [9,] . . 1</span></span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true"></a><span class="co">#&gt; [10,] . . 1</span></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true"></a><span class="co">#&gt; [11,] . . 1</span></span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true"></a><span class="co">#&gt; [12,] . . 1</span></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true"></a></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true"></a></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true"></a>vc_struct&lt;-<span class="st">&quot;sgps&quot;</span></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true"></a>vcl&lt;-<span class="kw">strsplit</span>(vc_struct,<span class="st">&quot;&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true"></a>tmplt&lt;-<span class="kw">paste0</span>(<span class="st">&quot;fam_chol_car_gmrf_&quot;</span>,vc_struct,<span class="st">&quot;_us&quot;</span>)</span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true"></a><span class="co">#tmplt&lt;-paste0(&quot;fam_chol_sar_gmrf_&quot;,vc_struct,&quot;_us&quot;)</span></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true"></a><span class="cf">if</span>(vcl[<span class="dv">1</span>]<span class="op">!=</span><span class="st">&quot;s&quot;</span>){</span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true"></a>  tmplt&lt;-<span class="kw">gsub</span>(<span class="st">&quot;car&quot;</span>,<span class="st">&quot;matern&quot;</span>,tmplt)</span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true"></a>}</span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true"></a></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true"></a></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true"></a>K&lt;-<span class="fl">0.05</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true"></a>ss<span class="op">$</span>d[,yb<span class="op">:</span><span class="er">=</span><span class="kw">as.numeric</span>(y <span class="op">&gt;</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>K))]</span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true"></a></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true"></a> </span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true"></a>binaryind&lt;-<span class="kw">ifelse</span>(K<span class="op">==</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>) </span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true"></a>khat&lt;-ss<span class="op">$</span>d[,<span class="kw">mean</span>(yb)]</span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true"></a>z&lt;-<span class="kw">dnorm</span>(<span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>khat))</span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true"></a>yvec&lt;-ss<span class="op">$</span>d[,yb]</span></code></pre></div>
+<p>Fit the smile model using the <code>smile()</code> function like below.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>model_output&lt;-</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="st">     </span><span class="kw">smile</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>       <span class="dt">X=</span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">nrow</span>(ss<span class="op">$</span>d),<span class="dt">ncol=</span><span class="dv">1</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>      ,<span class="dt">y=</span>yvec</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>      ,<span class="dt">Zs=</span>Zs</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>      ,<span class="dt">wmatd=</span>wmatd</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>      ,<span class="dt">vc_structure=</span><span class="st">&quot;gpcs&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>      ,<span class="dt">spatial_structure=</span><span class="st">&quot;car&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>      ,<span class="dt">mlists=</span>mlists</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>        )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">#&gt; lm(formula = dl$y ~ X - 1)</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="co">#&gt; -0.04675 -0.04675 -0.04675 -0.04675  0.95325 </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="co">#&gt;   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="co">#&gt; X 0.046750   0.001493   31.32   &lt;2e-16 ***</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a><span class="co">#&gt; ---</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a><span class="co">#&gt; Residual standard error: 0.2111 on 19999 degrees of freedom</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a><span class="co">#&gt; Multiple R-squared:  0.04675,    Adjusted R-squared:  0.0467 </span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a><span class="co">#&gt; F-statistic: 980.8 on 1 and 19999 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a><span class="co">#&gt; Order of parameters:</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a><span class="co">#&gt;  [1] &quot;beta&quot;           &quot;log_sdvc_res&quot;   &quot;logit_rho&quot;      &quot;log_sdvc_s&quot;    </span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a><span class="co">#&gt;  [5] &quot;x&quot;              &quot;log_sdvc_a&quot;     &quot;ua&quot;             &quot;log_sdvc_c_par&quot;</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a><span class="co">#&gt;  [9] &quot;uc_par&quot;         &quot;log_sdvc_c_sib&quot; &quot;uc_sib&quot;        </span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true"></a><span class="co">#&gt; Not matching template order:</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true"></a><span class="co">#&gt;  [1] &quot;log_sdvc_a&quot;     &quot;log_sdvc_s&quot;     &quot;log_sdvc_c_par&quot; &quot;log_sdvc_c_sib&quot;</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true"></a><span class="co">#&gt;  [5] &quot;log_sdvc_res&quot;   &quot;ua&quot;             &quot;uc_par&quot;         &quot;uc_sib&quot;        </span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true"></a><span class="co">#&gt;  [9] &quot;beta&quot;           &quot;logit_rho&quot;      &quot;x&quot;             </span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true"></a><span class="co">#&gt; Your parameter list has been re-ordered.</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true"></a><span class="co">#&gt; (Disable this warning with checkParameterOrder=FALSE)</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true"></a><span class="co">#&gt; Constructing atomic qnorm1</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true"></a><span class="co">#&gt; Constructing atomic qnorm1</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true"></a><span class="co">#&gt;      -2.595105      -2.595105      -2.595105      -2.595105      -1.901958 </span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true"></a><span class="co">#&gt;       0.046750       0.000000 </span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true"></a><span class="co">#&gt; Constructing atomic qnorm1</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true"></a><span class="co">#&gt; Optimizing tape... Done</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -91791.67 mgc: 85.55722 ustep: 1 </span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 1.607603e-13 </span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 1.607603e-13 </span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true"></a><span class="co">#&gt; Matching hessian patterns... Done</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  1877.476 </span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true"></a><span class="co">#&gt;   -2.406006646   -2.626987809   -2.471441576   -2.439698167   -0.947145208 </span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true"></a><span class="co">#&gt;   -0.063297671    0.001692176 </span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -73083.37 mgc: 25.97058 ustep: 1 </span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 1.865175e-13 </span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true"></a><span class="co">#&gt;  -2.5734423439  -2.5987577516  -2.5809385120  -2.5773020149  -1.7925756116 </span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true"></a><span class="co">#&gt;   0.0341430356   0.0001938542 </span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -90249.7 mgc: 9.997553 ustep: 1 </span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 9.089951e-14 </span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 9.089951e-14 </span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  2047.292 </span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true"></a><span class="co">#&gt;  -2.5709590677  -2.6029260606  -2.5865355279  -2.5781002938  -1.7773018126 </span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true"></a><span class="co">#&gt;   0.1474343486   0.0004699439 </span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -89267.92 mgc: 88.02176 ustep: 1 </span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 6.972201e-13 </span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true"></a><span class="co">#&gt;  -2.5735854823  -2.5991108206  -2.5817585324  -2.5777052579  -1.7930232206 </span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true"></a><span class="co">#&gt;   0.0457685319   0.0002181118 </span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -90282.86 mgc: 9.351349 ustep: 1 </span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 5.4734e-14 </span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 5.4734e-14 </span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  143.7105 </span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true"></a><span class="co">#&gt;   -2.575157679   -2.603543177   -2.590425831   -2.581988648   -1.797446415 </span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true"></a><span class="co">#&gt;    0.044689537    0.000349748 </span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -90507.1 mgc: 0.9059518 ustep: 1 </span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true"></a><span class="co">#&gt;  -2.5770015087  -2.6087413238  -2.6005906029  -2.5870120905  -1.8026338164 </span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true"></a><span class="co">#&gt;   0.0434241209   0.0005041275 </span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -90768.9 mgc: 1.072144 ustep: 1 </span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.907985e-14 </span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 3.907985e-14 </span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  406.339 </span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true"></a><span class="co">#&gt;  -2.5770963849  -2.6195575144  -2.6179018255  -2.5938970503  -1.7921664273 </span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true"></a><span class="co">#&gt;   0.0517825126   0.0008394454 </span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -90998.34 mgc: 6.524069 ustep: 1 </span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 9.126033e-14 </span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 9.126033e-14 </span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  1114.159 </span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true"></a><span class="co">#&gt;   -2.577532948   -2.630677975   -2.636222463   -2.601421144   -1.783446573 </span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true"></a><span class="co">#&gt;    0.044619621    0.001246403 </span></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -91276.34 mgc: 5.492267 ustep: 1 </span></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 4.823919e-14 </span></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 4.823919e-14 </span></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  196.2114 </span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true"></a><span class="co">#&gt;   -2.578210596   -2.642898160   -2.655170055   -2.609520249   -1.775399178 </span></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true"></a><span class="co">#&gt;    0.046680066    0.001711803 </span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -91578.07 mgc: 2.250939 ustep: 1 </span></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true"></a><span class="co">#&gt;   -2.579251672   -2.664583561   -2.688697248   -2.623754241   -1.760182929 </span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true"></a><span class="co">#&gt;    0.047422093    0.002535138 </span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -92107.47 mgc: 3.887881 ustep: 1 </span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  321.6957 </span></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true"></a><span class="co">#&gt;   -2.579155028   -2.723703614   -2.720486931   -2.642966685   -1.765403528 </span></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true"></a><span class="co">#&gt;    0.040930327    0.005901951 </span></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -92794.71 mgc: 4.587297 ustep: 1 </span></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 5.084821e-14 </span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 5.084821e-14 </span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  963.1166 </span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true"></a><span class="co">#&gt;    -2.57266603    -2.78386858    -2.74939233    -2.65942380    -1.76949752 </span></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true"></a><span class="co">#&gt;     0.05089300     0.01434707 </span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -93290.15 mgc: 5.990867 ustep: 1 </span></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 4.296563e-14 </span></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 4.296563e-14 </span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  1065.065 </span></span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true"></a><span class="co">#&gt;    -2.55577059    -2.83259490    -2.78485081    -2.67914080    -1.76378924 </span></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true"></a><span class="co">#&gt;     0.04481227     0.03843631 </span></span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -93678.95 mgc: 3.721967 ustep: 1 </span></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.331468e-14 </span></span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.331468e-14 </span></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  225.275 </span></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true"></a><span class="co">#&gt;    -2.57678672    -2.86103812    -2.81724239    -2.71008573    -1.74530603 </span></span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true"></a><span class="co">#&gt;     0.04691276     0.07520704 </span></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -94768.46 mgc: 4.306571 ustep: 1 </span></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.264855e-14 </span></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.264855e-14 </span></span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  226.2297 </span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true"></a><span class="co">#&gt;    -2.54667429    -2.87636345    -2.86331272    -2.68122845    -1.74997107 </span></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true"></a><span class="co">#&gt;     0.04513519     0.10408368 </span></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -94510.46 mgc: 3.394228 ustep: 1 </span></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  166.0171 </span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true"></a><span class="co">#&gt;    -2.57133143    -2.90536566    -2.88809324    -2.69886033    -1.74723309 </span></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true"></a><span class="co">#&gt;     0.04693205     0.15478712 </span></span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -95488.37 mgc: 2.395108 ustep: 1 </span></span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.575717e-14 </span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.575717e-14 </span></span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  230.2086 </span></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true"></a><span class="co">#&gt;    -2.56594739    -2.90803554    -2.88624045    -2.74115652    -1.74368282 </span></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true"></a><span class="co">#&gt;     0.04318197     0.21046872 </span></span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -95902.58 mgc: 3.413381 ustep: 1 </span></span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  611.3947 </span></span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true"></a><span class="co">#&gt;    -2.54717456    -2.90730267    -2.89042974    -2.74957179    -1.74395058 </span></span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true"></a><span class="co">#&gt;     0.04622749     0.23854426 </span></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -95744.91 mgc: 1.634204 ustep: 1 </span></span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  97.90537 </span></span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true"></a><span class="co">#&gt;    -2.54813793    -2.92099794    -2.90331015    -2.72526767    -1.74244473 </span></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true"></a><span class="co">#&gt;     0.04505224     0.30184428 </span></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -95604.1 mgc: 1.782492 ustep: 1 </span></span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  191.9624 </span></span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true"></a><span class="co">#&gt;    -2.58790454    -2.92878414    -2.92405437    -2.69993249    -1.73731747 </span></span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true"></a><span class="co">#&gt;     0.04665578     0.43253261 </span></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -96220.59 mgc: 3.593395 ustep: 1 </span></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  163.005 </span></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true"></a><span class="co">#&gt;    -2.56766000    -2.92891737    -2.93523293    -2.72791720    -1.73620411 </span></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true"></a><span class="co">#&gt;     0.04620387     0.56855868 </span></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -96376.95 mgc: 2.257663 ustep: 1 </span></span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true"></a><span class="co">#&gt;    -2.50704975    -2.92895321    -2.96823569    -2.81166315    -1.73363651 </span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true"></a><span class="co">#&gt;     0.04853986     0.97674731 </span></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -96868.89 mgc: 7.349536 ustep: 1 </span></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.531308e-14 </span></span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.531308e-14 </span></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  516.6218 </span></span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true"></a><span class="co">#&gt;    -2.49852461    -3.03563726    -2.95530966    -2.86538766    -1.73202684 </span></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true"></a><span class="co">#&gt;     0.04279096     1.52685346 </span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -97230.26 mgc: 4.238586 ustep: 1 </span></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.552714e-14 </span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 3.552714e-14 </span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  571.6484 </span></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true"></a><span class="co">#&gt;    -2.48561455    -3.14057747    -2.93833600    -2.90299894    -1.73300507 </span></span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true"></a><span class="co">#&gt;     0.04648896     2.07845435 </span></span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -97264.28 mgc: 3.273299 ustep: 1 </span></span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  82.32277 </span></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true"></a><span class="co">#&gt;    -2.54419664    -3.00974903    -3.04947312    -2.92766475    -1.71207509 </span></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true"></a><span class="co">#&gt;     0.04536853     2.61063183 </span></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -100057.3 mgc: 12.05796 ustep: 1 </span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true"></a><span class="co">#&gt;    -2.50825922    -3.09026005    -2.98127020    -2.91243974    -1.72470205 </span></span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true"></a><span class="co">#&gt;     0.04557197     2.28349816 </span></span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -98334.12 mgc: 4.382367 ustep: 1 </span></span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  47.95426 </span></span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true"></a><span class="co">#&gt;    -2.48261367    -3.20924322    -2.99357637    -2.90872592    -1.72922791 </span></span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true"></a><span class="co">#&gt;     0.04488704     2.69986160 </span></span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -98009.69 mgc: 4.418873 ustep: 1 </span></span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true"></a><span class="co">#&gt;     -2.4332821     -3.4335064     -3.0156661     -2.9025000     -1.7398971 </span></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true"></a><span class="co">#&gt;      0.0400687      3.4910708 </span></span>
+<span id="cb5-287"><a href="#cb5-287" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -97404.24 mgc: 8.670212 ustep: 1 </span></span>
+<span id="cb5-288"><a href="#cb5-288" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  669.0283 </span></span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true"></a><span class="co">#&gt;    -2.66074787    -3.97329725    -3.47946377    -3.09234558    -1.64824293 </span></span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-295"><a href="#cb5-295" aria-hidden="true"></a><span class="co">#&gt;     0.04466177     4.48128701 </span></span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -110156.6 mgc: 71.84831 ustep: 1 </span></span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 3.552714e-14 </span></span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true"></a><span class="co">#&gt;    -2.54550628    -3.69982163    -3.24448877    -2.99616364    -1.69467794 </span></span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true"></a><span class="co">#&gt;     0.04233477     3.97961119 </span></span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103592.4 mgc: 28.23196 ustep: 1 </span></span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-306"><a href="#cb5-306" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  458.3039 </span></span>
+<span id="cb5-307"><a href="#cb5-307" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-308"><a href="#cb5-308" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true"></a><span class="co">#&gt;    -2.53856512    -3.78960086    -3.98646679    -2.40698837    -1.71187451 </span></span>
+<span id="cb5-310"><a href="#cb5-310" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-311"><a href="#cb5-311" aria-hidden="true"></a><span class="co">#&gt;     0.06178296     4.44610280 </span></span>
+<span id="cb5-312"><a href="#cb5-312" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -106670.7 mgc: 145.6122 ustep: 1 </span></span>
+<span id="cb5-313"><a href="#cb5-313" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 9.947598e-14 </span></span>
+<span id="cb5-314"><a href="#cb5-314" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-315"><a href="#cb5-315" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-316"><a href="#cb5-316" aria-hidden="true"></a><span class="co">#&gt;    -2.54428775    -3.71454391    -3.36585370    -2.89968075    -1.69751532 </span></span>
+<span id="cb5-317"><a href="#cb5-317" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-318"><a href="#cb5-318" aria-hidden="true"></a><span class="co">#&gt;     0.04900837     4.05590182 </span></span>
+<span id="cb5-319"><a href="#cb5-319" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103996.7 mgc: 11.90505 ustep: 1 </span></span>
+<span id="cb5-320"><a href="#cb5-320" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-321"><a href="#cb5-321" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-322"><a href="#cb5-322" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  325.8707 </span></span>
+<span id="cb5-323"><a href="#cb5-323" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-324"><a href="#cb5-324" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-325"><a href="#cb5-325" aria-hidden="true"></a><span class="co">#&gt;    -2.55424585    -3.76184337    -3.46619391    -2.76662219    -1.69996514 </span></span>
+<span id="cb5-326"><a href="#cb5-326" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-327"><a href="#cb5-327" aria-hidden="true"></a><span class="co">#&gt;     0.04744583     4.05934977 </span></span>
+<span id="cb5-328"><a href="#cb5-328" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103835.3 mgc: 9.458287 ustep: 1 </span></span>
+<span id="cb5-329"><a href="#cb5-329" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-330"><a href="#cb5-330" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-331"><a href="#cb5-331" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  151.4512 </span></span>
+<span id="cb5-332"><a href="#cb5-332" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-333"><a href="#cb5-333" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-334"><a href="#cb5-334" aria-hidden="true"></a><span class="co">#&gt;    -2.55796390    -3.81241967    -3.45603302    -2.75948228    -1.70317278 </span></span>
+<span id="cb5-335"><a href="#cb5-335" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-336"><a href="#cb5-336" aria-hidden="true"></a><span class="co">#&gt;     0.04594593     4.22485182 </span></span>
+<span id="cb5-337"><a href="#cb5-337" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103665.7 mgc: 2.110034 ustep: 1 </span></span>
+<span id="cb5-338"><a href="#cb5-338" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 1.421085e-14 </span></span>
+<span id="cb5-339"><a href="#cb5-339" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 1.421085e-14 </span></span>
+<span id="cb5-340"><a href="#cb5-340" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  41.47345 </span></span>
+<span id="cb5-341"><a href="#cb5-341" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-342"><a href="#cb5-342" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-343"><a href="#cb5-343" aria-hidden="true"></a><span class="co">#&gt;    -2.55857190    -3.86979133    -3.44982049    -2.76699860    -1.70258220 </span></span>
+<span id="cb5-344"><a href="#cb5-344" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-345"><a href="#cb5-345" aria-hidden="true"></a><span class="co">#&gt;     0.04584815     4.38838208 </span></span>
+<span id="cb5-346"><a href="#cb5-346" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103675.8 mgc: 1.927144 ustep: 1 </span></span>
+<span id="cb5-347"><a href="#cb5-347" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 1.776357e-14 </span></span>
+<span id="cb5-348"><a href="#cb5-348" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-349"><a href="#cb5-349" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-350"><a href="#cb5-350" aria-hidden="true"></a><span class="co">#&gt;    -2.56039588    -4.04190634    -3.43118290    -2.78954758    -1.70081047 </span></span>
+<span id="cb5-351"><a href="#cb5-351" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-352"><a href="#cb5-352" aria-hidden="true"></a><span class="co">#&gt;     0.04555481     4.87897285 </span></span>
+<span id="cb5-353"><a href="#cb5-353" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103709.1 mgc: 5.532834 ustep: 1 </span></span>
+<span id="cb5-354"><a href="#cb5-354" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 1.776357e-14 </span></span>
+<span id="cb5-355"><a href="#cb5-355" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 1.776357e-14 </span></span>
+<span id="cb5-356"><a href="#cb5-356" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  71.31105 </span></span>
+<span id="cb5-357"><a href="#cb5-357" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-358"><a href="#cb5-358" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-359"><a href="#cb5-359" aria-hidden="true"></a><span class="co">#&gt;    -2.56993755    -4.38708777    -3.45016949    -2.77366589    -1.70533500 </span></span>
+<span id="cb5-360"><a href="#cb5-360" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-361"><a href="#cb5-361" aria-hidden="true"></a><span class="co">#&gt;     0.04593614     5.48080088 </span></span>
+<span id="cb5-362"><a href="#cb5-362" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103930.2 mgc: 10.04561 ustep: 1 </span></span>
+<span id="cb5-363"><a href="#cb5-363" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-364"><a href="#cb5-364" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-365"><a href="#cb5-365" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  99.49835 </span></span>
+<span id="cb5-366"><a href="#cb5-366" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-367"><a href="#cb5-367" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-368"><a href="#cb5-368" aria-hidden="true"></a><span class="co">#&gt;    -2.56048205    -4.66003336    -3.44553606    -2.76486640    -1.70492853 </span></span>
+<span id="cb5-369"><a href="#cb5-369" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-370"><a href="#cb5-370" aria-hidden="true"></a><span class="co">#&gt;     0.04596355     6.11906712 </span></span>
+<span id="cb5-371"><a href="#cb5-371" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103555.8 mgc: 7.81572 ustep: 1 </span></span>
+<span id="cb5-372"><a href="#cb5-372" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-373"><a href="#cb5-373" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-374"><a href="#cb5-374" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  35.51785 </span></span>
+<span id="cb5-375"><a href="#cb5-375" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-376"><a href="#cb5-376" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-377"><a href="#cb5-377" aria-hidden="true"></a><span class="co">#&gt;    -2.54020402    -5.03969700    -3.42475101    -2.78891112    -1.70347975 </span></span>
+<span id="cb5-378"><a href="#cb5-378" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-379"><a href="#cb5-379" aria-hidden="true"></a><span class="co">#&gt;     0.04590795     6.87591655 </span></span>
+<span id="cb5-380"><a href="#cb5-380" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -103187.8 mgc: 10.84132 ustep: 1 </span></span>
+<span id="cb5-381"><a href="#cb5-381" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-382"><a href="#cb5-382" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-383"><a href="#cb5-383" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  31.13334 </span></span>
+<span id="cb5-384"><a href="#cb5-384" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-385"><a href="#cb5-385" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-386"><a href="#cb5-386" aria-hidden="true"></a><span class="co">#&gt;    -2.53960089    -5.21387443    -3.41134564    -2.77496289    -1.70604205 </span></span>
+<span id="cb5-387"><a href="#cb5-387" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-388"><a href="#cb5-388" aria-hidden="true"></a><span class="co">#&gt;     0.04636695     7.25251760 </span></span>
+<span id="cb5-389"><a href="#cb5-389" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102797.2 mgc: 5.710803 ustep: 1 </span></span>
+<span id="cb5-390"><a href="#cb5-390" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-391"><a href="#cb5-391" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-392"><a href="#cb5-392" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  19.73521 </span></span>
+<span id="cb5-393"><a href="#cb5-393" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-394"><a href="#cb5-394" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-395"><a href="#cb5-395" aria-hidden="true"></a><span class="co">#&gt;    -2.54150605    -5.31550814    -3.40260210    -2.77577122    -1.70624488 </span></span>
+<span id="cb5-396"><a href="#cb5-396" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-397"><a href="#cb5-397" aria-hidden="true"></a><span class="co">#&gt;     0.04627133     7.42797903 </span></span>
+<span id="cb5-398"><a href="#cb5-398" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102709.4 mgc: 3.466 ustep: 1 </span></span>
+<span id="cb5-399"><a href="#cb5-399" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 1.776357e-14 </span></span>
+<span id="cb5-400"><a href="#cb5-400" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 1.776357e-14 </span></span>
+<span id="cb5-401"><a href="#cb5-401" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  10.1258 </span></span>
+<span id="cb5-402"><a href="#cb5-402" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-403"><a href="#cb5-403" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-404"><a href="#cb5-404" aria-hidden="true"></a><span class="co">#&gt;    -2.54177610    -5.40244581    -3.39089586    -2.77759815    -1.70648035 </span></span>
+<span id="cb5-405"><a href="#cb5-405" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-406"><a href="#cb5-406" aria-hidden="true"></a><span class="co">#&gt;     0.04618126     7.59836293 </span></span>
+<span id="cb5-407"><a href="#cb5-407" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102564.8 mgc: 3.135313 ustep: 1 </span></span>
+<span id="cb5-408"><a href="#cb5-408" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.253753e-14 </span></span>
+<span id="cb5-409"><a href="#cb5-409" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.253753e-14 </span></span>
+<span id="cb5-410"><a href="#cb5-410" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.9363197 </span></span>
+<span id="cb5-411"><a href="#cb5-411" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-412"><a href="#cb5-412" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-413"><a href="#cb5-413" aria-hidden="true"></a><span class="co">#&gt;    -2.54181250    -5.43338053    -3.38646627    -2.77752597    -1.70661135 </span></span>
+<span id="cb5-414"><a href="#cb5-414" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-415"><a href="#cb5-415" aria-hidden="true"></a><span class="co">#&gt;     0.04616764     7.66172781 </span></span>
+<span id="cb5-416"><a href="#cb5-416" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102499.1 mgc: 1.154107 ustep: 1 </span></span>
+<span id="cb5-417"><a href="#cb5-417" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-418"><a href="#cb5-418" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.131628e-14 </span></span>
+<span id="cb5-419"><a href="#cb5-419" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.3276893 </span></span>
+<span id="cb5-420"><a href="#cb5-420" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-421"><a href="#cb5-421" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-422"><a href="#cb5-422" aria-hidden="true"></a><span class="co">#&gt;    -2.54181528    -5.43894060    -3.38574619    -2.77742881    -1.70663557 </span></span>
+<span id="cb5-423"><a href="#cb5-423" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-424"><a href="#cb5-424" aria-hidden="true"></a><span class="co">#&gt;     0.04616963     7.67315425 </span></span>
+<span id="cb5-425"><a href="#cb5-425" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.2 mgc: 0.206619 ustep: 1 </span></span>
+<span id="cb5-426"><a href="#cb5-426" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-427"><a href="#cb5-427" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-428"><a href="#cb5-428" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.07786416 </span></span>
+<span id="cb5-429"><a href="#cb5-429" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-430"><a href="#cb5-430" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-431"><a href="#cb5-431" aria-hidden="true"></a><span class="co">#&gt;    -2.54181455    -5.43929821    -3.38575221    -2.77741809    -1.70663522 </span></span>
+<span id="cb5-432"><a href="#cb5-432" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-433"><a href="#cb5-433" aria-hidden="true"></a><span class="co">#&gt;     0.04617024     7.67386882 </span></span>
+<span id="cb5-434"><a href="#cb5-434" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.1 mgc: 0.01178017 ustep: 1 </span></span>
+<span id="cb5-435"><a href="#cb5-435" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-436"><a href="#cb5-436" aria-hidden="true"></a><span class="co">#&gt; par:</span></span>
+<span id="cb5-437"><a href="#cb5-437" aria-hidden="true"></a><span class="co">#&gt;     log_sdvc_a     log_sdvc_s log_sdvc_c_par log_sdvc_c_sib   log_sdvc_res </span></span>
+<span id="cb5-438"><a href="#cb5-438" aria-hidden="true"></a><span class="co">#&gt;    -2.54181528    -5.43894060    -3.38574619    -2.77742881    -1.70663557 </span></span>
+<span id="cb5-439"><a href="#cb5-439" aria-hidden="true"></a><span class="co">#&gt;           beta      logit_rho </span></span>
+<span id="cb5-440"><a href="#cb5-440" aria-hidden="true"></a><span class="co">#&gt;     0.04616963     7.67315425 </span></span>
+<span id="cb5-441"><a href="#cb5-441" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-442"><a href="#cb5-442" aria-hidden="true"></a><span class="co">#&gt; iter: 1  mgc: 2.842171e-14 </span></span>
+<span id="cb5-443"><a href="#cb5-443" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.07786416 </span></span>
+<span id="cb5-444"><a href="#cb5-444" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102469.8 mgc: 0.07408165 ustep: 1 </span></span>
+<span id="cb5-445"><a href="#cb5-445" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-446"><a href="#cb5-446" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  3.596237 </span></span>
+<span id="cb5-447"><a href="#cb5-447" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102504.7 mgc: 0.07422996 ustep: 1 </span></span>
+<span id="cb5-448"><a href="#cb5-448" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.137179e-14 </span></span>
+<span id="cb5-449"><a href="#cb5-449" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  3.658041 </span></span>
+<span id="cb5-450"><a href="#cb5-450" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.3 mgc: 0.03206214 ustep: 1 </span></span>
+<span id="cb5-451"><a href="#cb5-451" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-452"><a href="#cb5-452" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.0580572 </span></span>
+<span id="cb5-453"><a href="#cb5-453" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.2 mgc: 0.03203009 ustep: 1 </span></span>
+<span id="cb5-454"><a href="#cb5-454" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.250457e-14 </span></span>
+<span id="cb5-455"><a href="#cb5-455" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.1087673 </span></span>
+<span id="cb5-456"><a href="#cb5-456" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102472.8 mgc: 0.08642074 ustep: 1 </span></span>
+<span id="cb5-457"><a href="#cb5-457" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-458"><a href="#cb5-458" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.7783568 </span></span>
+<span id="cb5-459"><a href="#cb5-459" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102501.7 mgc: 0.08659375 ustep: 1 </span></span>
+<span id="cb5-460"><a href="#cb5-460" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-461"><a href="#cb5-461" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.8410665 </span></span>
+<span id="cb5-462"><a href="#cb5-462" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102473.9 mgc: 0.07710613 ustep: 1 </span></span>
+<span id="cb5-463"><a href="#cb5-463" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-464"><a href="#cb5-464" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  2.321743 </span></span>
+<span id="cb5-465"><a href="#cb5-465" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102500.6 mgc: 0.07726049 ustep: 1 </span></span>
+<span id="cb5-466"><a href="#cb5-466" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-467"><a href="#cb5-467" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  2.383389 </span></span>
+<span id="cb5-468"><a href="#cb5-468" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102482.4 mgc: 0.08642074 ustep: 1 </span></span>
+<span id="cb5-469"><a href="#cb5-469" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-470"><a href="#cb5-470" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  23.56982 </span></span>
+<span id="cb5-471"><a href="#cb5-471" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102492 mgc: 0.08659375 ustep: 1 </span></span>
+<span id="cb5-472"><a href="#cb5-472" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-473"><a href="#cb5-473" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  23.64129 </span></span>
+<span id="cb5-474"><a href="#cb5-474" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.2 mgc: 0.06072882 ustep: 1 </span></span>
+<span id="cb5-475"><a href="#cb5-475" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-476"><a href="#cb5-476" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  107.3356 </span></span>
+<span id="cb5-477"><a href="#cb5-477" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.2 mgc: 0.06072882 ustep: 1 </span></span>
+<span id="cb5-478"><a href="#cb5-478" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-479"><a href="#cb5-479" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  107.4913 </span></span>
+<span id="cb5-480"><a href="#cb5-480" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.2 mgc: 5.642258e-05 ustep: 1 </span></span>
+<span id="cb5-481"><a href="#cb5-481" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.842171e-14 </span></span>
+<span id="cb5-482"><a href="#cb5-482" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.05949866 </span></span>
+<span id="cb5-483"><a href="#cb5-483" aria-hidden="true"></a><span class="co">#&gt; iter: 1  value: -102487.2 mgc: 5.647898e-05 ustep: 1 </span></span>
+<span id="cb5-484"><a href="#cb5-484" aria-hidden="true"></a><span class="co">#&gt; iter: 2  mgc: 2.131628e-14 </span></span>
+<span id="cb5-485"><a href="#cb5-485" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.09626116 </span></span>
+<span id="cb5-486"><a href="#cb5-486" aria-hidden="true"></a><span class="co">#&gt; outer mgc:  0.7346391 </span></span>
+<span id="cb5-487"><a href="#cb5-487" aria-hidden="true"></a><span class="co">#&gt; [1] &quot;calculating liability scale variance components&quot;</span></span></code></pre></div>
+<p><code>vc_a_lia</code>, <code>vc_c_par_lia</code>, <code>vc_c_sib_lia</code>, <code>gvc_s_lia</code>, represent the G, P, C, and S variance compoenents respectively. The model estimates are close to the true simulated variances.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>model_output<span class="op">$</span>vc_rpt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">#&gt; $outrprt</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">#&gt;            param     Estimate    Std.Error</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">#&gt;  1:     vc_a_lia 0.4422652241 0.0922226871</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">#&gt;  2: vc_c_par_lia 0.0953335344 0.0530611478</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">#&gt;  3: vc_c_sib_lia 0.1813581547 0.0334935281</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">#&gt;  4:    gvc_s_lia 0.0393341731 0.1004538744</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">#&gt;  5:         vc_a 0.0061973682 0.0006901193</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="co">#&gt;  6:     vc_c_par 0.0011459831 0.0006432917</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="co">#&gt;  7:     vc_c_sib 0.0038686192 0.0006483096</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">#&gt;  8:        gvc_s 0.0003968471 0.0010681808</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="co">#&gt;  9:    vc_pp_lia 0.1346677075 0.0908880532</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="co">#&gt; 10:    vc_ps_lia 0.2604667852 0.0617653978</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="co">#&gt; 11:    vc_ss_lia 0.4418249398 0.0472668689</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="co">#&gt; 12:    gvc_s_lia 0.0393341731 0.1004538744</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a><span class="co">#&gt; 13:        vc_pp 0.0015428303 0.0012231453</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="co">#&gt; 14:        vc_ps 0.0034955312 0.0010930277</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a><span class="co">#&gt; 15:        vc_ss 0.0073641505 0.0011987380</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="co">#&gt; 16:        gvc_s 0.0003968471 0.0010681808</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a><span class="co">#&gt; $vclia.cov</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a><span class="co">#&gt;                  vc_a      vc_c_par      vc_c_sib        gvc_s</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a><span class="co">#&gt; vc_a      0.008505024  0.0021834325  0.0008739610 -0.008402273</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a><span class="co">#&gt; vc_c_par  0.002183433  0.0028154854  0.0003059209 -0.002322914</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a><span class="co">#&gt; vc_c_sib  0.000873961  0.0003059209  0.0011218164 -0.001788292</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a><span class="co">#&gt; gvc_s    -0.008402273 -0.0023229140 -0.0017882925  0.010090981</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a><span class="co">#&gt; $vcobs.cov</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a><span class="co">#&gt;                   vc_a      vc_c_par      vc_c_sib         gvc_s</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a><span class="co">#&gt; vc_a      4.762646e-07  6.104364e-08 -1.735852e-07 -6.536681e-08</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a><span class="co">#&gt; vc_c_par  6.104364e-08  4.138243e-07 -2.317641e-08 -2.937506e-08</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a><span class="co">#&gt; vc_c_sib -1.735852e-07 -2.317641e-08  4.203053e-07 -2.228426e-09</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a><span class="co">#&gt; gvc_s    -6.536681e-08 -2.937506e-08 -2.228426e-09  1.141010e-06</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true"></a><span class="co">#&gt; $rlia.cov</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true"></a><span class="co">#&gt;             vc_pp       vc_ps       vc_ss       gvc_s</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true"></a><span class="co">#&gt; vc_pp 0.008260638 0.004658647 0.003176275 0.007768067</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true"></a><span class="co">#&gt; vc_ps 0.004658647 0.003814964 0.002463652 0.005889845</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true"></a><span class="co">#&gt; vc_ss 0.003176275 0.002463652 0.002234157 0.004101552</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true"></a><span class="co">#&gt; gvc_s 0.007768067 0.005889845 0.004101552 0.010090981</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true"></a><span class="co">#&gt; $robs.cov</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true"></a><span class="co">#&gt;              vc_pp        vc_ps        vc_ss        gvc_s</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true"></a><span class="co">#&gt; vc_pp 1.496084e-06 1.109474e-06 1.084069e-06 1.111635e-06</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true"></a><span class="co">#&gt; vc_ps 1.109474e-06 1.194710e-06 1.105688e-06 1.108327e-06</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true"></a><span class="co">#&gt; vc_ss 1.084069e-06 1.105688e-06 1.436973e-06 1.106098e-06</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true"></a><span class="co">#&gt; gvc_s 1.111635e-06 1.108327e-06 1.106098e-06 1.141010e-06</span></span></code></pre></div>
+<p>The full model report from TMB with all fitted parameters are found in the <code>tmb_rpt</code> object.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>model_output<span class="op">$</span>tmb_rpt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">#&gt;                 param      Estimate   Std. Error            ll            ul</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="co">#&gt;     1:     log_sdvc_a -2.541815e+00 5.567841e-02 -2.650943e+00 -2.4326875966</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="co">#&gt;     2:     log_sdvc_s -5.438941e+00 1.345834e+00 -8.076727e+00 -2.8011542532</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="co">#&gt;     3: log_sdvc_c_par -3.385746e+00 2.806724e-01 -3.935854e+00 -2.8356383324</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="co">#&gt;     4: log_sdvc_c_sib -2.777429e+00 8.379082e-02 -2.941656e+00 -2.6132018165</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="co">#&gt;     5:   log_sdvc_res -1.706636e+00 1.535023e-02 -1.736721e+00 -1.6765496654</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="co">#&gt;    ---                                                                      </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="co">#&gt; 51294:       vc_c_par  1.145983e-03 6.432917e-04 -1.148455e-04  0.0024068118</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="co">#&gt; 51295:       vc_c_sib  3.868619e-03 6.483096e-04  2.597956e-03  0.0051392827</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="co">#&gt; 51296:         vc_res  3.293329e-02 1.011067e-03  3.095164e-02  0.0349149505</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="co">#&gt; 51297:           vc_s  1.887106e-05 5.079462e-05 -8.068457e-05  0.0001184267</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="co">#&gt; 51298:            rho  9.995351e-01 1.265331e-03  9.970551e-01  1.0020150703</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a><span class="co">#&gt;        objective                     mess fit_time sd_time modeltype</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a><span class="co">#&gt;     1:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a><span class="co">#&gt;     2:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a><span class="co">#&gt;     3:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a><span class="co">#&gt;     4:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a><span class="co">#&gt;     5:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a><span class="co">#&gt;    ---                                                              </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a><span class="co">#&gt; 51294:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a><span class="co">#&gt; 51295:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a><span class="co">#&gt; 51296:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a><span class="co">#&gt; 51297:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a><span class="co">#&gt; 51298:  -2894.29 relative convergence (4)    7.659   1.996  car_gmrf</span></span></code></pre></div>
+<p>The <code>indlevel_dt</code> object is a data-table showing all fitted effects and the response variable.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>model_output<span class="op">$</span>indlevel_dt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co">#&gt;        V1 y         fe         us            ua          upar         usib</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">#&gt;     1:  1 0 0.04616963  0.9464858 -0.0114990864 -0.0022736906 -0.003837772</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="co">#&gt;     2:  1 0 0.04616963  0.9464858 -0.0114990864 -0.0022736906 -0.003837772</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">#&gt;     3:  1 0 0.04616963  0.9464858 -0.0037838236 -0.0009895023 -0.006680740</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">#&gt;     4:  1 0 0.04616963  0.9464858 -0.0037838236 -0.0009895023 -0.006680740</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="co">#&gt;     5:  1 1 0.04616963  0.2659179  0.1223763028  0.0235894039  0.084801347</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="co">#&gt;    ---                                                                    </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co">#&gt; 19996:  1 0 0.04616963 -8.5490602 -0.0006796718 -0.0001777400 -0.001200032</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="co">#&gt; 19997:  1 0 0.04616963 -0.3286268  0.0429797412 -0.0051428862 -0.008680699</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a><span class="co">#&gt; 19998:  1 0 0.04616963 -0.3286268  0.0429797412 -0.0051428862 -0.008680699</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a><span class="co">#&gt; 19999:  1 0 0.04616963 -0.3286268 -0.0187110880 -0.0048931098  0.071020386</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a><span class="co">#&gt; 20000:  1 1 0.04616963 -0.3286268  0.0991598450  0.0259311492  0.071020386</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a><span class="co">#&gt;               yhat</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a><span class="co">#&gt;     1:  0.97504492</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a><span class="co">#&gt;     2:  0.97504492</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a><span class="co">#&gt;     3:  0.98120140</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a><span class="co">#&gt;     4:  0.98120140</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a><span class="co">#&gt;     5:  0.54285457</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a><span class="co">#&gt;    ---            </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true"></a><span class="co">#&gt; 19996: -8.50494803</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true"></a><span class="co">#&gt; 19997: -0.25330100</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true"></a><span class="co">#&gt; 19998: -0.25330100</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true"></a><span class="co">#&gt; 19999: -0.23504097</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true"></a><span class="co">#&gt; 20000: -0.08634578</span></span></code></pre></div>
+
+</body>
+</html>

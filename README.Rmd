@@ -69,10 +69,11 @@ library(sandwich)
 #source("mod_fit_func_sim.R")
 
 ### 
-lgeo_opt<-st_read("fam2_geo_opt_key.shp") %>% as.data.table()
-lgeo_opt[,rn:=1:.N]
-lgeo_opt[,prop:=N/sum(N)]
-lgeo_opt[1:10]
+#lgeo_opt<-st_read("../pipeline_scripts/fam2_geo_opt_key.shp") %>% as.data.table()
+#lgeo_opt[,rn:=1:.N]
+#lgeo_opt[,prop:=N/sum(N)]
+#lgeo_opt[1:10]
+data(lgeo_opt)
 ```
 Calculate spatial neighborhood matrix
 ```{r}
