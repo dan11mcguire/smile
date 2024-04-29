@@ -45,6 +45,9 @@ knit_hooks$set(output = function(x, options) {
 
 ```
 # SMILE 
+
+[![DOI](https://zenodo.org/badge/394834563.svg)](https://zenodo.org/doi/10.5281/zenodo.11081927)
+
 A **S**patial-**M****I**xed **L**inear **E**ffects model for estimating the contributions of genetic heritability, family-, and community-level environment to phenotype variation.
 
 
@@ -73,8 +76,8 @@ library(sandwich)
 
 data(lgeo_opt)
 lgeo_opt[1:20]
-seed<-808
-n_quad=10*10**3
+seed<-240428
+n_quad=5*10**4
 ```
 
 Calculate spatial neighborhood matrix
